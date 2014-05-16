@@ -1,0 +1,22 @@
+!.gitkeep
+
+# package managers #
+####################
+node_modules/
+npm-debug.log
+
+# generated coverage files #
+############################
+coverage/
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+.idea/
