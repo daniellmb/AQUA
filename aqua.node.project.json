@@ -1,0 +1,22 @@
+{
+  "id": "AQA",
+  "name": "AQUA: Automated QUality Analysis",
+  "by": "Daniel Lamb <dlamb.open.source@gmail.com>",
+  "readme": "./README.md",
+  "src": [
+    "./src/**/*.js"
+  ],
+  "type": "nodejs",
+  "unit": {
+    "tests": [
+      "./test/specs/**/*.js"
+    ],
+    "mocks": [
+      "./test/mocks.js"
+    ]
+  },
+  "alljs": "./!(coverage|docs|externs|node_modules)/!(bower_components)/*.js",
+  "types": [
+    "./test/types/*.js"
+  ]
+}

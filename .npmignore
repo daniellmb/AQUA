@@ -1,6 +1,8 @@
 node_modules/
 npm-debug.log
 coverage/
+.coverdata/
+.coverrun
 .DS_Store
 .DS_Store?
 ._*

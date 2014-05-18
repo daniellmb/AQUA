@@ -1,0 +1,17 @@
+{ 
+	"docs": {
+    "dir": "./docs",
+    "css": "./docs/doc.css",
+    "js": "./docs/doc.js",
+    "theme": "simplex"
+  },
+	"coverage": {
+    "dir": "./test/coverage"
+  },
+  "testing": {
+    "framework": "jasmine",
+    "web": "./configs/karma.conf.js",
+    "e2e": "./configs/protractor.conf.js",
+    "node": "./configs/node.conf.js"
+  }
+}

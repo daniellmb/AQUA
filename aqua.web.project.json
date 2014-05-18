@@ -1,0 +1,13 @@
+{
+  "id": "AQAW",
+  "name": "AQUA Website: Documentation, Unit Tests, Code Coverage Report",
+  "by": "Daniel Lamb <dlamb.open.source@gmail.com>",
+  "src": [
+    "./src/**/*.js"
+  ],
+  "e2e": {
+    "tests": [
+      "./test/e2e/*.js"
+    ]
+  }
+}

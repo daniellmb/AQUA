@@ -1,0 +1,25 @@
+{
+  "id": "ng",
+  "name": "Angular JS Example",
+  "by": "Daniel Lamb <dlamb.open.source@gmail.com>",
+  "readme": "./demos/angularjs/readme.md",
+  "src": [
+    "./demos/angularjs/js/**/*.js"
+  ],
+  "unit": {
+    "tests": [
+      "./demos/angularjs/test/*.js"
+    ]
+  },
+  "e2e" : {
+    "tests": [
+      "./demos/angularjs/test/e2e/*.js"
+    ],
+    "pgobj": [
+      "./demos/angularjs/test/e2e/pgobj/*.js"
+    ]
+  },
+  "alljs": "./demos/angularjs/!(bower_components)/*.js",
+  "types": [
+  ]
+}

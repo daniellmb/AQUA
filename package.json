@@ -1,60 +1,60 @@
 {
-    "name": "aqua",
-    "version": "0.0.1",
-    "description": "AQUA: Automated QUality Analysis; used to raise the visibility of code quality and increase awareness within teams by getting immediate feedback about code smells before they become technical debt.",
-    "author": "Daniel Lamb <daniellmb.com>",
-    "homepage": "https://github.com/daniellmb/AQUA",
-    "maintainers": [],
-    "contributors": [],
-    "bugs": {
-        "url": "https://github.com/daniellmb/AQUA/issues"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "http://daniellmb.mit-license.org"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/daniellmb/AQUA.git"
-    },
-    "keywords": [
-        "code quality",
-        "automated",
-        "unit test",
-        "e2e test",
-        "documentation"
-    ],
-    "devDependencies": {
-        "colors": "latest",
-        "glob": "latest",
-        "gulp": "latest",
-        "gulp-util": "latest",
-        "gulp-jshint": "latest",
-        "gulp-complexity": "latest",
-        "gulp-karma": "latest",
-        "gulp-jasmine": "latest",
-        "gulp-protractor": "latest",
-        "gulp-clean": "latest",
-        "gulp-jsdoc": "latest",
-        "gulp-closure-compiler": "latest",
-        "gulp-coverage": "latest",
-        "karma": "latest",
-        "karma-jasmine": "latest",
-        "karma-coverage": "latest",
-        "karma-firefox-launcher": "latest",
-        "karma-phantomjs-launcher": "latest",
-        "karma-ie-launcher": "latest",
-        "karma-chrome-launcher": "latest",
-        "karma-opera-launcher": "latest",
-        "karma-safari-launcher": "latest",
-        "protractor": "latest",
-        "phantomjs": "latest",
-        "rewire": "latest",
-        "yargs": "latest"
-    },
-    "engines": {
-        "node": ">= 0.10"
+  "name": "aqua",
+  "version": "0.0.1",
+  "description": "AQUA: Automated QUality Analysis; used to raise the visibility of code quality and increase awareness within teams by getting immediate feedback about code smells before they become technical debt.",
+  "author": "Daniel Lamb <dlamb.open.source@gmail.com> (daniellmb.com)",
+  "homepage": "https://github.com/daniellmb/AQUA",
+  "maintainers": [],
+  "contributors": [],
+  "bugs": {
+    "url": "https://github.com/daniellmb/AQUA/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://daniellmb.mit-license.org"
     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/daniellmb/AQUA.git"
+  },
+  "keywords": [
+    "code quality",
+    "automated",
+    "unit test",
+    "e2e test",
+    "documentation"
+  ],
+  "devDependencies": {
+    "colors": "latest",
+    "glob": "latest",
+    "gulp": "latest",
+    "gulp-util": "latest",
+    "gulp-jshint": "latest",
+    "gulp-complexity": "latest",
+    "gulp-karma": "latest",
+    "gulp-jasmine": "latest",
+    "gulp-protractor": "latest",
+    "gulp-clean": "latest",
+    "gulp-jsdoc": "latest",
+    "gulp-closure-compiler": "latest",
+    "gulp-coverage": "latest",
+    "karma": "latest",
+    "karma-jasmine": "latest",
+    "karma-coverage": "latest",
+    "karma-firefox-launcher": "latest",
+    "karma-phantomjs-launcher": "latest",
+    "karma-ie-launcher": "latest",
+    "karma-chrome-launcher": "latest",
+    "karma-opera-launcher": "latest",
+    "karma-safari-launcher": "latest",
+    "protractor": "latest",
+    "phantomjs": "latest",
+    "rewire": "latest",
+    "yargs": "latest"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  }
 }
