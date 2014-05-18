@@ -347,7 +347,3 @@ All code should be annotated with comments to enable both type checking at compi
     return -1;
   }
 </pre>
-
-## AQUA Development
-
-  * [Test Coverage](../../test/coverage/aqa)

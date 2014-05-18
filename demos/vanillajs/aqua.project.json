@@ -1,0 +1,17 @@
+{
+  "id": "vjs",
+  "name": "Vanilla JS Example",
+  "by": "Daniel Lamb <dlamb.open.source@gmail.com>",
+  "readme": "./demos/vanillajs/readme.md",
+  "src": [
+    "./demos/vanillajs/js/*.js"
+  ],
+  "unit": {
+    "tests": [
+      "./demos/vanillajs/test/*.js"
+    ]
+  },
+  "alljs": "./demos/vanillajs/!(bower_components)/*.js",
+  "types": [
+  ]
+}
