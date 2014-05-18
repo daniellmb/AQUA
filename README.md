@@ -2,7 +2,7 @@
 
 ## About
 
-[AQUA](https://www.npmjs.org/package/aqua) improves front-end code by surfacing actionable metrics about JavaScript and CSS.
+[AQUA](https://www.npmjs.org/package/aqua) improves code quality by surfacing actionable metrics about JavaScript, CSS and C#.
 
 >AQUA raises the visibility of code quality and increases awareness within teams by giving immediate feedback about code smells before they become technical debt.
 
@@ -30,6 +30,15 @@ While nothing is stopping you from simply editing a JavaScript file and committi
 ### CSS
 
   * Lint StyleSheets for Syntax Errors and Anti-Patterns
+
+### C&#35;
+
+  * Lint Source Code for Syntax Errors and Anti-Patterns (via [FxCop](http://msdn.microsoft.com/en-us/library/bb429476.aspx))
+  * Analyze Code Against Complexity Thresholds (via [Code Metrics PowerTool](http://www.microsoft.com/en-us/download/details.aspx?id=38196))
+  * Unit Test Runnner
+  * Code Coverage Reports
+  * End-to-end Test Runner
+  * Documentation Generation
 
 ### Environments
 
