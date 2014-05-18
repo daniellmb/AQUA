@@ -132,7 +132,7 @@ Debugging can be done by setting break points in the source code, using	`console
 
 ### Page Objects
 
-End to end testing (aka Integration Testing) are organized using the [PageObject Pattern](https://code.google.com/p/selenium/wiki/PageObjects) and run by the [Protractor API](https://github.com/angular/protractor/blob/master/docs/api.md). For now End to end tests should be at the component level, one level deep of interaction (full scenarios will be left to QA).
+End to end testing (aka Integration Testing) are organized using the [PageObject Pattern](https://code.google.com/p/selenium/wiki/PageObjects) and run by the [Protractor API](https://github.com/angular/protractor/blob/master/docs/api.md).
 
 Page Objects can be thought of as facing in two directions simultaneously. Facing towards the developer of a test, they represent the services offered by a particular page. Facing away from the developer, they should be the only thing that has a deep knowledge of the structure of the HTML of a page (or part of a page) It's simplest to think of the methods on a Page Object as offering the "services" that a page offers rather than exposing the details and mechanics of the page. As an example, think of the inbox of any web-based email system. Amongst the services that it offers are typically the ability to compose a new email, to choose to read a single email, and to list the subject lines of the emails in the inbox. How these are implemented shouldn't matter to the test.
 
@@ -143,20 +143,6 @@ Page Object Pattern Goals
  - Methods return other PageObjects
  - Need not represent an entire page
  - Different results for the same action are modelled as different methods
-
-### PubSub
-
-While it’s still best to interact with the page as a user will, sometimes it’s useful to tap directly into pubsub topics. This is made possible via the `publishTopic` method; it takes 2 parameters, the topic name and any data you want to publish with it.
-
-<pre class="sunlight-highlight-javascript">
-it('should show a message when allocating listings', function () {
-    // arrange
-    // act
-    publishTopic('/api/evenly/allocate/start');
-    // assert
-    expect(page.isAllocatingMessageVisible()).toBe(true);
-});
-</pre>
 
 ### Debugging
 
