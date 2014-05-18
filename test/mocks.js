@@ -1,6 +1,11 @@
 /**
- * Gulp mocks for unit testing
- * @type {{task: (!jasmine.Spy|*), src: (!jasmine.Spy|*), pipe: (!jasmine.Spy|*), on: (!jasmine.Spy|*)}}
+ * @file
+ *
+ * ### Responsibilities
+ * - create reusable mocks for unit testing
+ *
+ * @externs
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 
 

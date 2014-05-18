@@ -5,7 +5,7 @@
  * - log information to the console as a yellow warning.
  *
  * @module warn
- * @author dlamb.open.source@gmail.com (Daniel Lamb)
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 
 // require console colors module

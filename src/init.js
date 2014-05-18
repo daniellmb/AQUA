@@ -5,7 +5,7 @@
  * - Take the project config files and generate gulp tasks for them.
  *
  * @module init
- * @author dlamb.open.source@gmail.com (Daniel Lamb)
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 
 

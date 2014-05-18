@@ -5,7 +5,7 @@
  * - handle errors in a consistent way
  *
  * @module error
- * @author dlamb.open.source@gmail.com (Daniel Lamb)
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
 */
 
 

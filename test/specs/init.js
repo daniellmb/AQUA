@@ -1,3 +1,11 @@
+/**
+ * @file
+ *
+ * ### Responsibilities
+ * - unit test the AQUA init method.
+ *
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
+ */
 /*jshint maxstatements: 100*/
 
 var aqua = require('../../');

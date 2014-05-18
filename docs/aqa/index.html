@@ -129,13 +129,13 @@
     <section>
         <article><h1 id="aqua-automated-quality-analysis">AQUA: Automated QUality Analysis</h1>
 <h2 id="about">About</h2>
-<p><a href="https://www.npmjs.org/package/aqua">AQUA</a> improves front-end code by surfacing actionable metrics about JavaScript and CSS.</p>
+<p><a href="https://www.npmjs.org/package/aqua">AQUA</a> improves code quality by surfacing actionable metrics about JavaScript, CSS and C#.</p>
 <blockquote>
 <p>AQUA raises the visibility of code quality and increases awareness within teams by giving immediate feedback about code smells before they become technical debt.</p>
 </blockquote>
 <p>You are free to structure your projects anyway you like, and still take full advantage of AQUA. Simply create an <code>aqua.project.json</code> file that documents where things are.</p>
 <h2 id="philosophy">Philosophy</h2>
-<p>The goal of AQUA is to improve code quality, without dictating a strict project structure. <strong>Ramp-up gradually</strong> by only configuring the the parts of AQUA you want to use. Not ready for end-to-end tests yet? Simply don&#39;t configure them. Don&#39;t want to type check your code? Just leave out the &quot;types&quot; section. Even if you just start by linting your code, that will be a great step in the right direction!</p>
+<p>The goal of AQUA is to improve code quality, without dictating a strict project structure. <strong>Ramp-up gradually</strong> by only configuring the the parts of AQUA you want to use. Not ready for end-to-end tests yet? Simply don&#39;t configure them. Don&#39;t want to type check your JavaScript code? Just leave out the &quot;types&quot; section. Even if you just start by linting your code, that will be a great step in the right direction!</p>
 <p>While nothing is stopping you from simply editing a JavaScript file and committing it to source control; doing so will cause you to miss out on: linting, cyclomatic complexity analysis, type checking, running both unit and end-to-end tests, as well as documentation generation, and code coverage reports.</p>
 <h2 id="features">Features</h2>
 <h3 id="javascript">JavaScript</h3>
@@ -152,6 +152,15 @@
 <h3 id="css">CSS</h3>
 <ul>
 <li>Lint StyleSheets for Syntax Errors and Anti-Patterns</li>
+</ul>
+<h3 id="c-35-">C&#35;</h3>
+<ul>
+<li>Lint Source Code for Syntax Errors and Anti-Patterns (via <a href="http://msdn.microsoft.com/en-us/library/bb429476.aspx">FxCop</a>)</li>
+<li>Analyze Code Against Complexity Thresholds (via <a href="http://www.microsoft.com/en-us/download/details.aspx?id=38196">Code Metrics PowerTool</a>)</li>
+<li>Unit Test Runnner</li>
+<li>Code Coverage Reports</li>
+<li>End-to-end Test Runner</li>
+<li>Documentation Generation</li>
 </ul>
 <h3 id="environments">Environments</h3>
 <p>AQUA is designed to play well with the following types of projects.</p>
@@ -447,7 +456,7 @@ Debugging can be done by setting break points in the source code, using    <code
 </pre>
 
 <h2 id="type-checking">Type Checking</h2>
-<p>AQUA give you the ability to type check your JavaScript code without having to learn a new language such as <a href="http://www.typescriptlang.org/">TypeScript</a>. Type checking is done using <a href="https://github.com/google/closure-compiler">Google Closure compiler</a> that is written in Java so you&#39;ll need the <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html#jre-7u51-oth-JPR">Java Runtime Environment</a> (JRE 7u51) installed to do type checking. For troubleshooting see the <a href="https://github.com/google/closure-compiler/wiki">GCC Wiki</a>. If you need to <a href="https://www.java.com/en/download/faq/remove_olderversions.xml">remove older versions of Java</a> there is documentation for your operating system.</p>
+<p>AQUA give you the ability to type check your JavaScript code without having to learn a new language such as <a href="http://www.typescriptlang.org/">TypeScript</a>. Type checking is done using <a href="https://github.com/google/closure-compiler">Google Closure compiler</a> that is written in Java so you&#39;ll need the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">Java Runtime Environment</a> (JRE 7u51+) installed to do type checking. For troubleshooting see the <a href="https://github.com/google/closure-compiler/wiki">GCC Wiki</a>. If you need to <a href="https://www.java.com/en/download/faq/remove_olderversions.xml">remove older versions of Java</a> there is documentation for your operating system.</p>
 <h3 id="code-comments">Code Comments</h3>
 <p>All code should be annotated with comments to enable both type checking at compile time as well as documentation generation. See <a href="http://usejsdoc.org/">JSDoc Dictionary</a> and <a href="https://developers.google.com/closure/compiler/docs/js-for-compiler">Closure Compiler Annotation</a> for more information. Both (<a href="http://github.github.com/github-flavored-markdown/">GitHub Flavored Markdown</a>) and HTML is supported in the comments, with Markdown preferred as it does not degrade reading the source code as much as HTML.</p>
 <pre class="sunlight-highlight-javascript">
@@ -481,6 +490,558 @@ Debugging can be done by setting break points in the source code, using    <code
 
 
 
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    <h2>
+    aqua.js
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+            <div class="description"><h3>Responsibilities</h3><ul>
+<li>type definition for AQUA</li>
+</ul></div>
+        
+
+        
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:dlamb.open.source@gmail.com">Daniel Lamb</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="aqua.js.html">test/types/aqua.js</a>, <a href="aqua.js.html#sunlight-1-line-1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    <h2>
+    config.e2e.js
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+            <div class="description"><h3>Responsibilities</h3><ul>
+<li>type definition for AQUA project e2e config</li>
+</ul></div>
+        
+
+        
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:dlamb.open.source@gmail.com">Daniel Lamb</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="config.e2e.js.html">test/types/config.e2e.js</a>, <a href="config.e2e.js.html#sunlight-1-line-1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    <h2>
+    config.js
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+            <div class="description"><h3>Responsibilities</h3><ul>
+<li>type definition for AQUA project config</li>
+</ul></div>
+        
+
+        
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:dlamb.open.source@gmail.com">Daniel Lamb</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="config.js.html">test/types/config.js</a>, <a href="config.js.html#sunlight-1-line-1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    <h2>
+    config.unit.js
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+            <div class="description"><h3>Responsibilities</h3><ul>
+<li>type definition for AQUA project unit test config</li>
+</ul></div>
+        
+
+        
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:dlamb.open.source@gmail.com">Daniel Lamb</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="config.unit.js.html">test/types/config.unit.js</a>, <a href="config.unit.js.html#sunlight-1-line-1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    <h2>
+    gulp.js
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+            <div class="description"><h3>Responsibilities</h3><ul>
+<li>type definition for gulp instance</li>
+</ul></div>
+        
+
+        
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:dlamb.open.source@gmail.com">Daniel Lamb</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gulp.js.html">test/types/gulp.js</a>, <a href="gulp.js.html#sunlight-1-line-1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    <h2>
+    task.js
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+            <div class="description"><h3>Responsibilities</h3><ul>
+<li>type definition for AQUA task</li>
+</ul></div>
+        
+
+        
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:dlamb.open.source@gmail.com">Daniel Lamb</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="task.js.html">test/types/task.js</a>, <a href="task.js.html#sunlight-1-line-1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
 				</div>
 
 				<div class="clearfix"></div>
@@ -497,7 +1058,7 @@ Debugging can be done by setting break points in the source code, using    <code
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sun May 18 2014 11:11:25 GMT-0700 (PDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Sun May 18 2014 15:17:33 GMT-0700 (PDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

@@ -5,7 +5,7 @@
  * - validate a AQUA configuration file.
  *
  * @module validate
- * @author dlamb.open.source@gmail.com (Daniel Lamb)
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 
 

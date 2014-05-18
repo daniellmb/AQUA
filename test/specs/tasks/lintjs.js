@@ -1,3 +1,11 @@
+/**
+ * @file
+ *
+ * ### Responsibilities
+ * - unit test the AQUA lint task.
+ *
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
+ */
 /*jshint maxstatements: 100*/
 
 var aqua = require('../../../');

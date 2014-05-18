@@ -5,7 +5,7 @@
  * - configure AQUA.
  *
  * @module init
- * @author dlamb.open.source@gmail.com (Daniel Lamb)
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 
 

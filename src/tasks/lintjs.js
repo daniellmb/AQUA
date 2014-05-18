@@ -6,7 +6,7 @@
  * - register task to run linting.
  *
  * @module lintjs
- * @author dlamb.open.source@gmail.com (Daniel Lamb)
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 
 

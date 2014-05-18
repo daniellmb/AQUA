@@ -1,3 +1,12 @@
+/**
+ * @file
+ *
+ * ### Responsibilities
+ * - type definition for AQUA
+ *
+ * @externs
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
+ */
 
 
 
