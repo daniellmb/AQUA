@@ -10,7 +10,7 @@ You are free to structure your projects anyway you like, and still take full adv
 
 ## Philosophy
 
-The goal of AQUA is to improve code quality, without dictating a strict project structure. **Ramp-up gradually** by only configuring the the parts of AQUA you want to use. Not ready for end-to-end tests yet? Simply don't configure them. Don't want to type check your code? Just leave out the "types" section. Even if you just start by linting your code, that will be a great step in the right direction!
+The goal of AQUA is to improve code quality, without dictating a strict project structure. **Ramp-up gradually** by only configuring the the parts of AQUA you want to use. Not ready for end-to-end tests yet? Simply don't configure them. Don't want to type check your JavaScript code? Just leave out the "types" section. Even if you just start by linting your code, that will be a great step in the right direction!
 
 While nothing is stopping you from simply editing a JavaScript file and committing it to source control; doing so will cause you to miss out on: linting, cyclomatic complexity analysis, type checking, running both unit and end-to-end tests, as well as documentation generation, and code coverage reports.
 
