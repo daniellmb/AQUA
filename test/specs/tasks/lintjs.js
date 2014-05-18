@@ -10,7 +10,7 @@ describe('lintjs', function() {
   beforeEach(function() {
     // mock config
     cfg = {
-      id: 'ut'
+      id: 'TEST'
     };
 
     //mock gulp
@@ -100,7 +100,7 @@ describe('lintjs', function() {
       // act
       task.reg(aqua, cfg, gulp);
       // assert
-      expect(gulp.task).toHaveBeenCalledWith('ut-lint', [], jasmine.any(Function));
+      expect(gulp.task).toHaveBeenCalledWith('test-lint', [], jasmine.any(Function));
     });
 
     describe('gulp task', function() {
