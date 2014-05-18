@@ -313,7 +313,7 @@ Below are some typical configurations that you can cut-n-paste to jump-start you
 
 ## Type Checking
 
-AQUA give you the ability to type check your JavaScript code without having to learn a new language such as [TypeScript](http://www.typescriptlang.org/). Type checking is done using [Google Closure compiler](https://github.com/google/closure-compiler) that is written in Java so you'll need the [Java Runtime Environment](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) (JRE 7u51+) installed to do type checking. For troubleshooting see the [GCC Wiki](https://github.com/google/closure-compiler/wiki). If you need to [remove older versions of Java](https://www.java.com/en/download/faq/remove_olderversions.xml) there is documentation for your operating system.
+AQUA give you the ability to type check your JavaScript code without having to learn a new language such as [TypeScript](http://www.typescriptlang.org/). Type checking is done using [Google Closure compiler](https://github.com/google/closure-compiler) that is written in Java so you'll need the [Java 7 Runtime Environment](http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html) (JRE 7u51+) installed to do type checking. For troubleshooting see the [GCC Wiki](https://github.com/google/closure-compiler/wiki). If you need to [remove older versions of Java](https://www.java.com/en/download/faq/remove_olderversions.xml) there is documentation for your operating system.
 
 ### Code Comments
 
