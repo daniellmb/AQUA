@@ -339,7 +339,7 @@ All code should be annotated with comments to enable both type checking at compi
     var index = (fromIndex || 0) - 1,
         length = array ? array.length : 0;
 
-    while (++index < length) {
+    while (++index &lt; length) {
       if (array[index] === value) {
         return index;
       }
