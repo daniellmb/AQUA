@@ -21,9 +21,9 @@ function GPA() {
 
 
 /**
- * Lint JavaScript Source Code
+ * Check source code complexity
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!Config} cfg AQUA project config file.
+ * @param {!ProjConfig} cfg AQUA project config file.
  * @param {!Gulp} gulp - Gulp instance.
  */
 GPA.prototype.run = function(aqua, cfg, gulp) {
@@ -57,9 +57,9 @@ GPA.prototype.run = function(aqua, cfg, gulp) {
 
 
 /**
- * Create Project Task to Lint Source Code
+ * Create Project Task to check source code complexity
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!Config} cfg AQUA project config file.
+ * @param {!ProjConfig} cfg AQUA project config file.
  * @param {!Gulp} gulp - Gulp instance.
  */
 GPA.prototype.reg = function(aqua, cfg, gulp) {
@@ -72,7 +72,7 @@ GPA.prototype.reg = function(aqua, cfg, gulp) {
   // create task to check the gpa of the project source code
   gulp.task(id + '-gpa', [], function(done) {
     // check if project is configured properly
-    if (cfg.src) {
+    if (task.canRun(cfg)) {
       // run the task
       task.run(aqua, cfg, gulp);
     } else {
@@ -81,6 +81,16 @@ GPA.prototype.reg = function(aqua, cfg, gulp) {
     done();
   });
 
+};
+
+
+/**
+ * Check if the project is properly configured to run the task
+ * @param {!ProjConfig} pcfg - AQUA project config JSON.
+ * @return {boolean}
+ */
+GPA.prototype.canRun = function(pcfg) {
+  return !!(pcfg.src);
 };
 
 

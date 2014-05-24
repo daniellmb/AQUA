@@ -21,9 +21,9 @@ function LintJS() {
 
 
 /**
- * Lint JavaScript Source Code
+ * Lint JavaScript source code
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!Config} cfg AQUA project config file.
+ * @param {!ProjConfig} cfg AQUA project config file.
  * @param {!Gulp} gulp - Gulp instance.
  */
 LintJS.prototype.run = function(aqua, cfg, gulp) {
@@ -44,9 +44,9 @@ LintJS.prototype.run = function(aqua, cfg, gulp) {
 
 
 /**
- * Create Project Task to Lint Source Code
+ * Create Project Task to lint source code
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!Config} cfg AQUA project config file.
+ * @param {!ProjConfig} cfg AQUA project config file.
  * @param {!Gulp} gulp - Gulp instance.
  */
 LintJS.prototype.reg = function(aqua, cfg, gulp) {
@@ -59,7 +59,7 @@ LintJS.prototype.reg = function(aqua, cfg, gulp) {
   // create task to lint all JavaScript in the project
   gulp.task(id + '-lint', [], function(done) {
     // check if project is configured properly
-    if (cfg.alljs) {
+    if (task.canRun(cfg)) {
       // run the task
       task.run(aqua, cfg, gulp);
     } else {
@@ -68,6 +68,16 @@ LintJS.prototype.reg = function(aqua, cfg, gulp) {
     done();
   });
 
+};
+
+
+/**
+ * Check if the project is properly configured to run the task
+ * @param {!ProjConfig} pcfg - AQUA project config JSON.
+ * @return {boolean}
+ */
+LintJS.prototype.canRun = function(pcfg) {
+  return !!(pcfg.alljs);
 };
 
 

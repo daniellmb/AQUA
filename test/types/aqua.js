@@ -24,20 +24,21 @@ AQUA.prototype.tasks = null;
 
 /**
  * AQUA configuration
- * @type {Object}
+ * @type {AquaConfig}
  */
 AQUA.prototype.cfg = null;
 
 
 /**
  * Handle errors in a consistent way.
+ * @param {...*} var_args
  */
-AQUA.prototype.error = function() { };
+AQUA.prototype.error = function(var_args) { };
 
 
 /**
  * Configure AQUA
- * @param {Object} cfg - configure AQUA
+ * @param {AquaConfig} cfg - configure AQUA
  */
 AQUA.prototype.config = function(cfg) { };
 
@@ -59,7 +60,7 @@ AQUA.prototype.log = function(data, var_args) { };
 
 /**
  * Validate a AQUA configuration file.
- * @param {Config} cfg
+ * @param {AquaConfig} cfg
 */
 AQUA.prototype.validate = function(cfg) { };
 

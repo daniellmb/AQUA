@@ -12,7 +12,7 @@
 (function closure() {
   /**
    * Validate an AQUA configuration file
-   * @param {Config} cfg - an AQUA configuration file to validate
+   * @param {AquaConfig} cfg - an AQUA configuration file to validate
    * @return {AQUA}
    * @this {AQUA}
    */

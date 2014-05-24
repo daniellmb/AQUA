@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>AQUA: Automated QUality Analysis Class: ConfigUnitTest</title>
+	<title>AQUA: Automated QUality Analysis Class: AquaConfigDocs</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -49,6 +49,14 @@
 						</li>
 						
 						<li>
+							<a href="module-unit.html">unit</a>
+						</li>
+						
+						<li>
+							<a href="module-util.html">util</a>
+						</li>
+						
+						<li>
 							<a href="module-validate.html">validate</a>
 						</li>
 						
@@ -71,15 +79,27 @@
 						</li>
 						
 						<li>
-							<a href="Config.html">Config</a>
+							<a href="AquaConfig.html">AquaConfig</a>
 						</li>
 						
 						<li>
-							<a href="ConfigE2ETest.html">ConfigE2ETest</a>
+							<a href="AquaConfigDocs.html">AquaConfigDocs</a>
 						</li>
 						
 						<li>
-							<a href="ConfigUnitTest.html">ConfigUnitTest</a>
+							<a href="AquaConfigTesting.html">AquaConfigTesting</a>
+						</li>
+						
+						<li>
+							<a href="AquaConfigThresholds.html">AquaConfigThresholds</a>
+						</li>
+						
+						<li>
+							<a href="AquaConfigThresholdsComplexity.html">AquaConfigThresholdsComplexity</a>
+						</li>
+						
+						<li>
+							<a href="AquaConfigThresholdsCoverage.html">AquaConfigThresholdsCoverage</a>
 						</li>
 						
 						<li>
@@ -92,6 +112,22 @@
 						
 						<li>
 							<a href="module-lintjs-LintJS.html">LintJS</a>
+						</li>
+						
+						<li>
+							<a href="module-unit-Unit.html">Unit</a>
+						</li>
+						
+						<li>
+							<a href="ProjConfig.html">ProjConfig</a>
+						</li>
+						
+						<li>
+							<a href="ProjConfigE2ETest.html">ProjConfigE2ETest</a>
+						</li>
+						
+						<li>
+							<a href="ProjConfigUnitTest.html">ProjConfigUnitTest</a>
 						</li>
 						
 
@@ -111,12 +147,12 @@
 					
 
 
-	<h1 class="page-title">Class: ConfigUnitTest</h1>
+	<h1 class="page-title">Class: AquaConfigDocs</h1>
 <section>
 
 <header>
     <h2>
-    ConfigUnitTest
+    AquaConfigDocs
     </h2>
     
 </header>
@@ -128,7 +164,7 @@
     
         
 <dt>
-    <h4 class="name" id="ConfigUnitTest"><span class="type-signature"></span>new ConfigUnitTest<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="AquaConfigDocs"><span class="type-signature"></span>new AquaConfigDocs<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -136,7 +172,7 @@
     
     
     <div class="description">
-        <p>AQUA unit test configuration</p>
+        <p>AQUA documentation configuration</p>
     </div>
     
 
@@ -169,7 +205,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config.unit.js.html">test/types/config.unit.js</a>, <a href="config.unit.js.html#sunlight-1-line-15">line 15</a>
+        <a href="aqua.config.docs.js.html">test/types/aqua.config.docs.js</a>, <a href="aqua.config.docs.js.html#sunlight-1-line-15">line 15</a>
     </li></ul></dd>
     
 
@@ -213,14 +249,14 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="config"><span class="type-signature"></span>config<span class="type-signature"> :string</span></h4>
+    <h4 class="name" id="css"><span class="type-signature"></span>css<span class="type-signature"> :string</span></h4>
     
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Where to find your unit test config file</p>
+        <p>Optional stylesheet to include in documentation files</p>
     </div>
     
     
@@ -259,7 +295,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config.unit.js.html">test/types/config.unit.js</a>, <a href="config.unit.js.html#sunlight-1-line-29">line 29</a>
+        <a href="aqua.config.docs.js.html">test/types/aqua.config.docs.js</a>, <a href="aqua.config.docs.js.html#sunlight-1-line-29">line 29</a>
     </li></ul></dd>
     
 
@@ -277,14 +313,14 @@
         
             
 <dt>
-    <h4 class="name" id="deps"><span class="type-signature"></span>deps<span class="type-signature"> :Array</span></h4>
+    <h4 class="name" id="dir"><span class="type-signature"></span>dir<span class="type-signature"> :string</span></h4>
     
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Where to find the scripts the project depends on (such as AngularJS or jQuery)</p>
+        <p>Where put the generated documentation files</p>
     </div>
     
     
@@ -293,7 +329,7 @@
         <ul>
             <li>
                 
-<span class="param-type">Array</span>
+<span class="param-type">string</span>
 
 
             </li>
@@ -323,7 +359,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config.unit.js.html">test/types/config.unit.js</a>, <a href="config.unit.js.html#sunlight-1-line-36">line 36</a>
+        <a href="aqua.config.docs.js.html">test/types/aqua.config.docs.js</a>, <a href="aqua.config.docs.js.html#sunlight-1-line-22">line 22</a>
     </li></ul></dd>
     
 
@@ -341,14 +377,14 @@
         
             
 <dt>
-    <h4 class="name" id="mocks"><span class="type-signature"></span>mocks<span class="type-signature"> :Array</span></h4>
+    <h4 class="name" id="js"><span class="type-signature"></span>js<span class="type-signature"> :string</span></h4>
     
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Where to find all of the projects unit tests</p>
+        <p>Optional javaScript to include in documentation files</p>
     </div>
     
     
@@ -357,7 +393,7 @@
         <ul>
             <li>
                 
-<span class="param-type">Array</span>
+<span class="param-type">string</span>
 
 
             </li>
@@ -387,7 +423,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config.unit.js.html">test/types/config.unit.js</a>, <a href="config.unit.js.html#sunlight-1-line-43">line 43</a>
+        <a href="aqua.config.docs.js.html">test/types/aqua.config.docs.js</a>, <a href="aqua.config.docs.js.html#sunlight-1-line-36">line 36</a>
     </li></ul></dd>
     
 
@@ -405,14 +441,14 @@
         
             
 <dt>
-    <h4 class="name" id="tests"><span class="type-signature"></span>tests<span class="type-signature"> :Array</span></h4>
+    <h4 class="name" id="theme"><span class="type-signature"></span>theme<span class="type-signature"> :string</span></h4>
     
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Where to find all of your unit tests</p>
+        <p>Optional theme name for documentation files</p>
     </div>
     
     
@@ -421,7 +457,7 @@
         <ul>
             <li>
                 
-<span class="param-type">Array</span>
+<span class="param-type">string</span>
 
 
             </li>
@@ -451,7 +487,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config.unit.js.html">test/types/config.unit.js</a>, <a href="config.unit.js.html#sunlight-1-line-22">line 22</a>
+        <a href="aqua.config.docs.js.html">test/types/aqua.config.docs.js</a>, <a href="aqua.config.docs.js.html#sunlight-1-line-43">line 43</a>
     </li></ul></dd>
     
 
@@ -497,7 +533,7 @@
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sat May 24 2014 07:14:51 GMT-0700 (PDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Sat May 24 2014 12:55:43 GMT-0700 (PDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

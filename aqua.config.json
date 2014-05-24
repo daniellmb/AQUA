@@ -7,7 +7,7 @@
   },
   "thresholds": {
     "complexity": {
-      "cyclomatic":8,
+      "cyclomatic": 8,
       "halstead": 16,
       "maintainability": 100
     },

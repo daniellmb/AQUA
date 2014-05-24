@@ -8,14 +8,16 @@
  */
 /*jshint maxstatements: 100*/
 
-var aqua = require('../../../');
 var rewire = require('rewire');
 
 describe('lintjs', function() {
   'use strict';
-  var cfg, gulp;
+  var cfg, gulp, aqua;
 
   beforeEach(function() {
+    // get AQUA
+    aqua = require('../../../');
+
     // set aqua config
     aqua.config({});
 
@@ -122,16 +124,21 @@ describe('lintjs', function() {
     });
 
     describe('gulp task', function() {
-      var arg, done;
+      var arg, done, canRun;
 
       beforeEach(function() {
+        canRun = true;
         // add spies
         done = jasmine.createSpy('done');
         spyOn(aqua, 'warn');
+        spyOn(task, 'canRun').andCallFake(function() {
+          return canRun;
+        });
         spyOn(task, 'run');
       });
       it('should show warning if not supported', function() {
         // arrange
+        canRun = false;
         task.reg(aqua, cfg, gulp);
         arg = gulp.task.calls[0].args[2];
         // act
@@ -141,14 +148,12 @@ describe('lintjs', function() {
       });
       it('should only run if project is configured properly', function() {
         // arrange
-        cfg.alljs = [];
         task.reg(aqua, cfg, gulp);
         arg = gulp.task.calls[0].args[2];
         // act
         arg(done);
         // assert
-        expect(task.run).toHaveBeenCalledWith(aqua, cfg, gulp);
-        expect(aqua.warn).not.toHaveBeenCalled();
+        expect(task.canRun).toHaveBeenCalledWith(cfg);
       });
       it('should run the done callback', function() {
         // arrange
@@ -159,6 +164,30 @@ describe('lintjs', function() {
         // assert
         expect(done).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('canRun', function() {
+    var task;
+
+    beforeEach(function() {
+      task = aqua.tasks.lintjs;
+    });
+
+    it('should return true if the task can run', function() {
+      // arrange
+      cfg.alljs = [];
+      // act
+      var result = task.canRun(cfg);
+      // assert
+      expect(result).toBe(true);
+    });
+    it('should return false if the project is not properly configured', function() {
+      // arrange
+      // act
+      var result = task.canRun({});
+      // assert
+      expect(result).toBe(false);
     });
   });
 

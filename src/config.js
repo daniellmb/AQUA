@@ -12,7 +12,7 @@
 (function closure() {
   /**
    * configure AQUA
-   * @param {Object} cfg - AQUA configuration file
+   * @param {AquaConfig} cfg - AQUA configuration file
    * @return {AQUA}
    * @this {AQUA}
    */
