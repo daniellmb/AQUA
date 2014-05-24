@@ -2,7 +2,7 @@
  * @file
  *
  * ### Responsibilities
- * - analyse the JavaScript source code against complexity thresholds.
+ * - analyze the JavaScript source code against complexity thresholds.
  * - register task to check code complexity.
  *
  * @module gpa
