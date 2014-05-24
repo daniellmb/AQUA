@@ -5,6 +5,19 @@
     "js": "./docs/doc.js",
     "theme": "simplex"
   },
+  "thresholds": {
+    "complexity": {
+      "cyclomatic":8,
+      "halstead": 16,
+      "maintainability": 100
+    },
+    "coverage": {
+      "statements": 100,
+      "branches": 100,
+      "lines": 100,
+      "functions": 100
+    }
+  },
 	"coverage": {
     "dir": "./test/coverage"
   },

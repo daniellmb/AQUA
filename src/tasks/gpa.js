@@ -28,13 +28,30 @@ function GPA() {
  */
 GPA.prototype.run = function(aqua, cfg, gulp) {
   // load node modules needed
-  var complexity = /** @type {Function} */(require('gulp-complexity'));
+  var complexity = /** @type {Function} */(require('gulp-complexity')),
+      enforce = {
+        cyclomatic: [8],
+        halstead: [16],
+        maintainability: [100]
+      };
 
-  //aqua.log(' > run task', cfg.id + '-lint');
+  //aqua.log(' > run task', cfg.id + '-gpa');
+
+  // check for complexity settings
+  if (aqua.cfg.thresholds && aqua.cfg.thresholds.complexity) {
+    // set cyclomatic threshold
+    enforce.cyclomatic = [aqua.cfg.thresholds.complexity.cyclomatic];
+
+    // set halstead threshold
+    enforce.halstead = [aqua.cfg.thresholds.complexity.halstead];
+
+    // set maintainability threshold
+    enforce.maintainability = [aqua.cfg.thresholds.complexity.maintainability];
+  }
 
   // check JavaScript source code complexity
   gulp.src(cfg.src)
-      .pipe(complexity())
+      .pipe(complexity(enforce))
       .on('error', aqua.error);
 };
 
@@ -52,7 +69,7 @@ GPA.prototype.reg = function(aqua, cfg, gulp) {
 
   //TODO: register the project with AQUA
 
-  // create task to lint all JavaScript in the project
+  // create task to check the gpa of the project source code
   gulp.task(id + '-gpa', [], function(done) {
     // check if project is configured properly
     if (cfg.src) {

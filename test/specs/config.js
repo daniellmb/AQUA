@@ -23,7 +23,14 @@ describe('config', function() {
     // assert
     expect(aqua.config).toBeDefined();
   });
-
+  it('should set the AQUA config', function() {
+    // arrange
+    var cfg = {};
+    // act
+    aqua.config(cfg);
+    // assert
+    expect(aqua.cfg).toBe(cfg);
+  });
   it('should support call chaining', function() {
     // arrange
     // act

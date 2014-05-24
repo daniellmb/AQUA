@@ -16,12 +16,15 @@ describe('gpa', function() {
   var cfg, gulp;
 
   beforeEach(function() {
-    // mock config
+    // set aqua config
+    aqua.config({});
+
+    // mock project config
     cfg = {
       id: 'TEST'
     };
 
-    //mock gulp
+    // mock gulp
     gulp = mockGulp();
 
     // add spies
@@ -35,7 +38,11 @@ describe('gpa', function() {
   });
 
   describe('run', function() {
-    var gpa, task, mockReq;
+    var gpa, task, mockReq, defaults = {
+      cyclomatic: [8],
+      halstead: [16],
+      maintainability: [100]
+    };
 
     beforeEach(function() {
       // mock gpa
@@ -63,6 +70,36 @@ describe('gpa', function() {
       task.run(aqua, cfg, gulp);
       // assert
       expect(gulp.src).toHaveBeenCalledWith('pathtosrc');
+    });
+    it('should provide default complexity thresholds', function() {
+      // arrange
+      // act
+      task.run(aqua, cfg, gulp);
+      // assert
+      expect(gpa).toHaveBeenCalledWith(defaults);
+      expect(gulp.pipe).toHaveBeenCalledWith('bar');
+    });
+    it('should allow overriding the default complexity thresholds', function() {
+      // arrange
+      var expected = {
+        'cyclomatic': [1234],
+        'halstead': [4321],
+        'maintainability': [1337]
+      };
+      aqua.cfg = {
+        'thresholds': {
+          'complexity': {
+            'cyclomatic': 1234,
+            'halstead': 4321,
+            'maintainability': 1337
+          }
+        }
+      };
+      // act
+      task.run(aqua, cfg, gulp);
+      // assert
+      expect(gpa).toHaveBeenCalledWith(expected);
+      expect(gulp.pipe).toHaveBeenCalledWith('bar');
     });
     it('should check the complexity of the JavaScript source code', function() {
       // arrange

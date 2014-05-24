@@ -23,6 +23,13 @@ AQUA.prototype.tasks = null;
 
 
 /**
+ * AQUA configuration
+ * @type {Object}
+ */
+AQUA.prototype.cfg = null;
+
+
+/**
  * Handle errors in a consistent way.
  */
 AQUA.prototype.error = function() { };

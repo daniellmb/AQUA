@@ -17,6 +17,8 @@
   },
   "alljs": "./!(coverage|docs|externs|node_modules)/!(bower_components)/*.js",
   "types": [
+    "modules/gulp-jshint",
+    "modules/underscore",
     "./test/types/*.js"
   ]
 }

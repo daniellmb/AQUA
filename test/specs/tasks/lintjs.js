@@ -16,12 +16,15 @@ describe('lintjs', function() {
   var cfg, gulp;
 
   beforeEach(function() {
-    // mock config
+    // set aqua config
+    aqua.config({});
+
+    // mock project config
     cfg = {
       id: 'TEST'
     };
 
-    //mock gulp
+    // mock gulp
     gulp = mockGulp();
 
     // add spies

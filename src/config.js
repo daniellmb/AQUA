@@ -12,12 +12,15 @@
 (function closure() {
   /**
    * configure AQUA
-   * @param {string} cfg - AQUA configuration file
+   * @param {Object} cfg - AQUA configuration file
    * @return {AQUA}
    * @this {AQUA}
    */
   module.exports = function(cfg) {
     var aqua = this;
+
+    // set the AQUA config
+    aqua.cfg = cfg;
 
     // support call chaining
     return aqua;

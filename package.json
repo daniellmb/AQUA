@@ -49,8 +49,10 @@
     "karma-chrome-launcher": "latest",
     "karma-opera-launcher": "latest",
     "karma-safari-launcher": "latest",
+    "underscore": "latest",
     "protractor": "latest",
     "phantomjs": "latest",
+    "extend": "latest",
     "rewire": "latest",
     "yargs": "latest"
   },
