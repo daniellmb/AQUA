@@ -80,8 +80,10 @@ LintJS.prototype.about = function() {
 };
 
 
-/**
- * Export an instance of the task
- * @type {LintJS}
- */
-module.exports = new LintJS();
+(function closure() {
+  /**
+   * Export an instance of the task
+   * @type {LintJS}
+   */
+  module.exports = new LintJS();
+}());

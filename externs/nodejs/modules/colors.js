@@ -1,34 +1,16 @@
-﻿
-// Console Colors: https://github.com/Marak/colors.js
-var Colors = {
-    //styles
-    'bold': '',
-    'italic': '',
-    'underline': '',
-    'inverse': '',
-    'strikethrough': '',
-    //text colors
-    //grayscale
-    'white': '',
-    'grey': '',
-    'black': '',
-    //colors
-    'blue': '',
-    'cyan': '',
-    'green': '',
-    'magenta': '',
-    'red': '',
-    'yellow': '',
-    //background colors
-    //grayscale
-    'whiteBG': '',
-    'greyBG': '',
-    'blackBG': '',
-    //colors
-    'blueBG': '',
-    'cyanBG': '',
-    'greenBG': '',
-    'magentaBG': '',
-    'redBG': '',
-    'yellowBG': ''
-};
+
+
+
+/**
+ * Console Colors [see](https://github.com/Marak/colors.js)
+ * @constructor
+ * @nosideeffects
+ */
+var Colors = function() { };
+
+
+/**
+ Cyan text color
+ @param {...*} var_args
+ */
+Colors.prototype.cyan = function(var_args) {};

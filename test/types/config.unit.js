@@ -1,8 +1,5 @@
 /**
- * @file
- *
- * ### Responsibilities
- * - type definition for AQUA project unit test config
+ * Type definition for AQUA project unit test config.
  *
  * @externs
  * @author Daniel Lamb <dlamb.open.source@gmail.com>

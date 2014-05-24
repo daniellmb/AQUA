@@ -8,25 +8,30 @@
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 
-// require console colors module
-var colors = /**  @type {Colors} */ (require('colors'));
+
+(function closure() {
+  // require console colors module
+  var colors = /**  @type {Colors} */ (require('colors'));
 
 
-/**
- * logs information to the console.
- * @return {AQUA}
- * @this {AQUA}
-*/
-module.exports = function() {
-  // convert arguments to array
-  var args = Array.prototype.slice.call(arguments);
+  /**
+   * logs information to the console.
+   * @return {AQUA}
+   * @this {AQUA}
+  */
+  module.exports = function() {
 
-  // prefix the log with "[aqua] "
-  args.unshift('[' + colors.cyan('aqua') + ']');
+    // convert arguments to array
+    var args = Array.prototype.slice.call(arguments);
 
-  // log to the console
-  console.log.apply(console, args);
+    // prefix the log with "[aqua] "
+    args.unshift('[' + colors.cyan('aqua') + ']');
 
-  // support call chaining
-  return this;
-};
+    // log to the console
+    console.log.apply(console, args);
+
+    // support call chaining
+    return this;
+  };
+
+}());

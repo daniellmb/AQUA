@@ -1,8 +1,5 @@
 /**
- * @file
- *
- * ### Responsibilities
- * - type definition for gulp instance
+ * Type definition for gulp instance.
  *
  * @externs
  * @author Daniel Lamb <dlamb.open.source@gmail.com>

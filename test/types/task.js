@@ -1,8 +1,5 @@
 /**
- * @file
- *
- * ### Responsibilities
- * - type definition for AQUA task
+ * Type definition for AQUA task.
  *
  * @externs
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
@@ -19,18 +16,18 @@ function Task() { }
 
 /**
 Executes the task
-@param {AQUA} aqua - AQUA instance.
-@param {Config} cfg AQUA project config file.
-@param {Gulp} gulp - Gulp instance.
+@param {!AQUA} aqua - AQUA instance.
+@param {!Config} cfg AQUA project config file.
+@param {!Gulp} gulp - Gulp instance.
 */
 Task.prototype.run = function(aqua, cfg, gulp) { };
 
 
 /**
 Registers the task with AQUA
-@param {AQUA} aqua - AQUA instance.
-@param {Config} cfg - AQUA project config file.
-@param {Gulp} gulp - Gulp instance.
+@param {!AQUA} aqua - AQUA instance.
+@param {!Config} cfg - AQUA project config file.
+@param {!Gulp} gulp - Gulp instance.
 */
 Task.prototype.reg = function(aqua, cfg, gulp) { };
 

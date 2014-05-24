@@ -1,8 +1,5 @@
 /**
- * @file
- *
- * ### Responsibilities
- * - type definition for AQUA
+ * Type definition for AQUA.
  *
  * @externs
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
@@ -55,8 +52,9 @@ AQUA.prototype.log = function(data, var_args) { };
 
 /**
  * Validate a AQUA configuration file.
+ * @param {Config} cfg
 */
-AQUA.prototype.validate = function() { };
+AQUA.prototype.validate = function(cfg) { };
 
 
 /**

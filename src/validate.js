@@ -9,13 +9,16 @@
  */
 
 
-/**
- * Validate an AQUA configuration file
- * @param {Config} cfg - an AQUA configuration file to validate
- * @return {AQUA}
- * @this {AQUA}
- */
-module.exports = function(cfg) {
-  // support call chaining
-  return this;
-};
+(function closure() {
+  /**
+   * Validate an AQUA configuration file
+   * @param {Config} cfg - an AQUA configuration file to validate
+   * @return {AQUA}
+   * @this {AQUA}
+   */
+  module.exports = function(cfg) {
+    // support call chaining
+    return this;
+  };
+
+}());

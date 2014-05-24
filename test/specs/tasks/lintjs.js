@@ -89,6 +89,13 @@ describe('lintjs', function() {
       expect(jshint.reporter.callCount).toBe(2);
       expect(gulp.pipe).toHaveBeenCalledWith('fail');
     });
+    it('should listen for errors', function() {
+      // arrange
+      // act
+      task.run(aqua, cfg, gulp);
+      // assert
+      expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+    });
   });
 
   describe('reg', function() {

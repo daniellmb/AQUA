@@ -9,15 +9,18 @@
 */
 
 
-/**
- * Handle stream errors
- * @param {*} e - error details
- * @return {AQUA}
- * @this {AQUA}
-*/
-module.exports = function(e) {
-  var aqua = this;
+(function closure() {
+  /**
+   * Handle stream errors
+   * @param {*} e - error details
+   * @return {AQUA}
+   * @this {AQUA}
+  */
+  module.exports = function(e) {
+    var aqua = this;
 
-  // support call chaining
-  return aqua;
-};
+    // support call chaining
+    return aqua;
+  };
+
+}());

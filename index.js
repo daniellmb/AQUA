@@ -4,6 +4,7 @@
  */
 module.exports = {
   tasks: {
+    gpa: require('./src/tasks/gpa'),
     lintjs: require('./src/tasks/lintjs')
   },
   error: require('./src/error'),

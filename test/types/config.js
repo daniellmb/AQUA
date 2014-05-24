@@ -1,8 +1,5 @@
 /**
- * @file
- *
- * ### Responsibilities
- * - type definition for AQUA project config
+ * Type definition for AQUA project config.
  *
  * @externs
  * @author Daniel Lamb <dlamb.open.source@gmail.com>

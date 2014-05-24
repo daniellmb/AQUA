@@ -4,9 +4,9 @@
  * ### Responsibilities
  * - create global variable SOURCEONLY that is only true for 'unminified' code
  *
- * @externs
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
+
 
 /**
  @define {boolean} SOURCEONLY is used to exclude sections of code that

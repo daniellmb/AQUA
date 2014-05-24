@@ -4,22 +4,20 @@
  * ### Responsibilities
  * - create reusable mocks for unit testing
  *
- * @externs
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 
 
 /**
  * Create a mock gulp instance
+ * @this {Object}
  * @return {{task: (!jasmine.Spy), src: (!jasmine.Spy), pipe: (!jasmine.Spy), on: (!jasmine.Spy)}}
  */
 global.mockGulp = function() {
-  var gulp = {
-    'task': jasmine.createSpy('task').andCallFake(function() { return gulp; }),
-    'src': jasmine.createSpy('src').andCallFake(function() { return gulp; }),
-    'pipe': jasmine.createSpy('pipe').andCallFake(function() { return gulp; }),
-    'on': jasmine.createSpy('on').andCallFake(function() { return gulp; })
+  return {
+    'task': jasmine.createSpy('task').andCallFake(function() { return this; }),
+    'src': jasmine.createSpy('src').andCallFake(function() { return this; }),
+    'pipe': jasmine.createSpy('pipe').andCallFake(function() { return this; }),
+    'on': jasmine.createSpy('on').andCallFake(function() { return this; })
   };
-
-  return gulp;
 };

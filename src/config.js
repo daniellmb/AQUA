@@ -9,15 +9,18 @@
  */
 
 
-/**
- * configure AQUA
- * @param {string} cfg - AQUA configuration file
- * @return {AQUA}
- * @this {AQUA}
- */
-module.exports = function(cfg) {
-  var aqua = this;
+(function closure() {
+  /**
+   * configure AQUA
+   * @param {string} cfg - AQUA configuration file
+   * @return {AQUA}
+   * @this {AQUA}
+   */
+  module.exports = function(cfg) {
+    var aqua = this;
 
-  // support call chaining
-  return aqua;
-};
+    // support call chaining
+    return aqua;
+  };
+
+}());
