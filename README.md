@@ -65,7 +65,7 @@ The Node modules above can the run individually (see tasks below) or chained tog
 
 AQUA dynamically creates gulp tasks for you, based on what is configured in your `aqua.project.json` file. Tasks are namespaced with the project **id** in your config file. Any tasks that are not configured for the project are simply skipped.
 
-| gulp                  | does                                                             |
+| task                  | does                                                             |
 |-----------------------|------------------------------------------------------------------|
 |**gulp**               | List all possible tasks for all projects                         |
 |**gulp ?**             | List all possible tasks for all projects                         |
