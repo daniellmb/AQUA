@@ -63,24 +63,24 @@ The Node modules above can the run individually (see tasks below) or chained tog
 
 ### Run from the Command Line
 
-AQUA dynamically creates gulp tasks for you, based on what is configured in your `aqua.project.json` file. Tasks are namespaced with the project `id` in your config file. Any tasks that are not configured for the project are simply skipped.
+AQUA dynamically creates gulp tasks for you, based on what is configured in your `aqua.project.json` file. Tasks are namespaced with the project **id** in your config file. Any tasks that are not configured for the project are simply skipped.
 
-| gulp                | does                                                             |
-|---------------------|------------------------------------------------------------------|
-|`gulp`               | List all possible tasks for all projects                         |
-|`gulp ?`             | List all possible tasks for all projects                         |
-|`gulp {id}`          | Run all project tasks in the correct order                       |
-|`gulp {id}-?`        | List all possible tasks for the project                          |
-|`gulp {id}-all`      | Run all project tasks in the correct order                       |
-|`gulp {id}-lint`     | Lint the source code for syntax issues and anti-patterns         |
-|`gulp {id}-lint-fix` | Automatically fix lint errors non-destructively                  |
-|`gulp {id}-gpa`      | Analyze the source against complexity thresholds                 |
-|`gulp {id}-unit`     | Run unit tests against the source code                           |
-|`gulp {id}-chk`      | Type check the source code                                       |
-|`gulp {id}-min`      | Minify the source code and create source map                     |
-|`gulp {id}-e2e`      | Run end-to-end tests against the minified code                   |
-|`gulp {id}-doc`      | Generate documentation from code annotations	                   |
-|`gulp {id}-wch`      | Watch for file changes and automatically run all but e2e         |
+| gulp                  | does                                                             |
+|-----------------------|------------------------------------------------------------------|
+|**gulp**               | List all possible tasks for all projects                         |
+|**gulp ?**             | List all possible tasks for all projects                         |
+|**gulp {id}**          | Run all project tasks in the correct order                       |
+|**gulp {id}-?**        | List all possible tasks for the project                          |
+|**gulp {id}-all**      | Run all project tasks in the correct order                       |
+|**gulp {id}-lint**     | Lint the source code for syntax issues and anti-patterns         |
+|**gulp {id}-lint-fix** | Automatically fix lint errors non-destructively                  |
+|**gulp {id}-gpa**      | Analyze the source against complexity thresholds                 |
+|**gulp {id}-unit**     | Run unit tests against the source code                           |
+|**gulp {id}-chk**      | Type check the source code                                       |
+|**gulp {id}-min**      | Minify the source code and create source map                     |
+|**gulp {id}-e2e**      | Run end-to-end tests against the minified code                   |
+|**gulp {id}-doc**      | Generate documentation from code annotations	                   |
+|**gulp {id}-wch**      | Watch for file changes and automatically run all but e2e         |
 
 ## Tasks
 
