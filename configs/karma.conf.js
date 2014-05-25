@@ -4,20 +4,12 @@
  */
 module.exports = function(config) {
 
-  /*
-  cpl_cfg = require('../aqua.config.json');
-  // change source file path from root to relative path
-  var path = cpl_cfg.src[0].replace('./Scripts/User/Home/CompanyListingPlan/', '');
-  source_coverage = {};
-  source_coverage[path] = 'coverage';
-  */
-
   config.set({
     basePath: '../',
 
     reporters: ['dots', 'coverage'],
 
-    preprocessors: source_coverage,
+    //preprocessors: source_coverage,
 
     coverageReporter: {
       reporters: [{
@@ -33,7 +25,7 @@ module.exports = function(config) {
 
     colors: true,
 
-    autoWatch: true,
+    autoWatch: false,
 
     singleRun: false,
 

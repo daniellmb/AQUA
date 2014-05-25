@@ -17,15 +17,6 @@ module.exports = {
   // Code coverage settings
   coverage: {
     // report options
-    report: {
-      reporter: 'html',
-      outFile: 'index.html'
-    },
-    // coverage threshold levels
-    enforce: {
-      statements: -1,
-      blocks: -1,
-      lines: -1
-    }
+    reporters: ['html', 'text', 'json']
   }
 };

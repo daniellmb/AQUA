@@ -59,14 +59,11 @@ describe('unit', function() {
   describe('testNode', function() {
     // load dependencies
     // collect files
-    // set the coverage output dir based on the config
-    // make sure coverage folder exists
     // instrument source code for coverage
     // run unit tests with gulp-jasmine runner
-    // gather coverage data
+    // create code coverage report
     // enforce coverage thresholds
     // listen for errors
-    // create code coverage report
   });
 
   describe('run', function() {

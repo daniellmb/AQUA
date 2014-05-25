@@ -27,8 +27,6 @@
     "documentation"
   ],
   "devDependencies": {
-    "colors": "latest",
-    "glob": "latest",
     "gulp": "latest",
     "gulp-util": "latest",
     "gulp-jshint": "latest",
@@ -39,7 +37,8 @@
     "gulp-clean": "latest",
     "gulp-jsdoc": "latest",
     "gulp-closure-compiler": "latest",
-    "gulp-coverage": "latest",
+    "gulp-istanbul": "latest",
+    "gulp-istanbul-enforcer": "latest",
     "karma": "latest",
     "karma-jasmine": "latest",
     "karma-coverage": "latest",
@@ -49,6 +48,9 @@
     "karma-chrome-launcher": "latest",
     "karma-opera-launcher": "latest",
     "karma-safari-launcher": "latest",
+    "colors": "latest",
+    "glob": "latest",
+    "istanbul": "latest",
     "underscore": "latest",
     "protractor": "latest",
     "phantomjs": "latest",
