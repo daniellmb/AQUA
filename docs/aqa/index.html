@@ -185,6 +185,7 @@
 <h3 id="javascript">JavaScript</h3>
 <ul>
 <li>Lint Source Code for Syntax Errors and Anti-Patterns</li>
+<li>Automatically fix lint errors non-destructively</li>
 <li>Analyze Code Against Complexity Thresholds</li>
 <li>Type Checking Source Code</li>
 <li>Advanced Minification</li>
@@ -224,7 +225,7 @@
 </ul>
 <p>The Node modules above can the run individually (see tasks below) or chained together.</p>
 <h3 id="run-from-the-command-line">Run from the Command Line</h3>
-<p>AQUA dynamically creates gulp tasks for you, based on what is configured in your <code>aqua.project.json</code> file. Tasks are namespaced with the project <code>id</code> in your config file.</p>
+<p>AQUA dynamically creates gulp tasks for you, based on what is configured in your <code>aqua.project.json</code> file. Tasks are namespaced with the project <code>id</code> in your config file. Any tasks that are not configured for the project are simply skipped.</p>
 <table>
 <thead>
 <tr>
@@ -235,58 +236,176 @@
 <tbody>
 <tr>
 <td><code>gulp</code></td>
-<td>: list all possible gulp tasks for all projects</td>
+<td>List all possible tasks for all projects</td>
 </tr>
 <tr>
 <td><code>gulp ?</code></td>
-<td>: list all possible gulp tasks for all projects</td>
+<td>List all possible tasks for all projects</td>
 </tr>
 <tr>
 <td><code>gulp {id}</code></td>
-<td>: run all project tasks in the correct order</td>
+<td>Run all project tasks in the correct order</td>
 </tr>
 <tr>
 <td><code>gulp {id}-?</code></td>
-<td>: list all possible gulp tasks for the project</td>
+<td>List all possible tasks for the project</td>
 </tr>
 <tr>
 <td><code>gulp {id}-all</code></td>
-<td>: run all project tasks in the correct order</td>
+<td>Run all project tasks in the correct order</td>
 </tr>
 <tr>
 <td><code>gulp {id}-lint</code></td>
-<td>: lint the source code</td>
+<td>Lint the source code for syntax issues and anti-patterns</td>
+</tr>
+<tr>
+<td><code>gulp {id}-lint-fix</code></td>
+<td>Automatically fix lint errors non-destructively</td>
 </tr>
 <tr>
 <td><code>gulp {id}-gpa</code></td>
-<td>: analyze the source against complexity thresholds</td>
+<td>Analyze the source against complexity thresholds</td>
 </tr>
 <tr>
 <td><code>gulp {id}-unit</code></td>
-<td>: run unit tests against the source code</td>
+<td>Run unit tests against the source code</td>
 </tr>
 <tr>
 <td><code>gulp {id}-chk</code></td>
-<td>: type check the source code</td>
+<td>Type check the source code</td>
 </tr>
 <tr>
 <td><code>gulp {id}-min</code></td>
-<td>: minify the source code and create source map</td>
+<td>Minify the source code and create source map</td>
 </tr>
 <tr>
 <td><code>gulp {id}-e2e</code></td>
-<td>: run end-to-end tests against the minified code</td>
+<td>Run end-to-end tests against the minified code</td>
 </tr>
 <tr>
 <td><code>gulp {id}-doc</code></td>
-<td>: generate documentation from code annotations</td>
+<td>Generate documentation from code annotations</td>
 </tr>
 <tr>
 <td><code>gulp {id}-wch</code></td>
-<td>: watch for file changes and automatically run all but e2e</td>
+<td>Watch for file changes and automatically run all but e2e</td>
 </tr>
 </tbody>
 </table>
+<h2 id="tasks">Tasks</h2>
+<h3 id="gulp-or-gulp-">gulp or gulp ?</h3>
+<p>Use to review all the projects and tasks available.</p>
+<h3 id="-id-or-id-all">{id} or {id}-all</h3>
+<p>Save some typing by running all project tasks in the following order:</p>
+<ol>
+<li><code>{id}-lint</code></li>
+<li><code>{id}-gpa</code></li>
+<li><code>{id}-clean</code></li>
+<li><code>{id}-doc</code></li>
+<li><code>{id}-chk</code></li>
+<li><code>{id}-unit</code></li>
+<li><code>webdriver-update</code></li>
+<li><code>{id}-e2e</code></li>
+</ol>
+<p>Any tasks that are not configured for the project are simply skipped.</p>
+<h3 id="-id-">{id}-?</h3>
+<p>Can&#39;t remember what to type to run the command you want? Using <code>gulp {id}-?</code> (where <code>{id}</code> is your project id) will list all possible tasks for the project in the console.</p>
+<h3 id="-id-lint">{id}-lint</h3>
+<p>Lint all the JavaScript in your project, source code, unit tests, the for syntax issues and anti-patterns</p>
+<h3 id="-id-lint-fix">{id}-lint-fix</h3>
+<p>Automatically fix lint errors in a non-destructive way using your JSHint settings.</p>
+<ul>
+<li><code>asi</code> Add missing semicolons.</li>
+<li><code>camelcase|snakecase</code> Enforces camelCase and snake_case convention.</li>
+<li><code>curly</code> Adds curly braces to statements.</li>
+<li><code>debugger</code> Removes debugger statements</li>
+<li><code>plusplus</code> Converts plusplus and minusminus.</li>
+<li><code>quotmark</code> Enforces single and double quote style.</li>
+<li>Adds parenthesis when invoking a constructor</li>
+<li>Adds the radix parameter to parseInt</li>
+<li>Convert to use array literal and object literal</li>
+<li>Dot notation conversion</li>
+<li>Extra trailing commas</li>
+<li>Leading and trailing zeroes on decimals.</li>
+<li>Missing whitespaces.</li>
+<li>Mixed spaces/tabs</li>
+<li>Proper indentation</li>
+<li>Removes deletion of variables</li>
+<li>Removes undefined when assigning to variables</li>
+<li>Removes unnecessary semicolons</li>
+<li>Uses isNaN function rather than comparing to NaN</li>
+</ul>
+<h3 id="-id-gpa">{id}-gpa</h3>
+<p>Analyze the JavaScript source code for maintainability and enforce complexity thresholds.</p>
+<h3 id="-id-unit">{id}-unit</h3>
+<p>Run unit tests written in Jasmine against the source code and generate code coverage reports.</p>
+<p>Runs the tasks below in the following order:</p>
+<ol>
+<li><code>{id}-lint</code></li>
+<li><code>{id}-gpa</code></li>
+<li><code>{id}-doc</code></li>
+<li><code>{id}-chk</code></li>
+<li><code>{id}-unit</code></li>
+</ol>
+<p>Any tasks that are not configured for the project are simply skipped.</p>
+<h3 id="-id-chk">{id}-chk</h3>
+<p>First runs <code>{id}-lint</code>. Type check your JavaScript code without having to learn a new language such as <a href="http://www.typescriptlang.org/">TypeScript</a>. Type checking is done using <a href="https://github.com/google/closure-compiler">Google Closure compiler</a> that is written in Java so you&#39;ll need the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html">Java 7 Runtime Environment</a> (JRE 7u51+) installed to do type checking. For troubleshooting see the <a href="https://github.com/google/closure-compiler/wiki">GCC Wiki</a>. If you need to <a href="https://www.java.com/en/download/faq/remove_olderversions.xml">remove older versions of Java</a> there is documentation for your operating system.</p>
+<p>Runs the tasks below in the following order:</p>
+<ol>
+<li><code>{id}-lint</code></li>
+<li><code>{id}-chk</code></li>
+</ol>
+<p>Any tasks that are not configured for the project are simply skipped.</p>
+<h4 id="code-comments">Code Comments</h4>
+<p>All code should be annotated with comments to enable both type checking at compile time as well as documentation generation. See <a href="http://usejsdoc.org/">JSDoc Dictionary</a> and <a href="https://developers.google.com/closure/compiler/docs/js-for-compiler">Closure Compiler Annotation</a> for more information. Both (<a href="http://github.github.com/github-flavored-markdown/">GitHub Flavored Markdown</a>) and HTML is supported in the comments, with Markdown preferred as it does not degrade reading the source code as much as HTML.</p>
+<pre class="sunlight-highlight-javascript">
+/**
+  * An implementation of `_.contains` for cache objects that mimics the return
+  * signature of `_.indexOf` by returning `0` if the value is found, else `-1`.
+  * This example is from [lodash](https://github.com/lodash/lodash/blob/master/lodash.js#L273).
+  *
+  * @private
+  * @param {Object} cache The cache object to inspect.
+  * @param {*} value The value to search for.
+  * @returns {number} Returns `0` if `value` is found, else `-1`.
+  */
+  function baseIndexOf(array, value, fromIndex) {
+    var index = (fromIndex || 0) - 1,
+        length = array ? array.length : 0;
+
+    while (++index &lt; length) {
+      if (array[index] === value) {
+        return index;
+      }
+    }
+    return -1;
+  }
+</pre>
+
+<h3 id="-id-min">{id}-min</h3>
+<p>Use <a href="https://github.com/google/closure-compiler">Google Closure compiler</a> for advanced minification of your source code and create a source map.</p>
+<p>Runs the tasks below in the following order:</p>
+<ol>
+<li><code>{id}-lint</code></li>
+<li><code>{id}-min</code></li>
+</ol>
+<p>Any tasks that are not configured for the project are simply skipped.</p>
+<h3 id="-id-e2e">{id}-e2e</h3>
+<p>Unit tests are not enough, you also need to run end-to-end tests (aka integration tests) against your application to verify behavior.</p>
+<p>Runs the tasks below in the following order:</p>
+<ol>
+<li><code>webdriver-update</code></li>
+<li><code>{id}-e2e</code></li>
+</ol>
+<h3 id="-id-doc">{id}-doc</h3>
+<p>Generate documentation from code annotations using <a href="http://usejsdoc.org/">JSDoc</a>.</p>
+<p>Runs the tasks below in the following order:</p>
+<ol>
+<li><code>{id}-clean</code></li>
+<li><code>{id}-doc</code></li>
+</ol>
+<h3 id="-id-wch">{id}-wch</h3>
+<p>Watch for file changes and automatically run all but you end-to-end tests when something is updated. Great for those who use TDD and Red &gt; Green &gt; Refactor.</p>
 <h4 id="customization">Customization</h4>
 <p>Avoid a lot needless typing! You can create a shortcut that will open the command prompt at any folder you want.</p>
 <p>Use the steps below for Windows.</p>
@@ -334,7 +453,7 @@
 Debugging can be done by setting break points in the source code, using    <code>console.log</code> and <code>debugger;</code> statements.</p>
 <h3 id="end-to-end-tests">End-to-end Tests</h3>
 <h3 id="page-objects">Page Objects</h3>
-<p>End to end testing (aka Integration Testing) are organized using the <a href="https://code.google.com/p/selenium/wiki/PageObjects">PageObject Pattern</a> and run by the <a href="https://github.com/angular/protractor/blob/master/docs/api.md">Protractor API</a>.</p>
+<p>End to end testing (aka Integration Testing) should be organized using the <a href="https://code.google.com/p/selenium/wiki/PageObjects">PageObject Pattern</a> and run by the <a href="https://github.com/angular/protractor/blob/master/docs/api.md">Protractor API</a>.</p>
 <p>Page Objects can be thought of as facing in two directions simultaneously. Facing towards the developer of a test, they represent the services offered by a particular page. Facing away from the developer, they should be the only thing that has a deep knowledge of the structure of the HTML of a page (or part of a page) It&#39;s simplest to think of the methods on a Page Object as offering the &quot;services&quot; that a page offers rather than exposing the details and mechanics of the page. As an example, think of the inbox of any web-based email system. Amongst the services that it offers are typically the ability to compose a new email, to choose to read a single email, and to list the subject lines of the emails in the inbox. How these are implemented shouldn&#39;t matter to the test.</p>
 <p>Page Object Pattern Goals</p>
 <ul>
@@ -497,34 +616,6 @@ Debugging can be done by setting break points in the source code, using    <code
         "./any/number/of/paths/to/type/definitions/used/by/the/project/*.js"
     ]
 }
-</pre>
-
-<h2 id="type-checking">Type Checking</h2>
-<p>AQUA give you the ability to type check your JavaScript code without having to learn a new language such as <a href="http://www.typescriptlang.org/">TypeScript</a>. Type checking is done using <a href="https://github.com/google/closure-compiler">Google Closure compiler</a> that is written in Java so you&#39;ll need the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html">Java 7 Runtime Environment</a> (JRE 7u51+) installed to do type checking. For troubleshooting see the <a href="https://github.com/google/closure-compiler/wiki">GCC Wiki</a>. If you need to <a href="https://www.java.com/en/download/faq/remove_olderversions.xml">remove older versions of Java</a> there is documentation for your operating system.</p>
-<h3 id="code-comments">Code Comments</h3>
-<p>All code should be annotated with comments to enable both type checking at compile time as well as documentation generation. See <a href="http://usejsdoc.org/">JSDoc Dictionary</a> and <a href="https://developers.google.com/closure/compiler/docs/js-for-compiler">Closure Compiler Annotation</a> for more information. Both (<a href="http://github.github.com/github-flavored-markdown/">GitHub Flavored Markdown</a>) and HTML is supported in the comments, with Markdown preferred as it does not degrade reading the source code as much as HTML.</p>
-<pre class="sunlight-highlight-javascript">
-/**
-  * An implementation of `_.contains` for cache objects that mimics the return
-  * signature of `_.indexOf` by returning `0` if the value is found, else `-1`.
-  * This example is from [lodash](https://github.com/lodash/lodash/blob/master/lodash.js#L273).
-  *
-  * @private
-  * @param {Object} cache The cache object to inspect.
-  * @param {*} value The value to search for.
-  * @returns {number} Returns `0` if `value` is found, else `-1`.
-  */
-  function baseIndexOf(array, value, fromIndex) {
-    var index = (fromIndex || 0) - 1,
-        length = array ? array.length : 0;
-
-    while (++index &lt; length) {
-      if (array[index] === value) {
-        return index;
-      }
-    }
-    return -1;
-  }
 </pre></article>
     </section>
 
@@ -550,7 +641,7 @@ Debugging can be done by setting break points in the source code, using    <code
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sat May 24 2014 22:45:32 GMT-0700 (PDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Sun May 25 2014 13:43:23 GMT-0700 (PDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>
