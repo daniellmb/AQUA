@@ -7,6 +7,9 @@
     "./demos/angularjs/js/**/*.js"
   ],
   "unit": {
+    "deps": [
+      "./demos/angularjs/bower_components/*/*.js"
+    ],
     "tests": [
       "./demos/angularjs/test/*.js"
     ]

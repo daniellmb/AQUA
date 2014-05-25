@@ -7,6 +7,9 @@
     "./demos/vanillajs/js/*.js"
   ],
   "unit": {
+    "deps": [
+      "./demos/vanillajs/bower_components/*/*.js"
+    ],
     "tests": [
       "./demos/vanillajs/test/*.js"
     ]
