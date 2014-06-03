@@ -8,19 +8,23 @@
  */
 /*jshint maxstatements: 100*/
 
-var rewire = require('rewire');
-
 describe('unit', function() {
   'use strict';
-  var aqua, cfg, gulp, task;
+  var task, aqua, cfg, gulp, OK_MSG,
+      rewire = require('rewire'),
+      root = '../../../',
+      src = root + 'src/tasks/';
 
   beforeEach(function() {
     // get AQUA
-    aqua = require('../../../');
+    aqua = rewire(root);
 
-    task = aqua.tasks.unit;
+    OK_MSG = 'Coverage Check: ' + aqua.colors.green('Coverage is at or over the minimum thresholds.');
 
-    // set aqua config
+    // set task under test
+    task = rewire(src + 'unit');
+
+    // set aqua config to nothing
     aqua.config({});
 
     // mock project config
@@ -32,6 +36,9 @@ describe('unit', function() {
     gulp = mockGulp();
 
     // add spies
+    spyOn(aqua, 'log');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'warn');
   });
 
   it('should exist', function() {
@@ -42,36 +49,470 @@ describe('unit', function() {
   });
 
   describe('collect', function() {
-    // start with "sourceonly"
-    // check for globals
-    // check for deps
-    // check for mocks
+    var utCfg, src;
+    beforeEach(function() {
+      utCfg = {};
+      src = [];
+      // add spies
+      spyOn(Array.prototype, 'concat').andCallThrough();
+    });
+    it('should start with "sourceonly.js"', function() {
+      // arrange
+      // act
+      var result = task.collect(utCfg, src);
+      // assert
+      expect(result[0]).toContain('sourceonly.js');
+    });
+    it('should include globals if configured', function() {
+      // arrange
+      utCfg.globals = ['globals'];
+      // act
+      task.collect(utCfg, src);
+      // assert
+      expect(Array.prototype.concat).toHaveBeenCalledWith(utCfg.globals);
+    });
+    it('should not include globals if not configured', function() {
+      // arrange
+      // act
+      task.collect(utCfg, src);
+      // assert
+      expect(Array.prototype.concat).not.toHaveBeenCalledWith(utCfg.globals);
+    });
+    it('should include deps if configured', function() {
+      // arrange
+      utCfg.deps = ['deps'];
+      // act
+      task.collect(utCfg, src);
+      // assert
+      expect(Array.prototype.concat).toHaveBeenCalledWith(utCfg.deps);
+    });
+    it('should not include deps if not configured', function() {
+      // arrange
+      // act
+      task.collect(utCfg, src);
+      // assert
+      expect(Array.prototype.concat).not.toHaveBeenCalledWith(utCfg.deps);
+    });
+    it('should include mocks if configured', function() {
+      // arrange
+      utCfg.mocks = ['mocks'];
+      // act
+      task.collect(utCfg, src);
+      // assert
+      expect(Array.prototype.concat).toHaveBeenCalledWith(utCfg.mocks);
+    });
+    it('should not include mocks if not configured', function() {
+      // arrange
+      // act
+      task.collect(utCfg, src);
+      // assert
+      expect(Array.prototype.concat).not.toHaveBeenCalledWith(utCfg.mocks);
+    });
     // add source and spec files
-    // return the list
+    it('should include source then tests', function() {
+      // arrange
+      utCfg.tests = ['tests'];
+      src.push('source');
+      // act
+      task.collect(utCfg, src);
+      // assert
+      expect(Array.prototype.concat).toHaveBeenCalledWith(src, utCfg.tests);
+    });
+    it('should return the list of files', function() {
+      // arrange
+      // act
+      var result = task.collect(utCfg, src);
+      // assert
+      expect(result instanceof Array).toBe(true);
+    });
   });
 
   describe('testWeb', function() {
-    // load dependencies
-    // collect files
-    // run unit tests with karma
+    var karma, mockReq, files;
+
+    beforeEach(function() {
+      files = ['foo', 'bar'];
+
+      // mock aqua config
+      aqua.cfg.testing = {
+        web: {}
+      };
+
+      // mock karma
+      karma = jasmine.createSpy('karma').andReturn('karma');
+
+      // mock require
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return karma; });
+
+      // use dependency injection to inject mock require
+      task.__set__('require', mockReq);
+    });
+
+    it('should load dependencies', function() {
+      // arrange
+      // act
+      task.testWeb(aqua, files, gulp);
+      // assert
+      expect(mockReq).toHaveBeenCalledWith('gulp-karma');
+    });
+    it('should look up the files needed for testing', function() {
+      // arrange
+      // act
+      task.testWeb(aqua, files, gulp);
+      // assert
+      expect(gulp.src).toHaveBeenCalledWith(files);
+    });
+    it('should run unit tests with karma', function() {
+      // arrange
+      // act
+      task.testWeb(aqua, files, gulp);
+      // assert
+      expect(karma).toHaveBeenCalled();
+      expect(gulp.pipe).toHaveBeenCalledWith('karma');
+    });
+    it('should use the AQUA web testing config settings', function() {
+      // arrange
+      // act
+      task.testWeb(aqua, files, gulp);
+      // assert
+      var arg = karma.calls[0].args[0];
+      expect(arg.configFile).toBe(aqua.cfg.testing.web);
+    });
+    it('should listen for errors', function() {
+      // arrange
+      // act
+      task.testWeb(aqua, files, gulp);
+      // assert
+      expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+    });
   });
 
   describe('testNode', function() {
-    // load dependencies
-    // collect files
-    // instrument source code for coverage
-    // run unit tests with gulp-jasmine runner
-    // create code coverage report
-    // enforce coverage thresholds
-    // listen for errors
+    var istanbul, mockReq, files;
+
+    beforeEach(function() {
+      files = ['bar', 'baz'];
+
+      // mock dependencies
+      istanbul = jasmine.createSpy('istanbul').andReturn('istanbul');
+
+      // mock require
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return istanbul; });
+
+      // use dependency injection to inject mock require
+      task.__set__('require', mockReq);
+
+      // add spies
+      spyOn(task, 'runNodeTests');
+    });
+    it('should load dependencies', function() {
+      // arrange
+      // act
+      task.testNode(aqua, cfg, files, gulp);
+      // assert
+      expect(mockReq).toHaveBeenCalledWith('gulp-istanbul');
+    });
+    it('should look up the source code to instrument', function() {
+      // arrange
+      // act
+      task.testNode(aqua, cfg, files, gulp);
+      // assert
+      expect(gulp.src).toHaveBeenCalledWith(cfg.src);
+    });
+    it('should instrument source code for coverage', function() {
+      // arrange
+      // act
+      task.testNode(aqua, cfg, files, gulp);
+      // assert
+      expect(istanbul).toHaveBeenCalled();
+      expect(gulp.pipe).toHaveBeenCalledWith('istanbul');
+    });
+    it('should listen for when instrumentation finishes', function() {
+      // arrange
+      // act
+      task.testNode(aqua, cfg, files, gulp);
+      // assert
+      expect(gulp.on).toHaveBeenCalledWith('finish', jasmine.any(Function));
+    });
+    it('should run tests when instrumentation finishes', function() {
+      // arrange
+      task.testNode(aqua, cfg, files, gulp);
+      var done = gulp.on.calls[0].args[1];
+      // act
+      done();
+      // assert
+      expect(task.runNodeTests).toHaveBeenCalledWith(aqua, cfg.id, files, gulp);
+    });
+    it('should listen for errors', function() {
+      // arrange
+      // act
+      task.testNode(aqua, cfg, files, gulp);
+      // assert
+      expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+    });
+  });
+
+  describe('runNodeTests', function() {
+    var gulpJasmine, mockReq, files;
+
+    beforeEach(function() {
+      files = ['bar03', 'baz12'];
+
+      // mock aqua config
+      aqua.cfg.testing = {
+        node: {}
+      };
+
+      // mock dependencies
+      gulpJasmine = jasmine.createSpy('jasmine').andReturn('jasmine');
+
+      // mock require
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return gulpJasmine; });
+
+      // use dependency injection to inject mock require
+      task.__set__('require', mockReq);
+
+      // add spies
+      spyOn(task, 'createReports').andReturn('createReports');
+      spyOn(task, 'enforceThresholds');
+    });
+
+    it('should load dependencies', function() {
+      // arrange
+      // act
+      task.runNodeTests(aqua, cfg.id, files, gulp);
+      // assert
+      expect(mockReq).toHaveBeenCalledWith('gulp-jasmine');
+    });
+    it('should look up the files to unit test', function() {
+      // arrange
+      // act
+      task.runNodeTests(aqua, cfg.id, files, gulp);
+      // assert
+      expect(gulp.src).toHaveBeenCalledWith(files);
+    });
+    it('should run the unit tests', function() {
+      // arrange
+      // act
+      task.runNodeTests(aqua, cfg.id, files, gulp);
+      // assert
+      expect(gulpJasmine).toHaveBeenCalled();
+      expect(gulp.pipe).toHaveBeenCalledWith('jasmine');
+    });
+    it('should create code coverage reports', function() {
+      // arrange
+      // act
+      task.runNodeTests(aqua, cfg.id, files, gulp);
+      // assert
+      expect(task.createReports).toHaveBeenCalled();
+      expect(gulp.pipe).toHaveBeenCalledWith('createReports');
+    });
+    it('should listen for when reports have been written', function() {
+      // arrange
+      // act
+      task.runNodeTests(aqua, cfg.id, files, gulp);
+      // assert
+      expect(gulp.on).toHaveBeenCalledWith('end', jasmine.any(Function));
+    });
+    it('should run enforce thresholds when reports exist', function() {
+      // arrange
+      task.runNodeTests(aqua, cfg.id, files, gulp);
+      var done = gulp.on.calls[0].args[1];
+      // act
+      done();
+      // assert
+      expect(task.enforceThresholds).toHaveBeenCalledWith(aqua, cfg.id, gulp);
+    });
+    it('should listen for errors', function() {
+      // arrange
+      // act
+      task.runNodeTests(aqua, cfg.id, files, gulp);
+      // assert
+      expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+    });
+  });
+
+  describe('createReports', function() {
+    var istanbul, path, mockReq, ncfg;
+
+    beforeEach(function() {
+      // mock aqua config
+      aqua.cfg.coverage = {
+        report: {}
+      };
+
+      // mock node unit test runner config
+      ncfg = {
+        coverage: {
+          reporters: ['foo']
+        }
+      };
+
+      // mock dependencies
+      istanbul = jasmine.createSpy('istanbul').andReturn('istanbul');
+      istanbul.writeReports = jasmine.createSpy('writeReports').andReturn('writeReports');
+      path = {
+        join: jasmine.createSpy('join').andReturn('join')
+      };
+
+      // mock require
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+        var mock;
+        switch (name) {
+          case 'gulp-istanbul': mock = istanbul; break;
+          case 'path': mock = path; break;
+          default: throw 'Unexpected require ' + name;
+        }
+        return mock;
+      });
+
+      // use dependency injection to inject mock require
+      task.__set__('require', mockReq);
+
+      // add spies
+    });
+
+    it('should load dependencies', function() {
+      // arrange
+      // act
+      task.createReports(aqua.cfg, ncfg, cfg.id);
+      // assert
+      expect(mockReq).toHaveBeenCalledWith('gulp-istanbul');
+    });
+    it('should build the report output path', function() {
+      // arrange
+      // act
+      task.createReports(aqua.cfg, ncfg, cfg.id);
+      // assert
+      expect(path.join).toHaveBeenCalledWith(aqua.cfg.coverage.report, cfg.id.toLowerCase());
+    });
+    it('should write coverage reports', function() {
+      // arrange
+      // act
+      task.createReports(aqua.cfg, ncfg, cfg.id);
+      // assert
+      expect(istanbul.writeReports).toHaveBeenCalledWith({
+        dir: 'join',
+        reporters: ['foo']
+      });
+    });
+    it('should return the report writer', function() {
+      // arrange
+      // act
+      var result = task.createReports(aqua.cfg, ncfg, cfg.id);
+      // assert
+      expect(result).toBe('writeReports');
+    });
+  });
+
+  describe('enforceThresholds', function() {
+    var enforcer, mockReq;
+
+    beforeEach(function() {
+      // mock aqua config
+      aqua.cfg.thresholds = {
+        coverage: {}
+      };
+      aqua.cfg.coverage = {
+        report: {}
+      };
+
+      // mock dependencies
+      enforcer = jasmine.createSpy('enforcer').andReturn('enforcer');
+
+      // mock require
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return enforcer; });
+
+      // use dependency injection to inject mock require
+      task.__set__('require', mockReq);
+
+      // add spies
+    });
+    it('should load dependencies', function() {
+      // arrange
+      // act
+      task.enforceThresholds(aqua, cfg.id, gulp);
+      // assert
+      expect(mockReq).toHaveBeenCalledWith('gulp-istanbul-enforcer');
+    });
+    it('should look up whatever (not using if)', function() {
+      // arrange
+      // act
+      task.enforceThresholds(aqua, cfg.id, gulp);
+      // assert
+      expect(gulp.src).toHaveBeenCalledWith('.');
+    });
+    it('should enforce coverage thresholds', function() {
+      // arrange
+      // act
+      task.enforceThresholds(aqua, cfg.id, gulp);
+      // assert
+      expect(enforcer).toHaveBeenCalledWith({
+        thresholds: aqua.cfg.thresholds.coverage,
+        coverageDirectory: cfg.id.toLowerCase(),
+        rootDirectory: aqua.cfg.coverage.report
+      });
+      expect(gulp.pipe).toHaveBeenCalledWith('enforcer');
+    });
+    it('should listen for errors', function() {
+      // arrange
+      // act
+      task.enforceThresholds(aqua, cfg.id, gulp);
+      // assert
+      expect(gulp.on).toHaveBeenCalledWith('error', jasmine.any(Function));
+    });
+    it('should listen for when the task is finished', function() {
+      // arrange
+      // act
+      task.enforceThresholds(aqua, cfg.id, gulp);
+      // assert
+      expect(gulp.on).toHaveBeenCalledWith('finish', jasmine.any(Function));
+    });
+
+    describe('when error found', function() {
+      it('should log errors to the console', function() {
+        // arrange
+        task.enforceThresholds(aqua, cfg.id, gulp);
+        var onErr = gulp.on.calls[0].args[1],
+            err = {message: ''};
+        // act
+        onErr(err);
+        // assert
+        expect(aqua.log).toHaveBeenCalled();
+        expect(aqua.error).toHaveBeenCalled();
+      });
+      it('should not log "at minimum thresholds" to the console', function() {
+        // arrange
+        task.enforceThresholds(aqua, cfg.id, gulp);
+        var onErr = gulp.on.calls[0].args[1],
+            onDone = gulp.on.calls[1].args[1],
+            err = {message: ''};
+        // act
+        onErr(err);
+        onDone();
+        // assert
+        expect(aqua.log).not.toHaveBeenCalledWith(OK_MSG);
+      });
+    });
+    describe('when no errors', function() {
+      it('should log "at minimum thresholds" to the console', function() {
+        // arrange
+        task.enforceThresholds(aqua, cfg.id, gulp);
+        var onDone = gulp.on.calls[1].args[1];
+        // act
+        onDone();
+        // assert
+        expect(aqua.log).toHaveBeenCalledWith(OK_MSG);
+      });
+    });
   });
 
   describe('run', function() {
-
+    var files;
     beforeEach(function() {
+      files = ['001', '002', '003'];
       // add spies
-      spyOn(aqua, 'error');
-      spyOn(task, 'collect');
+      spyOn(task, 'collect').andReturn(files);
       spyOn(task, 'testWeb');
       spyOn(task, 'testNode');
     });
@@ -83,13 +524,20 @@ describe('unit', function() {
       // assert
       expect(task.testWeb).toHaveBeenCalled();
     });
+    it('should collect files needed for testing', function() {
+      // arrange
+      // act
+      task.run(aqua, cfg, gulp);
+      // assert
+      expect(task.collect).toHaveBeenCalled();
+    });
     it('should support testing web projects', function() {
       // arrange
       cfg.type = 'web';
       // act
       task.run(aqua, cfg, gulp);
       // assert
-      expect(task.testWeb).toHaveBeenCalled();
+      expect(task.testWeb).toHaveBeenCalledWith(aqua, files, gulp);
     });
     it('should support testing node.js projects', function() {
       // arrange
@@ -97,7 +545,7 @@ describe('unit', function() {
       // act
       task.run(aqua, cfg, gulp);
       // assert
-      expect(task.testNode).toHaveBeenCalled();
+      expect(task.testNode).toHaveBeenCalledWith(aqua, cfg, files, gulp);
     });
     it('should show a warning for unsupported project types', function() {
       // arrange
@@ -135,7 +583,6 @@ describe('unit', function() {
         canRun = true;
         // add spies
         done = jasmine.createSpy('done');
-        spyOn(aqua, 'warn');
         spyOn(task, 'canRun').andCallFake(function() {
           return canRun;
         });
@@ -174,13 +621,17 @@ describe('unit', function() {
 
   describe('canRun', function() {
 
+    beforeEach(function() {
+      // mock aqua config
+      aqua.cfg.testing = {
+        web: {}
+      };
+    });
+
     it('should return true if the task can run', function() {
       // arrange
       cfg.src = [];
       cfg.unit = {};
-      aqua.cfg.testing = {
-        web: 'path'
-      };
       // act
       var result = task.canRun(cfg, aqua.cfg);
       // assert

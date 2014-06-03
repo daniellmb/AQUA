@@ -17,7 +17,7 @@ function Task() { }
 /**
  * Executes the task
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg AQUA project config JSON.
+ * @param {!ProjConfig} cfg - AQUA project config JSON.
  * @param {!Gulp} gulp - Gulp instance.
  */
 Task.prototype.run = function(aqua, cfg, gulp) { };

@@ -83,6 +83,10 @@
 						</li>
 						
 						<li>
+							<a href="AquaConfigCoverage.html">AquaConfigCoverage</a>
+						</li>
+						
+						<li>
 							<a href="AquaConfigDocs.html">AquaConfigDocs</a>
 						</li>
 						
@@ -213,6 +217,12 @@
 <li>Web Projects</li>
 <li>Node.js Projects</li>
 </ul>
+<h2 id="projects-using-aqua">Projects Using AQUA</h2>
+<ul>
+<li><a href="https://www.npmjs.org/package/aqua">AQUA</a> NodeJS Project +1 for dogfooding</li>
+<li><a href="demos/angularjs">ToDoMVC</a> AngularJS Project</li>
+<li><a href="demos/vanillajs">ToDoMVC</a> VanillaJS Project</li>
+</ul>
 <h2 id="workflow">Workflow</h2>
 <p><a href="https://www.npmjs.org/package/aqua">AQUA</a> uses <a href="http://gulpjs.com/">Gulp</a> to orchestrate the following suite of <a href="https://www.npmjs.org/">NPM</a> Modules.</p>
 <ul>
@@ -229,7 +239,7 @@
 <table>
 <thead>
 <tr>
-<th>gulp</th>
+<th>task</th>
 <th>does</th>
 </tr>
 </thead>
@@ -295,7 +305,7 @@
 <h2 id="tasks">Tasks</h2>
 <h3 id="gulp-or-gulp-">gulp or gulp ?</h3>
 <p>Use to review all the projects and tasks available.</p>
-<h3 id="-id-or-id-all">{id} or {id}-all</h3>
+<h3 id="id-or-id-all">id or id-all</h3>
 <p>Save some typing by running all project tasks in the following order:</p>
 <ol>
 <li><code>{id}-lint</code></li>
@@ -308,11 +318,11 @@
 <li><code>{id}-e2e</code></li>
 </ol>
 <p>Any tasks that are not configured for the project are simply skipped.</p>
-<h3 id="-id-">{id}-?</h3>
+<h3 id="id-">id-?</h3>
 <p>Can&#39;t remember what to type to run the command you want? Using <code>gulp {id}-?</code> (where <code>{id}</code> is your project id) will list all possible tasks for the project in the console.</p>
-<h3 id="-id-lint">{id}-lint</h3>
+<h3 id="id-lint">id-lint</h3>
 <p>Lint all the JavaScript in your project, source code, unit tests, the for syntax issues and anti-patterns</p>
-<h3 id="-id-lint-fix">{id}-lint-fix</h3>
+<h3 id="id-lint-fix">id-lint-fix</h3>
 <p>Automatically fix lint errors in a non-destructive way using your JSHint settings.</p>
 <ul>
 <li><code>asi</code> Add missing semicolons.</li>
@@ -335,9 +345,9 @@
 <li>Removes unnecessary semicolons</li>
 <li>Uses isNaN function rather than comparing to NaN</li>
 </ul>
-<h3 id="-id-gpa">{id}-gpa</h3>
+<h3 id="id-gpa">id-gpa</h3>
 <p>Analyze the JavaScript source code for maintainability and enforce complexity thresholds.</p>
-<h3 id="-id-unit">{id}-unit</h3>
+<h3 id="id-unit">id-unit</h3>
 <p>Run unit tests written in Jasmine against the source code and generate code coverage reports.</p>
 <p>Runs the tasks below in the following order:</p>
 <ol>
@@ -348,7 +358,7 @@
 <li><code>{id}-unit</code></li>
 </ol>
 <p>Any tasks that are not configured for the project are simply skipped.</p>
-<h3 id="-id-chk">{id}-chk</h3>
+<h3 id="id-chk">id-chk</h3>
 <p>First runs <code>{id}-lint</code>. Type check your JavaScript code without having to learn a new language such as <a href="http://www.typescriptlang.org/">TypeScript</a>. Type checking is done using <a href="https://github.com/google/closure-compiler">Google Closure compiler</a> that is written in Java so you&#39;ll need the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html">Java 7 Runtime Environment</a> (JRE 7u51+) installed to do type checking. For troubleshooting see the <a href="https://github.com/google/closure-compiler/wiki">GCC Wiki</a>. If you need to <a href="https://www.java.com/en/download/faq/remove_olderversions.xml">remove older versions of Java</a> there is documentation for your operating system.</p>
 <p>Runs the tasks below in the following order:</p>
 <ol>
@@ -382,7 +392,7 @@
   }
 </pre>
 
-<h3 id="-id-min">{id}-min</h3>
+<h3 id="id-min">id-min</h3>
 <p>Use <a href="https://github.com/google/closure-compiler">Google Closure compiler</a> for advanced minification of your source code and create a source map.</p>
 <p>Runs the tasks below in the following order:</p>
 <ol>
@@ -390,21 +400,21 @@
 <li><code>{id}-min</code></li>
 </ol>
 <p>Any tasks that are not configured for the project are simply skipped.</p>
-<h3 id="-id-e2e">{id}-e2e</h3>
+<h3 id="id-e2e">id-e2e</h3>
 <p>Unit tests are not enough, you also need to run end-to-end tests (aka integration tests) against your application to verify behavior.</p>
 <p>Runs the tasks below in the following order:</p>
 <ol>
 <li><code>webdriver-update</code></li>
 <li><code>{id}-e2e</code></li>
 </ol>
-<h3 id="-id-doc">{id}-doc</h3>
+<h3 id="id-doc">id-doc</h3>
 <p>Generate documentation from code annotations using <a href="http://usejsdoc.org/">JSDoc</a>.</p>
 <p>Runs the tasks below in the following order:</p>
 <ol>
 <li><code>{id}-clean</code></li>
 <li><code>{id}-doc</code></li>
 </ol>
-<h3 id="-id-wch">{id}-wch</h3>
+<h3 id="id-wch">id-wch</h3>
 <p>Watch for file changes and automatically run all but you end-to-end tests when something is updated. Great for those who use TDD and Red &gt; Green &gt; Refactor.</p>
 <h4 id="customization">Customization</h4>
 <p>Avoid a lot needless typing! You can create a shortcut that will open the command prompt at any folder you want.</p>
@@ -641,7 +651,7 @@ Debugging can be done by setting break points in the source code, using    <code
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sun May 25 2014 13:48:58 GMT-0700 (PDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Mon Jun 02 2014 23:06:24 GMT-0700 (PDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

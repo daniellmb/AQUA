@@ -4,8 +4,8 @@
  */
 module.exports = {
   tasks: {
-    gpa: require('./src/tasks/gpa'),
     lintjs: require('./src/tasks/lintjs'),
+    gpa: require('./src/tasks/gpa'),
     unit: require('./src/tasks/unit')
   },
   error: require('./src/error'),
@@ -14,5 +14,7 @@ module.exports = {
   log: require('./src/log'),
   util: require('./src/util'),
   validate: require('./src/validate'),
-  warn: require('./src/warn')
+  warn: require('./src/warn'),
+  // NPM modules
+  colors: require('colors')
 };

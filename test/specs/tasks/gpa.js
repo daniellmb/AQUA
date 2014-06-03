@@ -6,19 +6,27 @@
  *
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
-/*gpa maxstatements: 100*/
-
-var rewire = require('rewire');
+/*jshint maxstatements: 100*/
 
 describe('gpa', function() {
   'use strict';
-  var cfg, gulp, aqua;
+
+  var task, aqua, cfg, gulp, ERR_MSG, OK_MSG,
+      rewire = require('rewire'),
+      root = '../../../',
+      src = root + 'src/tasks/';
 
   beforeEach(function() {
     // get AQUA
-    aqua = require('../../../');
+    aqua = rewire(root);
 
-    // set aqua config
+    ERR_MSG = 'GPA Check: ' + aqua.colors.yellow('Complexity issues found');
+    OK_MSG = 'GPA Check: ' + aqua.colors.green('No issues found');
+
+    // set task under test
+    task = rewire(src + 'gpa');
+
+    // set aqua config to nothing
     aqua.config({});
 
     // mock project config
@@ -30,21 +38,25 @@ describe('gpa', function() {
     gulp = mockGulp();
 
     // add spies
+    spyOn(aqua, 'log');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'warn');
   });
 
   it('should exist', function() {
     // arrange
     // act
     // assert
-    expect(typeof aqua.tasks.gpa).toBe('object');
+    expect(typeof task).toBe('object');
   });
 
   describe('run', function() {
-    var gpa, task, mockReq, defaults = {
-      cyclomatic: [8],
-      halstead: [16],
-      maintainability: [100]
-    };
+    var gpa, mockReq,
+        defaults = {
+          cyclomatic: [8],
+          halstead: [16],
+          maintainability: [100]
+        };
 
     beforeEach(function() {
       // mock gpa
@@ -54,7 +66,6 @@ describe('gpa', function() {
       mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return gpa; });
 
       // use dependency injection to inject mock require
-      task = rewire('../../../src/tasks/gpa');
       task.__set__('require', mockReq);
     });
 
@@ -116,15 +127,57 @@ describe('gpa', function() {
       // act
       task.run(aqua, cfg, gulp);
       // assert
-      expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+      expect(gulp.on).toHaveBeenCalledWith('error', jasmine.any(Function));
     });
+    it('should listen for when the task is finished', function() {
+      // arrange
+      // act
+      task.run(aqua, cfg, gulp);
+      // assert
+      expect(gulp.on).toHaveBeenCalledWith('finish', jasmine.any(Function));
+    });
+
+    describe('when error found', function() {
+      it('should log "complexity issues found" to the console', function() {
+        // arrange
+        task.run(aqua, cfg, gulp);
+        var onErr = gulp.on.calls[0].args[1];
+        // act
+        onErr();
+        // assert
+        expect(aqua.log).toHaveBeenCalledWith(ERR_MSG);
+        expect(aqua.error).toHaveBeenCalled();
+      });
+      it('should not log "no issues found" to the console', function() {
+        // arrange
+        task.run(aqua, cfg, gulp);
+        var onErr = gulp.on.calls[0].args[1],
+            onDone = gulp.on.calls[1].args[1];
+        // act
+        onErr();
+        onDone();
+        // assert
+        expect(aqua.log).not.toHaveBeenCalledWith(OK_MSG);
+      });
+    });
+
+    describe('when no errors', function() {
+      it('should log "no issues found" to the console', function() {
+        // arrange
+        task.run(aqua, cfg, gulp);
+        var onDone = gulp.on.calls[1].args[1];
+        // act
+        onDone();
+        // assert
+        expect(aqua.log).toHaveBeenCalledWith(OK_MSG);
+      });
+    });
+
   });
 
   describe('reg', function() {
-    var task;
-
     beforeEach(function() {
-      task = aqua.tasks.gpa;
+      // add spies
     });
 
     it('should register the project with AQUA', function() {
@@ -147,7 +200,6 @@ describe('gpa', function() {
         canRun = true;
         // add spies
         done = jasmine.createSpy('done');
-        spyOn(aqua, 'warn');
         spyOn(task, 'canRun').andCallFake(function() {
           return canRun;
         });
@@ -185,12 +237,6 @@ describe('gpa', function() {
   });
 
   describe('canRun', function() {
-    var task;
-
-    beforeEach(function() {
-      task = aqua.tasks.gpa;
-    });
-
     it('should return true if the task can run', function() {
       // arrange
       cfg.src = [];
@@ -212,7 +258,7 @@ describe('gpa', function() {
     it('should return information about the task', function() {
       // arrange
       // act
-      var result = aqua.tasks.gpa.about();
+      var result = task.about();
       // assert
       expect(result).toBe('`gulp {id}-gpa` to check source code against complexity thresholds');
     });

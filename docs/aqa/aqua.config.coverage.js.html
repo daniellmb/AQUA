@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>AQUA: Automated QUality Analysis Source: src/util.js</title>
+	<title>AQUA: Automated QUality Analysis Source: test/types/aqua.config.coverage.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -151,32 +151,32 @@
 					
 
 
-		<h1 class="page-title">Source: src/util.js</h1>
+		<h1 class="page-title">Source: test/types/aqua.config.coverage.js</h1>
     
     <section>
         <article>
             <pre class="sunlight-highlight-javascript linenums">/**
- * @file
+ * Type definition for AQUA testing config.
  *
- * ### Responsibilities
- * - AQUA utility methods.
- *
- * @module util
+ * @externs
  * @author Daniel Lamb &lt;dlamb.open.source@gmail.com>
  */
 
 
-(function closure() {
 
-  var util;
+/**
+ * AQUA test coverage configurations
+ * @constructor
+ * @nosideeffects
+*/
+var AquaConfigCoverage = function() { };
 
-  util = {
-    // add as needed
-  };
 
-  module.exports = util;
-
-}());
+/**
+ * Where to output coverage reports
+ * @type {string}
+*/
+AquaConfigCoverage.prototype.report = '';
 </pre>
         </article>
     </section>

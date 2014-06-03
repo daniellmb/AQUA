@@ -19,7 +19,7 @@
     }
   },
 	"coverage": {
-    "dir": "./test/coverage"
+    "report": "./test/coverage"
   },
   "testing": {
     "framework": "jasmine",

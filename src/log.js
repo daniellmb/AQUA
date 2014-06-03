@@ -10,14 +10,10 @@
 
 
 (function closure() {
-  // require console colors module
-  var colors = /**  @type {Colors} */ (require('colors'));
-
-
   /**
    * logs information to the console.
-   * @return {AQUA}
    * @this {AQUA}
+   * @return {AQUA}
   */
   module.exports = function() {
 
@@ -25,7 +21,7 @@
     var args = Array.prototype.slice.call(arguments);
 
     // prefix the log with "[aqua] "
-    args.unshift('[' + colors.cyan('aqua') + ']');
+    args.unshift('[' + this.colors.cyan('aqua') + ']');
 
     // log to the console
     console.log.apply(console, args);

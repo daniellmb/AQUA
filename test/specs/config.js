@@ -8,35 +8,37 @@
  */
 /*jshint maxstatements: 100*/
 
-var aqua = require('../../');
-
 describe('config', function() {
   'use strict';
 
+  var config,
+      src = '../../src/';
+
   beforeEach(function() {
-    // add spies
+    // get method under test
+    config = require(src + 'config');
   });
 
   it('should exist', function() {
     // arrange
     // act
     // assert
-    expect(aqua.config).toBeDefined();
+    expect(typeof config).toBe('function');
   });
   it('should set the AQUA config', function() {
     // arrange
     var cfg = {};
     // act
-    aqua.config(cfg);
+    config(cfg);
     // assert
-    expect(aqua.cfg).toBe(cfg);
+    expect(global.cfg).toBe(cfg);
   });
   it('should support call chaining', function() {
     // arrange
     // act
-    var result = aqua.config();
+    var result = config();
     // assert
-    expect(result).toBe(aqua);
+    expect(result).toBe(global);
   });
 
 });

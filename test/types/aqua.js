@@ -35,6 +35,11 @@ AQUA.prototype.cfg = null;
  */
 AQUA.prototype.error = function(var_args) { };
 
+/**
+ * Console Colors
+ * @type {Colors} */
+AQUA.prototype.colors = null;
+
 
 /**
  * Configure AQUA
@@ -45,7 +50,7 @@ AQUA.prototype.config = function(cfg) { };
 
 /**
  * Take the project config files and generate gulp tasks for them
- * @param {Array} cfgs - Array of AQUA configuration files
+ * @param {Array.<Object>} cfgs - Array of AQUA project configurations
  */
 AQUA.prototype.init = function(cfgs) { };
 

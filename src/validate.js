@@ -17,6 +17,8 @@
    * @this {AQUA}
    */
   module.exports = function(cfg) {
+    // validate AQUA config
+    // validate project config (including sub objects such as .unit is optional but .unit.tests is required)
     // support call chaining
     return this;
   };

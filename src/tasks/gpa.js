@@ -23,12 +23,13 @@ function GPA() {
 /**
  * Check source code complexity
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg AQUA project config file.
+ * @param {!ProjConfig} cfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.
  */
 GPA.prototype.run = function(aqua, cfg, gulp) {
   // load node modules needed
   var complexity = /** @type {Function} */(require('gulp-complexity')),
+      noErrors = true,
       enforce = {
         cyclomatic: [8],
         halstead: [16],
@@ -37,6 +38,7 @@ GPA.prototype.run = function(aqua, cfg, gulp) {
 
   //aqua.log(' > run task', cfg.id + '-gpa');
 
+  //TODO: refactor this part into it's own method
   // check for complexity settings
   if (aqua.cfg.thresholds && aqua.cfg.thresholds.complexity) {
     // set cyclomatic threshold
@@ -52,14 +54,23 @@ GPA.prototype.run = function(aqua, cfg, gulp) {
   // check JavaScript source code complexity
   gulp.src(cfg.src)
       .pipe(complexity(enforce))
-      .on('error', aqua.error);
+      .on('error', function() {
+        noErrors = false;
+        aqua.log('GPA Check: ' + aqua.colors.yellow('Complexity issues found'));
+        aqua.error(arguments);
+      })
+      .on('finish', function() {
+        if (noErrors) {
+          aqua.log('GPA Check: ' + aqua.colors.green('No issues found'));
+        }
+      });
 };
 
 
 /**
  * Create Project Task to check source code complexity
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg AQUA project config file.
+ * @param {!ProjConfig} cfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.
  */
 GPA.prototype.reg = function(aqua, cfg, gulp) {

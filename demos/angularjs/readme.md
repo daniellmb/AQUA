@@ -1,5 +1,7 @@
 # AngularJS TodoMVC Example
 
+This example project was setup to use AQUA **without modification** from [todomvc](https://github.com/tastejs/todomvc/tree/gh-pages/architecture-examples/angularjs), the only thing added was the aqua.project.json file and end-to-end tests created.
+
 > HTML is great for declaring static documents, but it falters when we try to use it for declaring dynamic views in web-applications. AngularJS lets you extend HTML vocabulary for your application. The resulting environment is extraordinarily expressive, readable, and quick to develop.
 
 > _[AngularJS - angularjs.org](http://angularjs.org)_

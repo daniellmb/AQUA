@@ -11,6 +11,6 @@ var JSHint = function() { };
 
 /**
 JS Hint report
-@param {string} name - reporter name
+@param {string|Function} rpt - reporter name or function
 */
-JSHint.prototype.reporter = function(name) {};
+JSHint.prototype.reporter = function(rpt) {};

@@ -23,30 +23,44 @@ function LintJS() {
 /**
  * Lint JavaScript source code
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg AQUA project config file.
+ * @param {!ProjConfig} cfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.
  */
 LintJS.prototype.run = function(aqua, cfg, gulp) {
   // load node modules needed
-  var jshint = /** @type {Function} */(require('gulp-jshint')),
-      reporter = /** @type {JSHint} */(require('gulp-jshint')).reporter('default'),
-      failOnEx = /** @type {JSHint} */(require('gulp-jshint')).reporter('fail');
+  var lintJs = /** @type {Function} */(require('gulp-jshint')),
+      jshint = /** @type {JSHint} */(require('gulp-jshint'));
 
   //aqua.log(' > run task', cfg.id + '-lint');
 
+  var no_errors = true;
+
   // lint all JavaScript against anti-patterns
   gulp.src(cfg.alljs)
-      .pipe(jshint())
-      .pipe(reporter)
-      .pipe(failOnEx)
-      .on('error', aqua.error);
+    .pipe(lintJs())
+    .pipe(jshint.reporter(function() {
+        // show on the first error only
+        if (no_errors) {
+          aqua.log('Lint Check: ' + aqua.colors.yellow('Lint errors found'));
+          aqua.error(arguments);
+        }
+        no_errors = false;
+      }))
+      .pipe(jshint.reporter('default'))
+      .pipe(jshint.reporter('fail'))
+      .on('error', aqua.error)
+      .on('end', function() {
+        if (no_errors) {
+          aqua.log('Lint Check: ' + aqua.colors.green('No errors found'));
+        }
+      });
 };
 
 
 /**
  * Create Project Task to lint source code
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg AQUA project config file.
+ * @param {!ProjConfig} cfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.
  */
 LintJS.prototype.reg = function(aqua, cfg, gulp) {

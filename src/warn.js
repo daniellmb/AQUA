@@ -9,14 +9,10 @@
  */
 
 (function closure() {
-  // require console colors module
-  var colors = /**  @type {Colors} */ (require('colors'));
-
-
   /**
    * logs information to the console as a yellow warning.
-   * @return {AQUA}
    * @this {AQUA}
+   * @return {AQUA}
    */
   module.exports = function() {
     // convert arguments to array
@@ -27,7 +23,7 @@
     args.push('\x1B[39m');
 
     // prefix the log with "[aqua] "
-    args.unshift('[' + colors.cyan('aqua') + ']');
+    args.unshift('[' + this.colors.cyan('aqua') + ']');
 
     // log to the console
     console.log.apply(console, args);

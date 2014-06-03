@@ -48,6 +48,12 @@ AQUA is designed to play well with the following types of projects.
   * Web Projects
   * Node.js Projects
 
+## Projects Using AQUA
+
+  * [AQUA](https://www.npmjs.org/package/aqua) NodeJS Project +1 for dogfooding
+  * [ToDoMVC](demos/angularjs) AngularJS Project
+  * [ToDoMVC](demos/vanillajs) VanillaJS Project
+
 ## Workflow
 
 [AQUA](https://www.npmjs.org/package/aqua) uses [Gulp](http://gulpjs.com/) to orchestrate the following suite of [NPM](https://www.npmjs.org/) Modules.
@@ -88,7 +94,7 @@ AQUA dynamically creates gulp tasks for you, based on what is configured in your
 
 Use to review all the projects and tasks available.
 
-### {id} or {id}-all
+### id or id-all
 
 Save some typing by running all project tasks in the following order:
 
@@ -103,15 +109,15 @@ Save some typing by running all project tasks in the following order:
 
 Any tasks that are not configured for the project are simply skipped.
 
-### {id}-?
+### id-?
 
 Can't remember what to type to run the command you want? Using `gulp {id}-?` (where `{id}` is your project id) will list all possible tasks for the project in the console.
 
-### {id}-lint
+### id-lint
 
 Lint all the JavaScript in your project, source code, unit tests, the for syntax issues and anti-patterns
 
-### {id}-lint-fix
+### id-lint-fix
 
 Automatically fix lint errors in a non-destructive way using your JSHint settings.
 
@@ -135,11 +141,11 @@ Automatically fix lint errors in a non-destructive way using your JSHint setting
   * Removes unnecessary semicolons
   * Uses isNaN function rather than comparing to NaN
 
-### {id}-gpa
+### id-gpa
 
 Analyze the JavaScript source code for maintainability and enforce complexity thresholds.
 
-### {id}-unit
+### id-unit
 
 Run unit tests written in Jasmine against the source code and generate code coverage reports.
 
@@ -153,7 +159,7 @@ Runs the tasks below in the following order:
 
 Any tasks that are not configured for the project are simply skipped.
 
-### {id}-chk
+### id-chk
 
 First runs `{id}-lint`. Type check your JavaScript code without having to learn a new language such as [TypeScript](http://www.typescriptlang.org/). Type checking is done using [Google Closure compiler](https://github.com/google/closure-compiler) that is written in Java so you'll need the [Java 7 Runtime Environment](http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html) (JRE 7u51+) installed to do type checking. For troubleshooting see the [GCC Wiki](https://github.com/google/closure-compiler/wiki). If you need to [remove older versions of Java](https://www.java.com/en/download/faq/remove_olderversions.xml) there is documentation for your operating system.
 
@@ -192,7 +198,7 @@ All code should be annotated with comments to enable both type checking at compi
   }
 </pre>
 
-### {id}-min
+### id-min
 
 Use [Google Closure compiler](https://github.com/google/closure-compiler) for advanced minification of your source code and create a source map.
 
@@ -204,7 +210,7 @@ Runs the tasks below in the following order:
 
 Any tasks that are not configured for the project are simply skipped.
 
-### {id}-e2e
+### id-e2e
 
 Unit tests are not enough, you also need to run end-to-end tests (aka integration tests) against your application to verify behavior.
 
@@ -213,7 +219,7 @@ Runs the tasks below in the following order:
   1. `webdriver-update`
   1. `{id}-e2e`
 
-### {id}-doc
+### id-doc
 
 Generate documentation from code annotations using [JSDoc](http://usejsdoc.org/).
 
@@ -222,7 +228,7 @@ Runs the tasks below in the following order:
   1. `{id}-clean`
   1. `{id}-doc`
 
-### {id}-wch
+### id-wch
 
 Watch for file changes and automatically run all but you end-to-end tests when something is updated. Great for those who use TDD and Red &gt; Green &gt; Refactor.
 

@@ -8,28 +8,45 @@
  */
 /*jshint maxstatements: 100*/
 
-var aqua = require('../../');
-
 describe('error', function() {
   'use strict';
 
+  var error,
+      src = '../../src/',
+      rewire = require('rewire'),
+      log;
+
   beforeEach(function() {
-    // add spies
+    log = jasmine.createSpy();
+
+    // use dependency injection to inject mock require
+    error = rewire(src + 'error');
+    error.__set__({
+      console: {
+        log: log
+      }
+    });
   });
 
   it('should exist', function() {
     // arrange
     // act
     // assert
-    expect(aqua.error).toBeDefined();
+    expect(typeof error).toBe('function');
   });
-
+  it('should beep to sound', function() {
+    // arrange
+    // act
+    error();
+    // assert
+    expect(log).toHaveBeenCalledWith('\x07');
+  });
   it('should support call chaining', function() {
     // arrange
     // act
-    var result = aqua.error();
+    var result = error();
     // assert
-    expect(result).toBe(aqua);
+    expect(result).toBe(global);
   });
 
 });

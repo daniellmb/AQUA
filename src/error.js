@@ -19,6 +19,9 @@
   module.exports = function(e) {
     var aqua = this;
 
+    // write "beep" sound to the console
+    console.log('\x07');
+
     // support call chaining
     return aqua;
   };

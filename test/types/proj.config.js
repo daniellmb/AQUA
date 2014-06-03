@@ -38,7 +38,7 @@ ProjConfig.prototype.by = '';
 
 /**
 Where to find all source code written for the project
-@type {Array}
+@type {Array.<string>}
 */
 ProjConfig.prototype.src = null;
 
@@ -52,7 +52,7 @@ ProjConfig.prototype.readme = '';
 
 /**
 Where to find all the JavaScript written for the project, including specs (used for linting)
-@type {Array}
+@type {Array.<string>}
 */
 ProjConfig.prototype.alljs = null;
 
@@ -73,7 +73,7 @@ ProjConfig.prototype.e2e = null;
 
 /**
 Where to find all type definitions used by the project
-@type {Array}
+@type {Array.<string>}
 */
 ProjConfig.prototype.types = null;
 

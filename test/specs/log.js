@@ -8,45 +8,59 @@
  */
 /*jshint maxstatements: 100*/
 
-var aqua = require('../../');
-var colors = require('colors');
-
 describe('log', function() {
   'use strict';
 
+  var log,
+      src = '../../src/',
+      colors = require('colors'),
+      rewire = require('rewire'),
+      apply;
+
   beforeEach(function() {
-    // add spies
-    spyOn(console.log, 'apply');
+    apply = jasmine.createSpy('apply');
+
+    global.colors = colors;
+
+    // use dependency injection to inject mock require
+    log = rewire(src + 'log');
+    log.__set__({
+      console: {
+        log: {
+          apply: apply
+        }
+      }
+    });
   });
 
   it('should exist', function() {
     // arrange
     // act
     // assert
-    expect(aqua.log).toBeDefined();
+    expect(typeof log).toBe('function');
   });
   it('should prefix the message with "[aqua]"', function() {
     // arrange
     var arg;
     // act
-    aqua.log('');
+    log('');
     // assert
-    arg = console.log.apply.calls[0].args[1].join(' ');
+    arg = apply.calls[0].args[1].join(' ');
     expect(arg).toContain('[' + colors.cyan('aqua') + '] ');
   });
   it('should log to the console', function() {
     // arrange
     // act
-    aqua.log('bar');
+    log('bar');
     // assert
-    expect(console.log.apply).toHaveBeenCalled();
+    expect(apply).toHaveBeenCalled();
   });
   it('should support call chaining', function() {
     // arrange
     // act
-    var result = aqua.log('baz');
+    var result = log('baz');
     // assert
-    expect(result).toBe(aqua);
+    expect(result).toBe(global);
   });
 
 });

@@ -16,28 +16,28 @@ var ProjConfigUnitTest = function() { };
 
 
 /**
- * Where to find all of your unit tests
- * @type {Array}
+ * Where to find the files containing expected global variables
+ * @type {Array.<string>}
  */
-ProjConfigUnitTest.prototype.tests = null;
-
-
-/**
- * Where to find your unit test config file
- * @type {string}
- */
-ProjConfigUnitTest.prototype.config = '';
+ProjConfigUnitTest.prototype.globals = null;
 
 
 /**
  * Where to find the scripts the project depends on (such as AngularJS or jQuery)
- * @type {Array}
+ * @type {Array.<string>}
  */
 ProjConfigUnitTest.prototype.deps = null;
 
 
 /**
  * Where to find all of the projects unit tests
- * @type {Array}
+ * @type {Array.<string>}
  */
 ProjConfigUnitTest.prototype.mocks = null;
+
+
+/**
+ * Where to find all of your unit tests
+ * @type {Array.<string>}
+ */
+ProjConfigUnitTest.prototype.tests = null;

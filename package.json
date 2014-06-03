@@ -26,6 +26,7 @@
     "e2e test",
     "documentation"
   ],
+  "main" : "./index.js",
   "devDependencies": {
     "gulp": "latest",
     "gulp-util": "latest",

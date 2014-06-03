@@ -8,36 +8,25 @@
  */
 /*jshint maxstatements: 100*/
 
-var aqua = require('../../');
+var root = '../../',
+    aqua = require(root);
 
 describe('util', function() {
   'use strict';
 
+  var util,
+      src = '../../src/';
+
   beforeEach(function() {
-    // add spies
+    // get method under test
+    util = require(src + 'util');
   });
 
   it('should exist', function() {
     // arrange
     // act
     // assert
-    expect(aqua.util).toBeDefined();
-  });
-
-  describe('mkdirParent', function() {
-    it('should exist', function() {
-      // arrange
-      // act
-      // assert
-      expect(typeof aqua.util.mkdirParent).toBe('function');
-    });
-    it('should support call chaining', function() {
-      // arrange
-      // act
-      var result = aqua.util.mkdirParent();
-      // assert
-      expect(result).toBe(aqua.util);
-    });
+    expect(typeof util).toBe('object');
   });
 
 });

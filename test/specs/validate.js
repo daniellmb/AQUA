@@ -8,27 +8,29 @@
  */
 /*jshint maxstatements: 100*/
 
-var aqua = require('../../');
-
 describe('validate', function() {
   'use strict';
 
+  var validate,
+      src = '../../src/';
+
   beforeEach(function() {
-    // add spies
+    // get method under test
+    validate = require(src + 'validate');
   });
 
   it('should exist', function() {
     // arrange
     // act
     // assert
-    expect(aqua.validate).toBeDefined();
+    expect(typeof validate).toBe('function');
   });
   it('should support call chaining', function() {
     // arrange
     // act
-    var result = aqua.validate({});
+    var result = validate();
     // assert
-    expect(result).toBe(aqua);
+    expect(result).toBe(global);
   });
 
 });
