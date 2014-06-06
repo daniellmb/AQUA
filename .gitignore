@@ -7,7 +7,6 @@ npm-debug.log
 
 # generated coverage files #
 ############################
-coverage/
 .coverdata/
 .coverrun
 

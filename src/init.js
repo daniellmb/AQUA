@@ -12,30 +12,32 @@
 (function closure() {
   /**
    * Take the project config files and generate gulp tasks for them.
-   * @param {Array} cfgs - Array of AQUA configuration files
+   * @param {Array} cfgs - Array of AQUA project configuration objects
    * @this {AQUA}
    * @return {Gulp}
    */
   module.exports = function(cfgs) {
     var aqua = /** @type {AQUA} */(this),
-        tasks = /** @type {!Object} */(aqua.tasks),
-        gulp = /** @type {Gulp} */(require('gulp'));
+        tasks = (aqua.tasks),
+        util = aqua.util,
+        gulp = /** @type {Gulp} */(require('gulp')),
+        log = aqua.logger.create('init');
 
-    // loop through the AQUA configuration files
+    // loop through the AQUA project configurations
     cfgs.forEach(function(cfg) {
 
-      //aqua.log(cfg.name + ' Project');
+      log.debug('%s Project', cfg.name);
 
-      // validate the AQUA configuration files
+      // validate the AQUA project configuration
       aqua.validate(cfg);
 
       // loop through the AQUA tasks
-      Object.keys(tasks).forEach(function(name) {
+      util.forOwn(tasks, function(value, key) {
 
-        //aqua.log(' -', name);
+        log.debug(' - %s', key);
 
         // register each task using the config
-        tasks[name].reg(aqua, cfg, gulp);
+        tasks[key].reg(aqua, cfg, gulp);
       });
     });
 

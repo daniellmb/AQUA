@@ -2,45 +2,40 @@
  * Export Karma unit test config
  * @param {*} config
  */
-module.exports = function(config) {
+module.exports = {
+  autoWatch: false,
+  singleRun: true,
+  reportSlowerThan: 250,
 
-  config.set({
-    basePath: '../',
+  /*
+   dots
+   progress
+   nyan
+   */
+  reporters: ['dots'],
 
-    reporters: ['dots', 'coverage'],
+  /*
+   jasmine
+   mocha
+   qunit
+  */
+  frameworks: ['jasmine'],
 
-    //preprocessors: source_coverage,
+  /*
+   Chrome
+   ChromeCanary
+   PhantomJS
+   Firefox
+   Opera
+   IE
+   Safari
+   iOS
+   */
+  browsers: ['PhantomJS'],
 
-    coverageReporter: {
-      reporters: [{
-        type: 'text',
-        //TODO fix to support more than one project!
-        dir: 'coverage/aqaw'
-      }, {
-        type: 'html',
-        //TODO fix to support more than one project!
-        dir: 'coverage/aqaw'
-      }]
-    },
-
-    colors: true,
-
-    autoWatch: false,
-
-    singleRun: false,
-
-    logLevel: config.LOG_INFO,
-
-    captureTimeout: 60000,
-
-    frameworks: ['jasmine'],
-
-    browsers: ['PhantomJS'],
-
-    plugins: [
-      'karma-coverage',
-      'karma-phantomjs-launcher',
-      'karma-jasmine'
-    ]
-  });
+  // code coverage settings
+  coverage: {
+    // used to generate reports and enforce test coverage thresholds
+    reporters: ['html', 'text', 'json']
+  }
 };

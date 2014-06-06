@@ -35,11 +35,6 @@ AQUA.prototype.cfg = null;
  */
 AQUA.prototype.error = function(var_args) { };
 
-/**
- * Console Colors
- * @type {Colors} */
-AQUA.prototype.colors = null;
-
 
 /**
  * Configure AQUA
@@ -64,6 +59,20 @@ AQUA.prototype.log = function(data, var_args) { };
 
 
 /**
+ * Logger instance
+ * @type {Object}
+ */
+AQUA.prototype.logger = null;
+
+
+/**
+ * Util instance
+ * @type {Object}
+ */
+AQUA.prototype.util = null;
+
+
+/**
  * Validate a AQUA configuration file.
  * @param {AquaConfig} cfg
 */
@@ -76,6 +85,12 @@ AQUA.prototype.validate = function(cfg) { };
  * @param {...*} var_args
  */
 AQUA.prototype.warn = function(data, var_args) { };
+
+
+/**
+ * Console Colors (NPM module)
+ * @type {Colors} */
+AQUA.prototype.colors = null;
 
 
 /**

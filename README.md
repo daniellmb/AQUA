@@ -274,6 +274,25 @@ You'll need to have [node.js](http://nodejs.org/download/) v10+ installed.
   1. for windows you may need to add `-msvs_version=2012`
 1. install gulp globally `npm install gulp -g`
 
+## Troubleshooting
+During install some of you may encounter some issues.
+
+Most issues can be solved by one of the following tips, but if are unable to find a solution feel free to an issue via the repository issue tracker.
+
+#### Update NPM, Bower or Grunt
+Sometimes you may find there is a weird error during install like npm's *Error: ENOENT*. Usually updating those tools to the latest version solves the issue.
+
+* Updating NPM: `npm update -g npm`
+* Updating Grunt: `npm update -g grunt-cli`
+* Updating Bower: `npm update -g bower`
+
+#### Cleaning NPM and Bower cache
+NPM and Bower has a caching system for holding packages that you already installed.
+We found that often cleaning the cache solves some issues.
+
+* NPM Clean Cache: `npm cache clean`
+* Bower Clean Cache: `bower cache clean`
+
 ## Testing
 
 To improve efficiency and reduce cognitive load, *all* tests are written in JavaScipt, using a single testing framework ([Jasmine](http://jasmine.github.io/1.3/introduction.html)). This means you can use the same assertion patterns and mocking strategies whether you're writing end-to-end tests for a web project or unit tests for your Node.js project.

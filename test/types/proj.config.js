@@ -8,7 +8,7 @@
 
 
 /**
-AQUA configuration file
+AQUA project configuration file
 @constructor
 @nosideeffects
 */

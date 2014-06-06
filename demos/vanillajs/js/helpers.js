@@ -12,7 +12,7 @@
 
 	// addEventListener wrapper:
 	window.$on = function (target, type, callback, useCapture) {
-		target.addEventListener(type, callback, !!useCapture);
+		//target.addEventListener(type, callback, !!useCapture);
 	};
 
 	// Register events on elements that may or may not exist yet:

@@ -13,16 +13,37 @@ describe('init', function() {
 
   var init,
       src = '../../src/',
-      rewire = require('rewire');
+      rewire = require('rewire'),
+      cfgs;
 
   beforeEach(function() {
     // get method under test
     init = require(src + 'init');
+
+    // mock aqua project configs
+    cfgs = [];
+
+    // mock aqua tasks
     global.tasks = {
-      unit: {
+      test: {
         reg: jasmine.createSpy('reg')
       }
     };
+
+    // mock aqua logger
+    global.logger = {
+      create: jasmine.createSpy('create').andReturn(mockLogger())
+    };
+
+    // mock aqua validate
+    global.validate = jasmine.createSpy('validate');
+
+    // mock aqua util
+    global.util = mockUtil();
+  });
+  afterEach(function() {
+    // tear down
+    global.tasks = global.logger = global.validate = global.util = undefined;
   });
 
   it('should exist', function() {
@@ -31,30 +52,48 @@ describe('init', function() {
     // assert
     expect(typeof init).toBe('function');
   });
-  it('should loop through the AQUA configuration files', function() {
+  it('should loop through the AQUA configuration objects', function() {
     // arrange
     spyOn(Array.prototype, 'forEach').andCallThrough();
-    var cfgs = [];
     // act
     init(cfgs);
     // assert
     expect(cfgs.forEach).toHaveBeenCalled();
   });
-  it('should validate the AQUA configuration files', function() {
+  it('should create the init logger', function() {
+    // arrange
+    // act
+    init(cfgs);
+    // assert
+    expect(global.logger.create).toHaveBeenCalledWith('init');
+  });
+  it('should validate the AQUA configuration settings', function() {
     // arrange
     var cfg = {};
-    global.validate = jasmine.createSpy('validate');
+    cfgs.push(cfg);
     // act
-    init([cfg]);
+    init(cfgs);
     // assert
     expect(global.validate).toHaveBeenCalledWith(cfg);
   });
+  it('should loop through the tasks', function() {
+    // arrange
+    cfgs.push({});
+    // act
+    init(cfgs);
+    // assert
+    expect(global.util.forOwn).toHaveBeenCalledWith(global.tasks, jasmine.any(Function));
+  });
   it('should register each task', function() {
     // arrange
+    var cfgTaskLogger, name = 'test', cfg = {}, gulp = require('gulp');
+    cfgs.push(cfg);
+    init(cfgs);
+    cfgTaskLogger = global.util.forOwn.calls[0].args[1];
     // act
-    init([{}]);
+    cfgTaskLogger(null, name);
     // assert
-    expect(global.tasks.unit.reg).toHaveBeenCalled();
+    expect(global.tasks[name].reg).toHaveBeenCalledWith(global, cfg, gulp);
   });
   it('should return the gulp instance', function() {
     // arrange

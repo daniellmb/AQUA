@@ -1,3 +1,9 @@
+/**
+ * Type definition for gulp-istanbul.
+ *
+ * @externs
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
+ */
 
 
 

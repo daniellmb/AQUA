@@ -54,23 +54,79 @@ Unit.prototype.collect = function(utCfg, src) {
 
 
 /**
+ * Configure test coverage settings for karma
+ * @param {!Object} wcfg - unit test for web configuration
+ * @param {!ProjConfig} pcfg - aqua project configuration
+ * @param {!AquaConfig} acfg - aqua configuration
+ */
+Unit.prototype.getCoverageConfig = function(wcfg, pcfg, acfg) {
+  var path = require('path'), folder;
+
+  // set coverage preprocessor
+  wcfg.preprocessors = {};
+  pcfg.src.forEach(function(path) {
+    wcfg.preprocessors[path] = ['coverage'];
+  });
+
+  // add coverage reporter
+  wcfg.reporters.push('coverage');
+
+  // set coverage report output folder
+  folder = path.join(acfg.coverage.report, pcfg.id.toLowerCase());
+
+  // add coverage reporters
+  wcfg.coverageReporter = {
+    reporters: []
+  };
+  wcfg.coverage.reporters.forEach(function(rptr) {
+    wcfg.coverageReporter.reporters.push({
+      type: rptr,
+      dir: folder
+    });
+  });
+};
+
+
+/**
  * Unit test web projects
  * @param {!AQUA} aqua - AQUA instance.
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @param {!Array.<string>} files - files needed for testing.
  * @param {!Gulp} gulp - Gulp instance.
  */
-Unit.prototype.testWeb = function(aqua, files, gulp) {
+Unit.prototype.testWeb = function(aqua, pcfg, files, gulp) {
   // load dependencies
-  var karma = /** @type {Function} */(require('gulp-karma'));
+  var karma = /** @type {Function} */(require('gulp-karma')),
+      wcfg = /** @type {Object} */(require('../../' + aqua.cfg.testing.web)),
+      acfg = aqua.cfg, task = this;
+
+  //TODO: refactor to use util.assign
+  // set action (used by gulp-karma)
+  wcfg.action = 'run';
+
+  // set karma logging level to match aqua logging level
+  wcfg.logLevel = acfg.logging.level;
+
+  // set karma colors setting to match aqua
+  wcfg.colors = acfg.logging.colors;
+
+  // set karma base path
+  wcfg.basePath = './';
+
+  if (aqua.cfg.coverage) {
+    task.getCoverageConfig(wcfg, pcfg, acfg);
+  }
+
+  task.log.debug('karma config', wcfg);
 
   // get files needed for testing
   gulp.src(files)
-    .pipe(karma({
-        // run unit tests with karma
-        configFile: aqua.cfg.testing.web,
-        action: 'run'
-      }))
-    .on('error', aqua.error);
+      .pipe(karma(wcfg))
+      .on('end', function() {
+        // enforce thresholds
+        task.enforceThresholds(aqua, pcfg.id, gulp);
+      })
+      .on('error', aqua.error);
 };
 
 
@@ -110,12 +166,21 @@ Unit.prototype.runNodeTests = function(aqua, id, files, gulp) {
   // load dependencies
   var jasmine = /** @type {Function} */(require('gulp-jasmine')),
       ncfg = /** @type {Object} */(require('../../' + aqua.cfg.testing.node)),
-      task = this;
+      acfg = aqua.cfg, task = this;
+
+  // set gulp-jasmine show colors to match AQUA setting
+  if (acfg.logging && !acfg.logging.colors) {
+
+    // default is true so we only need to set when false
+    ncfg.jasmine.showColors = acfg.logging.colors;
+  }
+
+  task.log.debug(ncfg);
 
   // run unit tests
   gulp.src(files)
       .pipe(jasmine(ncfg.jasmine))
-      .pipe(task.createReports(aqua.cfg, ncfg, id))
+      .pipe(task.createReports(acfg, ncfg, id))
       .on('end', function() {
         // enforce thresholds
         task.enforceThresholds(aqua, id, gulp);
@@ -127,18 +192,18 @@ Unit.prototype.runNodeTests = function(aqua, id, files, gulp) {
 /**
  * Enforce unit test code coverage reports
  * @param {AquaConfig} acfg - AQUA configuration.
- * @param {!Object} ncfg - NodeJS test runner configuration.
+ * @param {!Object} rcfg - unit test runner configuration.
  * @param {!string} id - AQUA project id.
  * @return {Object} istanbul report writer
  */
-Unit.prototype.createReports = function(acfg, ncfg, id) {
+Unit.prototype.createReports = function(acfg, rcfg, id) {
   var istanbul = /** @type {Istanbul} */(require('gulp-istanbul')),
       path = require('path');
 
   return istanbul.writeReports({
     // create reports
     dir: path.join(acfg.coverage.report, id.toLowerCase()),
-    reporters: ncfg.coverage.reporters
+    reporters: rcfg.coverage.reporters
   });
 };
 
@@ -152,24 +217,25 @@ Unit.prototype.createReports = function(acfg, ncfg, id) {
 Unit.prototype.enforceThresholds = function(aqua, id, gulp) {
   // load dependencies
   var enforcer = /** @type {Function} */(require('gulp-istanbul-enforcer')),
-      noErrors = true;
+      path = require('path'),
+      noErrors = true,
+      task = this;
 
   // enforce coverage thresholds
   gulp.src('.')
       .pipe(enforcer({
         thresholds: aqua.cfg.thresholds.coverage,
-        coverageDirectory: id.toLowerCase(),
-        rootDirectory: aqua.cfg.coverage.report
+        rootDirectory: path.join(aqua.cfg.coverage.report, id.toLowerCase())
       }))
       .on('error', function(e) {
         noErrors = false;
-        aqua.log('Coverage Check: Below Thresholds:\n' +
+        task.log.warn('Coverage Below Thresholds:\n' +
             aqua.colors.yellow(e.message.replace(/ERROR: /g, '')));
         aqua.error(arguments);
       })
-      .on('finish', function(e) {
+      .on('end', function() {
         if (noErrors) {
-          aqua.log('Coverage Check: ' + aqua.colors.green('Coverage is at or over the minimum thresholds.'));
+          task.log.info(aqua.colors.green('Coverage is at or over the minimum thresholds.'));
         }
       });
 };
@@ -178,33 +244,33 @@ Unit.prototype.enforceThresholds = function(aqua, id, gulp) {
 /**
  * Unit test JavaScript Source Code
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg - AQUA project configuration.
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.
  */
-Unit.prototype.run = function(aqua, cfg, gulp) {
+Unit.prototype.run = function(aqua, pcfg, gulp) {
   //aqua.log(' > run task', cfg.id + '-unit');
 
   // default project type to web
-  cfg.type = cfg.type ? cfg.type : 'web';
+  pcfg.type = pcfg.type ? pcfg.type : 'web';
 
   // collect files needed for testing
-  var files = this.collect(cfg.unit, cfg.src);
+  var files = this.collect(pcfg.unit, pcfg.src);
 
   // check project type
-  switch (cfg.type) {
+  switch (pcfg.type) {
 
     case 'web':
       // unit test web project
-      this.testWeb(aqua, files, gulp);
+      this.testWeb(aqua, pcfg, files, gulp);
       break;
 
     case 'nodejs':
       // unit test node.js project
-      this.testNode(aqua, cfg, files, gulp);
+      this.testNode(aqua, pcfg, files, gulp);
       break;
 
     default:
-      aqua.error('unsupported project type:', cfg.type);
+      aqua.error('unsupported project type:', pcfg.type);
       break;
   }
 };
@@ -213,12 +279,12 @@ Unit.prototype.run = function(aqua, cfg, gulp) {
 /**
  * Create Project Task to unit test source code
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg - AQUA project configuration.
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.
  */
-Unit.prototype.reg = function(aqua, cfg, gulp) {
+Unit.prototype.reg = function(aqua, pcfg, gulp) {
 
-  var id = cfg.id.toLowerCase(),
+  var id = pcfg.id.toLowerCase(),
       task = this;
 
   //TODO: register the project with AQUA
@@ -227,9 +293,9 @@ Unit.prototype.reg = function(aqua, cfg, gulp) {
   gulp.task(id + '-unit', [], function(done) {
 
     // check if project is configured properly
-    if (task.canRun(cfg, aqua.cfg)) {
+    if (task.canRun(pcfg, aqua.cfg)) {
       // run the task
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
     } else {
       aqua.warn('unit testing source code not configured');
     }

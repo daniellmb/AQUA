@@ -49,15 +49,20 @@
     "karma-chrome-launcher": "latest",
     "karma-opera-launcher": "latest",
     "karma-safari-launcher": "latest",
+    "karma-ios-launcher": "latest",
+    "karma-sauce-launcher": "latest",
+    "karma-nyan-reporter": "latest",
+    "karma-coveralls": "latest",
     "colors": "latest",
     "glob": "latest",
     "istanbul": "latest",
-    "underscore": "latest",
+    "lodash": "latest",
     "protractor": "latest",
     "phantomjs": "latest",
     "extend": "latest",
     "rewire": "latest",
-    "yargs": "latest"
+    "yargs": "latest",
+    "log4js": "latest"
   },
   "engines": {
     "node": ">= 0.10"

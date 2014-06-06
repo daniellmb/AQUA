@@ -2,7 +2,7 @@
  * @file
  *
  * ### Responsibilities
- * - validate a AQUA configuration file.
+ * - validate a AQUA and AQUA project configuration files.
  *
  * @module validate
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
@@ -12,7 +12,7 @@
 (function closure() {
   /**
    * Validate an AQUA configuration file
-   * @param {AquaConfig} cfg - an AQUA configuration file to validate
+   * @param {AquaConfig} cfg - an AQUA configuration object to validate
    * @return {AQUA}
    * @this {AQUA}
    */

@@ -1,3 +1,9 @@
+/**
+ * Type definition for gulp-jshint.
+ *
+ * @externs
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
+ */
 
 
 

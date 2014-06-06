@@ -1,5 +1,8 @@
+# Closure Linter Reference
+# https://gist.github.com/daniellmb/b0486fc0ba3d09eb66d9
 --strict
 --jsdoc
 --jslint_error=all
+--disable=227
 --max_line_length=120
 --custom_jsdoc_tags=module,file

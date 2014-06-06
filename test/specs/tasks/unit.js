@@ -19,10 +19,13 @@ describe('unit', function() {
     // get AQUA
     aqua = rewire(root);
 
-    OK_MSG = 'Coverage Check: ' + aqua.colors.green('Coverage is at or over the minimum thresholds.');
+    OK_MSG = aqua.colors.green('Coverage is at or over the minimum thresholds.');
 
     // set task under test
     task = rewire(src + 'unit');
+
+    // mock logging
+    task.log = mockLogger();
 
     // set aqua config to nothing
     aqua.config({});
@@ -137,6 +140,9 @@ describe('unit', function() {
       aqua.cfg.testing = {
         web: {}
       };
+      aqua.cfg.logging = {
+        level: 'level'
+      };
 
       // mock karma
       karma = jasmine.createSpy('karma').andReturn('karma');
@@ -146,42 +152,52 @@ describe('unit', function() {
 
       // use dependency injection to inject mock require
       task.__set__('require', mockReq);
+
+      // add spies
+      spyOn(task, 'getCoverageConfig');
     });
 
     it('should load dependencies', function() {
       // arrange
       // act
-      task.testWeb(aqua, files, gulp);
+      task.testWeb(aqua, cfg, files, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-karma');
+    });
+    it('should should call getCoverageConfig when coverage is enabled', function() {
+      // arrange
+      // act
+      // assert
     });
     it('should look up the files needed for testing', function() {
       // arrange
       // act
-      task.testWeb(aqua, files, gulp);
+      task.testWeb(aqua, cfg, files, gulp);
       // assert
       expect(gulp.src).toHaveBeenCalledWith(files);
     });
     it('should run unit tests with karma', function() {
       // arrange
       // act
-      task.testWeb(aqua, files, gulp);
+      task.testWeb(aqua, cfg, files, gulp);
       // assert
       expect(karma).toHaveBeenCalled();
       expect(gulp.pipe).toHaveBeenCalledWith('karma');
     });
-    it('should use the AQUA web testing config settings', function() {
+    it('should listen for when the task is complete', function() {
       // arrange
       // act
-      task.testWeb(aqua, files, gulp);
       // assert
-      var arg = karma.calls[0].args[0];
-      expect(arg.configFile).toBe(aqua.cfg.testing.web);
+    });
+    it('should should call enforceThresholds', function() {
+      // arrange
+      // act
+      // assert
     });
     it('should listen for errors', function() {
       // arrange
       // act
-      task.testWeb(aqua, files, gulp);
+      task.testWeb(aqua, cfg, files, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
     });
@@ -256,18 +272,29 @@ describe('unit', function() {
     var gulpJasmine, mockReq, files;
 
     beforeEach(function() {
+      var mockNodeCfg;
+
       files = ['bar03', 'baz12'];
 
       // mock aqua config
       aqua.cfg.testing = {
-        node: {}
+        node: 'test'
       };
 
       // mock dependencies
       gulpJasmine = jasmine.createSpy('jasmine').andReturn('jasmine');
+      mockNodeCfg = {
+        jasmine: {}
+      };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return gulpJasmine; });
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+        switch (name) {
+          case 'gulp-jasmine': return gulpJasmine;
+          case '../../test': return mockNodeCfg;
+          default: throw 'Unexpected require ' + name;
+        }
+      });
 
       // use dependency injection to inject mock require
       task.__set__('require', mockReq);
@@ -283,6 +310,17 @@ describe('unit', function() {
       task.runNodeTests(aqua, cfg.id, files, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-jasmine');
+    });
+    it('should set show colors to match the aqua config', function() {
+      // arrange
+      aqua.cfg.logging = {
+        colors: false
+      };
+      // act
+      task.runNodeTests(aqua, cfg.id, files, gulp);
+      // assert
+      var args = gulpJasmine.calls[0].args[0];
+      expect(args.showColors).toBe(false);
     });
     it('should look up the files to unit test', function() {
       // arrange
@@ -357,13 +395,11 @@ describe('unit', function() {
 
       // mock require
       mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
-        var mock;
         switch (name) {
-          case 'gulp-istanbul': mock = istanbul; break;
-          case 'path': mock = path; break;
+          case 'gulp-istanbul': return istanbul;
+          case 'path': return path;
           default: throw 'Unexpected require ' + name;
         }
-        return mock;
       });
 
       // use dependency injection to inject mock require
@@ -406,7 +442,7 @@ describe('unit', function() {
   });
 
   describe('enforceThresholds', function() {
-    var enforcer, mockReq;
+    var enforcer, path, mockReq;
 
     beforeEach(function() {
       // mock aqua config
@@ -414,14 +450,23 @@ describe('unit', function() {
         coverage: {}
       };
       aqua.cfg.coverage = {
-        report: {}
+        report: 'coverage-report-path'
       };
 
       // mock dependencies
       enforcer = jasmine.createSpy('enforcer').andReturn('enforcer');
+      path = {
+        join: jasmine.createSpy('join').andReturn('join')
+      };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return enforcer; });
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+        switch (name) {
+          case 'gulp-istanbul-enforcer': return enforcer;
+          case 'path': return path;
+          default: throw 'Unexpected require ' + name;
+        }
+      });
 
       // use dependency injection to inject mock require
       task.__set__('require', mockReq);
@@ -442,6 +487,13 @@ describe('unit', function() {
       // assert
       expect(gulp.src).toHaveBeenCalledWith('.');
     });
+    it('should build output path', function() {
+      // arrange
+      // act
+      task.enforceThresholds(aqua, cfg.id, gulp);
+      // assert
+      expect(path.join).toHaveBeenCalledWith(aqua.cfg.coverage.report, cfg.id.toLowerCase());
+    });
     it('should enforce coverage thresholds', function() {
       // arrange
       // act
@@ -449,8 +501,7 @@ describe('unit', function() {
       // assert
       expect(enforcer).toHaveBeenCalledWith({
         thresholds: aqua.cfg.thresholds.coverage,
-        coverageDirectory: cfg.id.toLowerCase(),
-        rootDirectory: aqua.cfg.coverage.report
+        rootDirectory: 'join'
       });
       expect(gulp.pipe).toHaveBeenCalledWith('enforcer');
     });
@@ -466,7 +517,7 @@ describe('unit', function() {
       // act
       task.enforceThresholds(aqua, cfg.id, gulp);
       // assert
-      expect(gulp.on).toHaveBeenCalledWith('finish', jasmine.any(Function));
+      expect(gulp.on).toHaveBeenCalledWith('end', jasmine.any(Function));
     });
 
     describe('when error found', function() {
@@ -478,7 +529,7 @@ describe('unit', function() {
         // act
         onErr(err);
         // assert
-        expect(aqua.log).toHaveBeenCalled();
+        expect(task.log.warn).toHaveBeenCalled();
         expect(aqua.error).toHaveBeenCalled();
       });
       it('should not log "at minimum thresholds" to the console', function() {
@@ -491,7 +542,7 @@ describe('unit', function() {
         onErr(err);
         onDone();
         // assert
-        expect(aqua.log).not.toHaveBeenCalledWith(OK_MSG);
+        expect(task.log.warn).not.toHaveBeenCalledWith(OK_MSG);
       });
     });
     describe('when no errors', function() {
@@ -502,7 +553,7 @@ describe('unit', function() {
         // act
         onDone();
         // assert
-        expect(aqua.log).toHaveBeenCalledWith(OK_MSG);
+        expect(task.log.info).toHaveBeenCalledWith(OK_MSG);
       });
     });
   });
@@ -537,7 +588,7 @@ describe('unit', function() {
       // act
       task.run(aqua, cfg, gulp);
       // assert
-      expect(task.testWeb).toHaveBeenCalledWith(aqua, files, gulp);
+      expect(task.testWeb).toHaveBeenCalledWith(aqua, cfg, files, gulp);
     });
     it('should support testing node.js projects', function() {
       // arrange

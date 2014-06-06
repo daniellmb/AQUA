@@ -41,3 +41,10 @@ AquaConfig.prototype.coverage = null;
  * @type {AquaConfigTesting}
  */
 AquaConfig.prototype.testing = null;
+
+
+/**
+ * Configure AQUA logging for all projects
+ * @type {AquaConfigLogging}
+ */
+AquaConfig.prototype.logging = null;

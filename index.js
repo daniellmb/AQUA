@@ -4,17 +4,21 @@
  */
 module.exports = {
   tasks: {
+    // tasks are listed in the order they should run
     lintjs: require('./src/tasks/lintjs'),
     gpa: require('./src/tasks/gpa'),
     unit: require('./src/tasks/unit')
   },
-  error: require('./src/error'),
   config: require('./src/config'),
+  constants: require('./src/constants'),
   init: require('./src/init'),
-  log: require('./src/log'),
+  logger: require('./src/logger'),
   util: require('./src/util'),
   validate: require('./src/validate'),
-  warn: require('./src/warn'),
   // NPM modules
-  colors: require('colors')
+  colors: require('colors'),
+  // DEPRECATED
+  log: require('./src/log'),
+  warn: require('./src/warn'),
+  error: require('./src/error')
 };

@@ -1,3 +1,9 @@
+/**
+ * Type definition for colors.js.
+ *
+ * @externs
+ * @author Daniel Lamb <dlamb.open.source@gmail.com>
+ */
 
 
 

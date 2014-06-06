@@ -2,21 +2,21 @@
  * Export Node.js unit test config
  */
 module.exports = {
-  // Jasmine runner settings
+  // jasmine runner settings
   jasmine: {
-    // If true, display spec names.
+    // if true, display spec names.
     verbose: false,
 
-    // If true, include stack traces in failures.
+    // if true, include stack traces in failures.
     includeStackTrace: true,
 
-    // Time to wait in milliseconds before a test automatically fails
+    // time to wait in milliseconds before a test automatically fails
     timeout: 250
   },
 
-  // Code coverage settings
+  // code coverage settings
   coverage: {
-    // report options
+    // used to generate reports and enforce test coverage thresholds
     reporters: ['html', 'text', 'json']
   }
 };
