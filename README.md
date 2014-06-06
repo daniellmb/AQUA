@@ -485,7 +485,7 @@ Below are some typical configurations that you can cut-n-paste to jump-start you
 
 (The MIT License)
 
-Copyright (c) 2014 Daniel Lamb <dlamb.open.source@gmail.com>>
+Copyright (c) 2014 Daniel Lamb <dlamb.open.source@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
