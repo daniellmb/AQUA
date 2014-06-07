@@ -18,7 +18,7 @@ function saveScreenShot(data, filename) {
 // make common utility methods available by exporting them to the global scope
 function exportUtilityMethods() {
   // provide a way to turn off angularjs syncing
-  global.isAngularSite = function(flag) {
+  global.isAngularSite = function (flag) {
     browser.ignoreSynchronization = !flag;
 
     if (!flag) {
