@@ -1,5 +1,5 @@
 # aqua: Automated QUality Analysis
-[![Build Status][travis-image]][travis-url] [![Coveralls Status][coveralls-image]][coveralls-url] [![Code GPA][cc-image]][cc-url]  [![Dependency Status][depstat-image]][depstat-url] [![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url] [![Coverage Status][coverage-image]][coverage-url] [![Code GPA][cc-image]][cc-url]  [![Dependency Status][depstat-image]][depstat-url] [![NPM version][npm-image]][npm-url]
 
 ## About
 
@@ -513,7 +513,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [npm-image]: https://badge.fury.io/js/aqua.png
 [travis-url]: https://travis-ci.org/daniellmb/aqua
 [travis-image]: https://api.travis-ci.org/daniellmb/AQUA.png
-[coveralls-url]: https://coveralls.io/r/daniellmb/AQUA
-[coveralls-image]: https://coveralls.io/repos/daniellmb/AQUA/badge.png
+[coverage-url]: https://codeclimate.com/github/daniellmb/AQUA
+[coverage-image]: https://codeclimate.com/github/daniellmb/AQUA/coverage.png
 [depstat-url]: https://david-dm.org/daniellmb/aqua
 [depstat-image]: https://david-dm.org/daniellmb/aqua/dev-status.png?theme=shields.io
