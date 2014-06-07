@@ -26,6 +26,9 @@
     "e2e test",
     "documentation"
   ],
+  "scripts": {
+    "test": "gulp aqa-unit"
+  },
   "main" : "./index.js",
   "devDependencies": {
     "gulp": "latest",

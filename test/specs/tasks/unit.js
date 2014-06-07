@@ -130,31 +130,133 @@ describe('unit', function() {
     });
   });
 
+  describe('getCoverageConfig', function() {
+    var path, mockReq, wcfg;
+    beforeEach(function() {
+      // web config
+      wcfg = {
+        reporters: [],
+        coverage: {
+          reporters: []
+        }
+      };
+
+      // mock aqua config
+      aqua.cfg.coverage = {
+        report: 'report'
+      };
+
+      // mock path module
+      path = {
+        join: jasmine.createSpy('join').andReturn('join')
+      };
+
+      // mock require
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+        switch (name) {
+          case 'path': return path;
+          default: throw 'Unexpected require ' + name;
+        }
+      });
+
+      // use dependency injection to inject mock require
+      task.__set__('require', mockReq);
+
+      // add spies
+      spyOn(aqua.util, 'forEach');
+    });
+
+    it('should load dependencies', function() {
+      // arrange
+      // act
+      task.getCoverageConfig(wcfg, cfg, aqua);
+      // assert
+      expect(mockReq).toHaveBeenCalledWith('path');
+    });
+    it('should loop through the source files', function() {
+      // arrange
+      // act
+      task.getCoverageConfig(wcfg, cfg, aqua);
+      // assert
+      expect(aqua.util.forEach).toHaveBeenCalledWith(cfg.src, jasmine.any(Function));
+    });
+    it('should set coverage preprocessor for source files', function() {
+      // arrange
+      task.getCoverageConfig(wcfg, cfg, aqua);
+      var loop = aqua.util.forEach.calls[0].args[1];
+      // act
+      loop('file');
+      // assert
+      expect(wcfg.preprocessors.file).toEqual(['coverage']);
+    });
+    it('should add coverage reporter', function() {
+      // arrange
+      // act
+      task.getCoverageConfig(wcfg, cfg, aqua);
+      // assert
+      expect(wcfg.reporters).toEqual(['coverage']);
+    });
+    it('should set coverage report output folder', function() {
+      // arrange
+      // act
+      task.getCoverageConfig(wcfg, cfg, aqua);
+      // assert
+      expect(path.join).toHaveBeenCalledWith(aqua.cfg.coverage.report, cfg.id.toLowerCase());
+    });
+    it('should loop through the coverage reporters', function() {
+      // arrange
+      // act
+      task.getCoverageConfig(wcfg, cfg, aqua);
+      // assert
+      expect(aqua.util.forEach).toHaveBeenCalledWith(wcfg.coverage.reporters, jasmine.any(Function));
+    });
+    it('should add coverage reporters', function() {
+      // arrange
+      task.getCoverageConfig(wcfg, cfg, aqua);
+      var loop = aqua.util.forEach.calls[1].args[1];
+      // act
+      loop('reporter');
+      // assert
+      expect(wcfg.coverageReporter.reporters[0].type).toBe('reporter');
+      expect(wcfg.coverageReporter.reporters[0].dir).toBe('join');
+    });
+  });
+
   describe('testWeb', function() {
-    var karma, mockReq, files;
+    var karma, wcfg, mockReq, files;
 
     beforeEach(function() {
       files = ['foo', 'bar'];
 
       // mock aqua config
       aqua.cfg.testing = {
-        web: {}
+        web: 'path'
       };
       aqua.cfg.logging = {
-        level: 'level'
+        level: 'level',
+        colors: true
       };
 
       // mock karma
       karma = jasmine.createSpy('karma').andReturn('karma');
+      wcfg = {};
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return karma; });
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+        switch (name) {
+          case 'gulp-karma': return karma;
+          case '../../' + aqua.cfg.testing.web: return wcfg;
+          default: throw 'Unexpected require ' + name;
+        }
+      });
 
       // use dependency injection to inject mock require
       task.__set__('require', mockReq);
 
       // add spies
+      spyOn(aqua.util, 'assign').andReturn(wcfg);
       spyOn(task, 'getCoverageConfig');
+      spyOn(task, 'enforceThresholds');
     });
 
     it('should load dependencies', function() {
@@ -164,10 +266,25 @@ describe('unit', function() {
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-karma');
     });
-    it('should should call getCoverageConfig when coverage is enabled', function() {
+    it('should merge the web config with dynamic settings', function() {
       // arrange
       // act
+      task.testWeb(aqua, cfg, files, gulp);
       // assert
+      expect(aqua.util.assign).toHaveBeenCalledWith(wcfg, {
+        logLevel: 'level',
+        colors: true,
+        basePath: './',
+        action: 'run'
+      });
+    });
+    it('should call getCoverageConfig when coverage is enabled', function() {
+      // arrange
+      aqua.cfg.coverage = {};
+      // act
+      task.testWeb(aqua, cfg, files, gulp);
+      // assert
+      expect(task.getCoverageConfig).toHaveBeenCalledWith(wcfg, cfg, aqua);
     });
     it('should look up the files needed for testing', function() {
       // arrange
@@ -187,12 +304,18 @@ describe('unit', function() {
     it('should listen for when the task is complete', function() {
       // arrange
       // act
+      task.testWeb(aqua, cfg, files, gulp);
       // assert
+      expect(gulp.on).toHaveBeenCalledWith('end', jasmine.any(Function));
     });
-    it('should should call enforceThresholds', function() {
+    it('should call enforceThresholds when the task is done', function() {
       // arrange
+      task.testWeb(aqua, cfg, files, gulp);
+      var onEnd = gulp.on.calls[0].args[1];
       // act
+      onEnd();
       // assert
+      expect(task.enforceThresholds).toHaveBeenCalledWith(aqua, cfg.id, gulp);
     });
     it('should listen for errors', function() {
       // arrange

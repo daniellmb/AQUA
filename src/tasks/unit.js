@@ -57,14 +57,16 @@ Unit.prototype.collect = function(utCfg, src) {
  * Configure test coverage settings for karma
  * @param {!Object} wcfg - unit test for web configuration
  * @param {!ProjConfig} pcfg - aqua project configuration
- * @param {!AquaConfig} acfg - aqua configuration
+ * @param {!AQUA} aqua - AQUA instance.
  */
-Unit.prototype.getCoverageConfig = function(wcfg, pcfg, acfg) {
-  var path = require('path'), folder;
+Unit.prototype.getCoverageConfig = function(wcfg, pcfg, aqua) {
+  // load dependencies
+  var path = require('path'), folder,
+      acfg = aqua.cfg, util = aqua.util;
 
   // set coverage preprocessor
   wcfg.preprocessors = {};
-  pcfg.src.forEach(function(path) {
+  util.forEach(pcfg.src, function(path) {
     wcfg.preprocessors[path] = ['coverage'];
   });
 
@@ -78,7 +80,7 @@ Unit.prototype.getCoverageConfig = function(wcfg, pcfg, acfg) {
   wcfg.coverageReporter = {
     reporters: []
   };
-  wcfg.coverage.reporters.forEach(function(rptr) {
+  util.forEach(wcfg.coverage.reporters, function(rptr) {
     wcfg.coverageReporter.reporters.push({
       type: rptr,
       dir: folder
@@ -100,21 +102,20 @@ Unit.prototype.testWeb = function(aqua, pcfg, files, gulp) {
       wcfg = /** @type {Object} */(require('../../' + aqua.cfg.testing.web)),
       acfg = aqua.cfg, task = this;
 
-  //TODO: refactor to use util.assign
-  // set action (used by gulp-karma)
-  wcfg.action = 'run';
-
-  // set karma logging level to match aqua logging level
-  wcfg.logLevel = acfg.logging.level;
-
-  // set karma colors setting to match aqua
-  wcfg.colors = acfg.logging.colors;
-
-  // set karma base path
-  wcfg.basePath = './';
+  // merge the web config with dynamic settings
+  wcfg = aqua.util.assign(wcfg, {
+    // set karma logging level to match aqua logging level
+    logLevel: acfg.logging.level,
+    // set karma colors setting to match aqua
+    colors: acfg.logging.colors,
+    // set karma base path
+    basePath: './',
+    // set action (used by gulp-karma)
+    action: 'run'
+  });
 
   if (aqua.cfg.coverage) {
-    task.getCoverageConfig(wcfg, pcfg, acfg);
+    task.getCoverageConfig(wcfg, pcfg, aqua);
   }
 
   task.log.debug('karma config', wcfg);
