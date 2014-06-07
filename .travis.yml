@@ -1,9 +1,9 @@
 language: node_js
 node_js:
-  - "0.10"
+- '0.10'
 before_script:
-  - npm install -g codeclimate-test-reporter
-  - npm install --loglevel warn
+- npm install -g codeclimate-test-reporter
+- npm install --loglevel warn
 env:
   global:
-    secure: "kcI4Xlow3ijE/kpA3AY8JGXZk5ISuFwkebwSoWMhVgW/tt26wcgwGx+sjWU/pVwYLFMwx6C5poTtDmIz4qfSksDom2mdMXSoYDAHJd80t3fTNrFEEl82k8p7ae0m973Q9klBdmrOwS7mgFdu+aN64cuR2CurcFKVArPra1J+TGA="
+    secure: ZUObSi7w2oGxKWi4sRT6AmhYzAjrVXByIT49x0Coi6eXf+XzOpYILGHyhVvwCnHHS1vKt+vWfFZIXhp8BR94amj+0dZ0on56Mi1wgaZB9dLqZBuaXHthbJEYJvOh/4NWxPnQ4aHxAQRYDdWfMf7y1cpju3bigNZvFJd1WYHt8eE=
