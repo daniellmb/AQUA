@@ -5,5 +5,5 @@ before_script:
   - npm install -g codeclimate-test-reporter
   - npm install --loglevel warn
 env:
-  - secure: "kcI4Xlow3ijE/kpA3AY8JGXZk5ISuFwkebwSoWMhVgW/tt26wcgwGx+sjWU/pVwYLFMwx6C5poTtDmIz4qfSksDom2mdMXSoYDAHJd80t3fTNrFEEl82k8p7ae0m973Q9klBdmrOwS7mgFdu+aN64cuR2CurcFKVArPra1J+TGA="
-  - NODE_ENV=development
+  global:
+    secure: "kcI4Xlow3ijE/kpA3AY8JGXZk5ISuFwkebwSoWMhVgW/tt26wcgwGx+sjWU/pVwYLFMwx6C5poTtDmIz4qfSksDom2mdMXSoYDAHJd80t3fTNrFEEl82k8p7ae0m973Q9klBdmrOwS7mgFdu+aN64cuR2CurcFKVArPra1J+TGA="
