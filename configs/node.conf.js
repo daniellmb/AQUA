@@ -17,6 +17,6 @@ module.exports = {
   // code coverage settings
   coverage: {
     // used to generate reports and enforce test coverage thresholds
-    reporters: ['html', 'text', 'json']
+    reporters: ['html', 'text', 'json', 'lcovonly']
   }
 };
