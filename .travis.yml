@@ -4,6 +4,8 @@ node_js:
 before_script:
 - npm install -g codeclimate-test-reporter
 - npm install --loglevel warn
+after_script
+- codeclimate < test/coverage/aqa/lcov.info
 env:
   global:
-    secure: ZUObSi7w2oGxKWi4sRT6AmhYzAjrVXByIT49x0Coi6eXf+XzOpYILGHyhVvwCnHHS1vKt+vWfFZIXhp8BR94amj+0dZ0on56Mi1wgaZB9dLqZBuaXHthbJEYJvOh/4NWxPnQ4aHxAQRYDdWfMf7y1cpju3bigNZvFJd1WYHt8eE=
+    secure: tsipXq8wv3G0ySgaxUWzCdpvEGXW6ZNe+bXpzHeMCp2I2jQZuLEZgmDzqBYqotCKi0aFG+lIyYqaGAKIXboXyGFCXcuMRd+D4hxP1gYvcgEiCZzUYykTFgxYKN9pgMHjVBNZgPr/PUDYsIM/9K8jd6HXR9V+NKM+G3fPs7szBsU=
