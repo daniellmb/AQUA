@@ -14,7 +14,6 @@
   "newcap": true,
   "noarg": true,
   "quotmark": "single",
-  "regexp": true,
   "smarttabs": true,
   "white": false,
   "predef": {
