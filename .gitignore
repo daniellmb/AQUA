@@ -5,8 +5,10 @@
 node_modules/
 npm-debug.log
 
-# generated coverage files #
+# generated files #
 ############################
+docs/**/
+coverage/
 .coverdata/
 .coverrun
 

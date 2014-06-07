@@ -1,16 +1,17 @@
-# AQUA: Automated QUality Analysis
+# aqua: Automated QUality Analysis
+[![Build Status][travis-image]][travis-url] [![Coveralls Status][coveralls-image]][coveralls-url] [![Code GPA][cc-image]][cc-url]  [![Dependency Status][depstat-image]][depstat-url] [![NPM version][npm-image]][npm-url]
 
 ## About
 
-[AQUA](https://www.npmjs.org/package/aqua) improves code quality by surfacing actionable metrics about JavaScript, CSS and C#.
+[aqua](https://www.npmjs.org/package/aqua) improves code quality by surfacing actionable metrics about JavaScript, CSS and C#.
 
->AQUA raises the visibility of code quality and increases awareness within teams by giving immediate feedback about code smells before they become technical debt.
+>aqua raises the visibility of code quality and increases awareness within teams by giving immediate feedback about code smells before they become technical debt.
 
-You are free to structure your projects anyway you like, and still take full advantage of AQUA. Simply create an `aqua.project.json` file that documents where things are.
+You are free to structure your projects anyway you like, and still take full advantage of aqua. Simply create an `aqua.project.json` file that documents where things are.
 
 ## Philosophy
 
-The goal of AQUA is to improve code quality, without dictating a strict project structure. **Ramp-up gradually** by only configuring the the parts of AQUA you want to use. Not ready for end-to-end tests yet? Simply don't configure them. Don't want to type check your JavaScript code? Just leave out the "types" section. Even if you just start by linting your code, that will be a great step in the right direction!
+The goal of aqua is to improve code quality, without dictating a strict project structure. **Ramp-up gradually** by only configuring the the parts of aqua you want to use. Not ready for end-to-end tests yet? Simply don't configure them. Don't want to type check your JavaScript code? Just leave out the "types" section. Even if you just start by linting your code, that will be a great step in the right direction!
 
 While nothing is stopping you from simply editing a JavaScript file and committing it to source control; doing so will cause you to miss out on: linting, cyclomatic complexity analysis, type checking, running both unit and end-to-end tests, as well as documentation generation, and code coverage reports.
 
@@ -43,20 +44,20 @@ While nothing is stopping you from simply editing a JavaScript file and committi
 
 ### Environments
 
-AQUA is designed to play well with the following types of projects.
+aqua is designed to play well with the following types of projects.
 
   * Web Projects
   * Node.js Projects
 
-## Projects Using AQUA
+## Projects Using aqua
 
-  * [AQUA](https://www.npmjs.org/package/aqua) NodeJS Project +1 for dogfooding
+  * [aqua](https://www.npmjs.org/package/aqua) NodeJS Project +1 for dogfooding
   * [ToDoMVC](demos/angularjs) AngularJS Project
   * [ToDoMVC](demos/vanillajs) VanillaJS Project
 
 ## Workflow
 
-[AQUA](https://www.npmjs.org/package/aqua) uses [Gulp](http://gulpjs.com/) to orchestrate the following suite of [NPM](https://www.npmjs.org/) Modules.
+[aqua](https://www.npmjs.org/package/aqua) uses [Gulp](http://gulpjs.com/) to orchestrate the following suite of [NPM](https://www.npmjs.org/) Modules.
 
 * [JSHint](https://www.npmjs.org/package/jshint): to lint the code & standardize syntax
 * [Complexity-Report](https://www.npmjs.org/package/complexity-report): for complexity analysis
@@ -69,7 +70,7 @@ The Node modules above can the run individually (see tasks below) or chained tog
 
 ### Run from the Command Line
 
-AQUA dynamically creates gulp tasks for you, based on what is configured in your `aqua.project.json` file. Tasks are namespaced with the project **id** in your config file. Any tasks that are not configured for the project are simply skipped.
+aqua dynamically creates gulp tasks for you, based on what is configured in your `aqua.project.json` file. Tasks are namespaced with the project **id** in your config file. Any tasks that are not configured for the project are simply skipped.
 
 | task                  | does                                                             |
 |-----------------------|------------------------------------------------------------------|
@@ -263,7 +264,7 @@ If there is any issues found by the quality checks such as a lint error or faili
 - Download the [Gulp Devtools extension](https://chrome.google.com/webstore/detail/gulp-devtools/ojpmgjhofceebfifeajnjojpokebkkji) for Chrome Developer Tools from the Chrome Web Store.
 - Gun `npm install gulp-devtools -g`
 - Run `gulp-devtools` from the your project root folder (where your gulpfile.js is located)
-- Open Chrome Dev tools, find the Gulp tab. The AQUA/Gulp tasks are now accessible from Chrome.
+- Open Chrome Dev tools, find the Gulp tab. The aqua/Gulp tasks are now accessible from Chrome.
 
 ### Environment Prep
 
@@ -328,11 +329,11 @@ Page Object Pattern Goals
 You can pause end-to-end tests for debugging by using `browser.degugger()` for more, see documentation on [Debugging E2E Tests](https://github.com/angular/protractor/blob/master/docs/debugging.md#pausing-to-debug).
 
 
-## Configuring AQUA
+## Configuring aqua
 
 ### Patterns
 
-The AQUA config uses [glob patterns](https://www.npmjs.org/package/glob) similar to those in the various Unix shells to find and filter your files. Glob patterns resemble regular expressions somewhat, but have a much simpler syntax. The following character sequences have special meaning within a glob pattern:
+The aqua config uses [glob patterns](https://www.npmjs.org/package/glob) similar to those in the various Unix shells to find and filter your files. Glob patterns resemble regular expressions somewhat, but have a much simpler syntax. The following character sequences have special meaning within a glob pattern:
 
   * `!` negates the pattern
   * `?` matches any one character
@@ -347,7 +348,7 @@ While it's possible to manually include each set of files individually, it's enc
 
 ### aqua.config.json
 
-Used to configure AQUA settings that apply to all of your projects
+Used to configure aqua settings that apply to all of your projects
 
   * `docs`: **Required** Array; Where to find all source code written for the project
   * `docs`: *Optional* Object; all setting related to generating documentation
@@ -365,7 +366,7 @@ Used to configure AQUA settings that apply to all of your projects
 
 ### aqua.project.json
 
-Used to configure AQUA settings that apply to an individual project
+Used to configure aqua settings that apply to an individual project
 
   * `id`: **Required** String; a short but unique id for the project
   * `name`: **Required** String; a descriptive name of the project
@@ -384,9 +385,9 @@ Used to configure AQUA settings that apply to an individual project
   * `types`: *Optional* Array; Where to find all type definitions used by the project
   * `type`: *Optional* String; Used to indicate the type of project (such as Node.js)
 
-## Example AQUA Config File
+## Example aqua Config File
 
-Below are some typical configurations that you can cut-n-paste to jump-start your AQUA setup.
+Below are some typical configurations that you can cut-n-paste to jump-start your aqua setup.
 
 <pre class="sunlight-highlight-javascript">
 {
@@ -505,3 +506,14 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[cc-url]: https://codeclimate.com/github/daniellmb/aqua
+[cc-image]: https://codeclimate.com/github/daniellmb/aqua.png
+[npm-url]: https://npmjs.org/package/aqua
+[npm-image]: https://badge.fury.io/js/aqua.png
+[travis-url]: https://travis-ci.org/daniellmb/aqua
+[travis-image]: https://api.travis-ci.org/daniellmb/aqua.png
+[coveralls-url]: https://coveralls.io/r/daniellmb/aqua
+[coveralls-image]: https://coveralls.io/repos/daniellmb/aqua/badge.png
+[depstat-url]: https://david-dm.org/daniellmb/aqua
+[depstat-image]: https://david-dm.org/daniellmb/aqua.png?theme=shields.io
