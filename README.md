@@ -507,13 +507,13 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[cc-url]: https://codeclimate.com/github/daniellmb/aqua
-[cc-image]: https://codeclimate.com/github/daniellmb/aqua.png
+[cc-url]: https://codeclimate.com/github/daniellmb/AQUA
+[cc-image]: https://codeclimate.com/github/daniellmb/AQUA.png
 [npm-url]: https://npmjs.org/package/aqua
 [npm-image]: https://badge.fury.io/js/aqua.png
 [travis-url]: https://travis-ci.org/daniellmb/aqua
-[travis-image]: https://api.travis-ci.org/daniellmb/aqua.png
-[coveralls-url]: https://coveralls.io/r/daniellmb/aqua
-[coveralls-image]: https://coveralls.io/repos/daniellmb/aqua/badge.png
+[travis-image]: https://api.travis-ci.org/daniellmb/AQUA.png
+[coveralls-url]: https://coveralls.io/r/daniellmb/AQUA
+[coveralls-image]: https://coveralls.io/repos/daniellmb/AQUA/badge.png
 [depstat-url]: https://david-dm.org/daniellmb/aqua
-[depstat-image]: https://david-dm.org/daniellmb/aqua.png?theme=shields.io
+[depstat-image]: https://david-dm.org/daniellmb/aqua/dev-status.png?theme=shields.io
