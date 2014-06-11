@@ -8,6 +8,6 @@ Use the `{id}-e2e` task to run your end-to-end tests and verify interaction beha
 
 ## Configuration
 
-To use this task you need to include the following required sections in your in your [https://github.com/daniellmb/AQUA#aquaprojectjson](aqua.project.json) file.
+To use this task you need to include the following required sections in your in your [aqua.project.json](https://github.com/daniellmb/AQUA#user-content-aquaprojectjson) file.
 
 ### Required

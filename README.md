@@ -72,22 +72,22 @@ The Node modules above can the run individually (see tasks below) or chained tog
 
 AQUA dynamically creates gulp tasks for you, based on what is configured in your `aqua.project.json` file. Tasks are namespaced with the project **id** in your config file. Any tasks that are not configured for the project are simply skipped.
 
-| task                                                                             | does                                                             |
-|----------------------------------------------------------------------------------|------------------------------------------------------------------|
-|**gulp**                                                                          | List all possible tasks for all projects                         |
-|**gulp ?**                                                                        | List all possible tasks for all projects                         |
-|**gulp {id}**                                                                     | Run all project tasks in the correct order                       |
-|**gulp {id}-?**                                                                   | List all possible tasks for the project                          |
-|**[gulp {id}-all](https://github.com/daniellmb/AQUA/src/tasks/all.md)**           | Run all project tasks in the correct order                       |
-|**[gulp {id}-lint](https://github.com/daniellmb/AQUA/src/tasks/lintjs.md)**       | Lint the source code for syntax issues and anti-patterns         |
-|**[gulp {id}-lint-fix](https://github.com/daniellmb/AQUA/src/tasks/lintfix.md)**  | Automatically fix lint errors non-destructively                  |
-|**[gulp {id}-gpa](https://github.com/daniellmb/AQUA/src/tasks/gpa.md)**           | Analyze the source against complexity thresholds                 |
-|**[gulp {id}-unit](https://github.com/daniellmb/AQUA/src/tasks/unit.md)**         | Run unit tests against the source code                           |
-|**[gulp {id}-chk](https://github.com/daniellmb/AQUA/src/tasks/chk.md)**           | Type check the source code                                       |
-|**[gulp {id}-min](https://github.com/daniellmb/AQUA/src/tasks/min.md)**           | Minify the source code and create source map                     |
-|**[gulp {id}-e2e](https://github.com/daniellmb/AQUA/src/tasks/e2e.md)**           | Run end-to-end tests against the minified code                   |
-|**[gulp {id}-doc](https://github.com/daniellmb/AQUA/src/tasks/doc.md)**           | Generate documentation from code annotations	                    |
-|**[gulp {id}-wch](https://github.com/daniellmb/AQUA/src/tasks/wch.md)**           | Watch for file changes and automatically run tasks               |
+| task                                                                                         | does                                                             |
+|----------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+|**gulp**                                                                                      | List all possible tasks for all projects                         |
+|**gulp ?**                                                                                    | List all possible tasks for all projects                         |
+|**gulp {id}**                                                                                 | Run all project tasks in the correct order                       |
+|**gulp {id}-?**                                                                               | List all possible tasks for the project                          |
+|**[gulp {id}-all](https://github.com/daniellmb/AQUA/blob/master/src/tasks/all.md)**           | Run all project tasks in the correct order                       |
+|**[gulp {id}-lint](https://github.com/daniellmb/AQUA/blob/master/src/tasks/lintjs.md)**       | Lint the source code for syntax issues and anti-patterns         |
+|**[gulp {id}-lint-fix](https://github.com/daniellmb/AQUA/blob/master/src/tasks/lintfix.md)**  | Automatically fix lint errors non-destructively                  |
+|**[gulp {id}-gpa](https://github.com/daniellmb/AQUA/blob/master/src/tasks/gpa.md)**           | Analyze the source against complexity thresholds                 |
+|**[gulp {id}-unit](https://github.com/daniellmb/AQUA/blob/master/src/tasks/unit.md)**         | Run unit tests against the source code                           |
+|**[gulp {id}-chk](https://github.com/daniellmb/AQUA/blob/master/src/tasks/chk.md)**           | Type check the source code                                       |
+|**[gulp {id}-min](https://github.com/daniellmb/AQUA/blob/master/src/tasks/min.md)**           | Minify the source code and create source map                     |
+|**[gulp {id}-e2e](https://github.com/daniellmb/AQUA/blob/master/src/tasks/e2e.md)**           | Run end-to-end tests against the minified code                   |
+|**[gulp {id}-doc](https://github.com/daniellmb/AQUA/blob/master/src/tasks/doc.md)**           | Generate documentation from code annotations	                    |
+|**[gulp {id}-wch](https://github.com/daniellmb/AQUA/blob/master/src/tasks/wch.md)**           | Watch for file changes and automatically run tasks               |
 
 
 #### Console Customization

@@ -10,7 +10,7 @@ Use the `{id}-wch` task to file changes and automatically run your configured ta
 
 Will run whatever you have configured, except end-to-end tests as they are typically slow and you typically don't want to trigger them every time you save a file.
 
-To use this task you need to include the following required sections in your in your [https://github.com/daniellmb/AQUA#aquaprojectjson](aqua.project.json) file.
+To use this task you need to include the following required sections in your in your [aqua.project.json](https://github.com/daniellmb/AQUA#user-content-aquaprojectjson) file.
 
 ### Required
 

@@ -17,4 +17,4 @@ Use the `{id}-all` or simply `{id}` to run all tasks you have configured. Where 
 
 ## Configuration
 
-Will run whatever you have configured in your [https://github.com/daniellmb/AQUA#aquaprojectjson](aqua.project.json) file.
+Will run whatever you have configured in your [aqua.project.json](https://github.com/daniellmb/AQUA#user-content-aquaprojectjson) file.
