@@ -13,10 +13,15 @@
 
 /**
  * @constructor
- * @implements {Task}
+ * @extends {Base}
+ * @param {string} name - The task name.
+ * @param {string} warning - The task config warning.
  */
-function Unit() {
+function Unit(name, warning) {
+  var base = /** @type {Function} */(require('./base'));
 
+  // reuse Base's constructor
+  base.call(this, name, warning);
 }
 
 
@@ -278,35 +283,6 @@ Unit.prototype.run = function(aqua, pcfg, gulp) {
 
 
 /**
- * Create Project Task to unit test source code
- * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} pcfg - AQUA project configuration.
- * @param {!Gulp} gulp - Gulp instance.
- */
-Unit.prototype.reg = function(aqua, pcfg, gulp) {
-
-  var id = pcfg.id.toLowerCase(),
-      task = this;
-
-  //TODO: register the project with AQUA
-
-  // create task to run all unit tests in the project
-  gulp.task(id + '-unit', [], function(done) {
-
-    // check if project is configured properly
-    if (task.canRun(pcfg, aqua.cfg)) {
-      // run the task
-      task.run(aqua, pcfg, gulp);
-    } else {
-      aqua.warn('unit testing source code not configured');
-    }
-    done();
-  });
-
-};
-
-
-/**
  * Check if the project is properly configured to run the task
  * @param {!ProjConfig} pcfg - AQUA project config JSON.
  * @param {AquaConfig=} opt_acfg - optional AQUA config JSON.
@@ -327,10 +303,16 @@ Unit.prototype.about = function() {
 };
 
 
+/**
+ * Inherit from the base AQUA task.
+ */
+Unit.prototype.__proto__ = require('./base').prototype;
+
+
 (function closure() {
   /**
    * Export an instance of the task
    * @type {Unit}
    */
-  module.exports = new Unit();
+  module.exports = new Unit('unit', 'unit testing source code not configured');
 }());

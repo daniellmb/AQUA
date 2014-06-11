@@ -176,64 +176,6 @@ describe('lintjs', function() {
     });
   });
 
-  describe('reg', function() {
-
-    it('should register the project with AQUA', function() {
-      // arrange
-      // act
-      // assert
-    });
-    it('should create task to lint all JavaScript in the project', function() {
-      // arrange
-      // act
-      task.reg(aqua, cfg, gulp);
-      // assert
-      expect(gulp.task).toHaveBeenCalledWith('test-lint', [], jasmine.any(Function));
-    });
-
-    describe('gulp task', function() {
-      var arg, done, canRun;
-
-      beforeEach(function() {
-        canRun = true;
-        // add spies
-        done = jasmine.createSpy('done');
-        spyOn(task, 'canRun').andCallFake(function() {
-          return canRun;
-        });
-        spyOn(task, 'run');
-      });
-      it('should show warning if not supported', function() {
-        // arrange
-        canRun = false;
-        task.reg(aqua, cfg, gulp);
-        arg = gulp.task.calls[0].args[2];
-        // act
-        arg(done);
-        // assert
-        expect(aqua.warn).toHaveBeenCalledWith('linting source code not configured');
-      });
-      it('should only run if project is configured properly', function() {
-        // arrange
-        task.reg(aqua, cfg, gulp);
-        arg = gulp.task.calls[0].args[2];
-        // act
-        arg(done);
-        // assert
-        expect(task.canRun).toHaveBeenCalledWith(cfg);
-      });
-      it('should run the done callback', function() {
-        // arrange
-        task.reg(aqua, cfg, gulp);
-        arg = gulp.task.calls[0].args[2];
-        // act
-        arg(done);
-        // assert
-        expect(done).toHaveBeenCalled();
-      });
-    });
-  });
-
   describe('canRun', function() {
     it('should return true if the task can run', function() {
       // arrange

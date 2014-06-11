@@ -72,168 +72,25 @@ The Node modules above can the run individually (see tasks below) or chained tog
 
 AQUA dynamically creates gulp tasks for you, based on what is configured in your `aqua.project.json` file. Tasks are namespaced with the project **id** in your config file. Any tasks that are not configured for the project are simply skipped.
 
-| task                  | does                                                             |
-|-----------------------|------------------------------------------------------------------|
-|**gulp**               | List all possible tasks for all projects                         |
-|**gulp ?**             | List all possible tasks for all projects                         |
-|**gulp {id}**          | Run all project tasks in the correct order                       |
-|**gulp {id}-?**        | List all possible tasks for the project                          |
-|**gulp {id}-all**      | Run all project tasks in the correct order                       |
-|**gulp {id}-lint**     | Lint the source code for syntax issues and anti-patterns         |
-|**gulp {id}-lint-fix** | Automatically fix lint errors non-destructively                  |
-|**gulp {id}-gpa**      | Analyze the source against complexity thresholds                 |
-|**gulp {id}-unit**     | Run unit tests against the source code                           |
-|**gulp {id}-chk**      | Type check the source code                                       |
-|**gulp {id}-min**      | Minify the source code and create source map                     |
-|**gulp {id}-e2e**      | Run end-to-end tests against the minified code                   |
-|**gulp {id}-doc**      | Generate documentation from code annotations	                   |
-|**gulp {id}-wch**      | Watch for file changes and automatically run all but e2e         |
-
-## Tasks
-
-### gulp or gulp ?
-
-Use to review all the projects and tasks available.
-
-### id or id-all
-
-Save some typing by running all project tasks in the following order:
-
-  1. `{id}-lint`
-  1. `{id}-gpa`
-  1. `{id}-clean`
-  1. `{id}-doc`
-  1. `{id}-chk`
-  1. `{id}-unit`
-  1. `webdriver-update`
-  1. `{id}-e2e`
-
-Any tasks that are not configured for the project are simply skipped.
-
-### id-?
-
-Can't remember what to type to run the command you want? Using `gulp {id}-?` (where `{id}` is your project id) will list all possible tasks for the project in the console.
-
-### id-lint
-
-Lint all the JavaScript in your project, source code, unit tests, the for syntax issues and anti-patterns
-
-### id-lint-fix
-
-Automatically fix lint errors in a non-destructive way using your JSHint settings.
-
-  * `asi` Add missing semicolons.
-  * `camelcase|snakecase` Enforces camelCase and snake_case convention.
-  * `curly` Adds curly braces to statements.
-  * `debugger` Removes debugger statements
-  * `plusplus` Converts plusplus and minusminus.
-  * `quotmark` Enforces single and double quote style.
-  * Adds parenthesis when invoking a constructor
-  * Adds the radix parameter to parseInt
-  * Convert to use array literal and object literal
-  * Dot notation conversion
-  * Extra trailing commas
-  * Leading and trailing zeroes on decimals.
-  * Missing whitespaces.
-  * Mixed spaces/tabs
-  * Proper indentation
-  * Removes deletion of variables
-  * Removes undefined when assigning to variables
-  * Removes unnecessary semicolons
-  * Uses isNaN function rather than comparing to NaN
-
-### id-gpa
-
-Analyze the JavaScript source code for maintainability and enforce complexity thresholds.
-
-### id-unit
-
-Run unit tests written in Jasmine against the source code and generate code coverage reports.
-
-Runs the tasks below in the following order:
-
-  1. `{id}-lint`
-  1. `{id}-gpa`
-  1. `{id}-doc`
-  1. `{id}-chk`
-  1. `{id}-unit`
-
-Any tasks that are not configured for the project are simply skipped.
-
-### id-chk
-
-First runs `{id}-lint`. Type check your JavaScript code without having to learn a new language such as [TypeScript](http://www.typescriptlang.org/). Type checking is done using [Google Closure compiler](https://github.com/google/closure-compiler) that is written in Java so you'll need the [Java 7 Runtime Environment](http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html) (JRE 7u51+) installed to do type checking. For troubleshooting see the [GCC Wiki](https://github.com/google/closure-compiler/wiki). If you need to [remove older versions of Java](https://www.java.com/en/download/faq/remove_olderversions.xml) there is documentation for your operating system.
-
-Runs the tasks below in the following order:
-
-  1. `{id}-lint`
-  1. `{id}-chk`
-
-Any tasks that are not configured for the project are simply skipped.
-
-#### Code Comments
-
-All code should be annotated with comments to enable both type checking at compile time as well as documentation generation. See [JSDoc Dictionary](http://usejsdoc.org/) and [Closure Compiler Annotation](https://developers.google.com/closure/compiler/docs/js-for-compiler) for more information. Both ([GitHub Flavored Markdown](http://github.github.com/github-flavored-markdown/)) and HTML is supported in the comments, with Markdown preferred as it does not degrade reading the source code as much as HTML.
-
-<pre class="sunlight-highlight-javascript">
-/**
-  * An implementation of `_.contains` for cache objects that mimics the return
-  * signature of `_.indexOf` by returning `0` if the value is found, else `-1`.
-  * This example is from [lodash](https://github.com/lodash/lodash/blob/master/lodash.js#L273).
-  *
-  * @private
-  * @param {Object} cache The cache object to inspect.
-  * @param {*} value The value to search for.
-  * @returns {number} Returns `0` if `value` is found, else `-1`.
-  */
-  function baseIndexOf(array, value, fromIndex) {
-    var index = (fromIndex || 0) - 1,
-        length = array ? array.length : 0;
-
-    while (++index &lt; length) {
-      if (array[index] === value) {
-        return index;
-      }
-    }
-    return -1;
-  }
-</pre>
-
-### id-min
-
-Use [Google Closure compiler](https://github.com/google/closure-compiler) for advanced minification of your source code and create a source map.
+| task                                                                             | does                                                             |
+|----------------------------------------------------------------------------------|------------------------------------------------------------------|
+|**gulp**                                                                          | List all possible tasks for all projects                         |
+|**gulp ?**                                                                        | List all possible tasks for all projects                         |
+|**gulp {id}**                                                                     | Run all project tasks in the correct order                       |
+|**gulp {id}-?**                                                                   | List all possible tasks for the project                          |
+|**[gulp {id}-all](https://github.com/daniellmb/AQUA/src/tasks/all.md)**           | Run all project tasks in the correct order                       |
+|**[gulp {id}-lint](https://github.com/daniellmb/AQUA/src/tasks/lintjs.md)**       | Lint the source code for syntax issues and anti-patterns         |
+|**[gulp {id}-lint-fix](https://github.com/daniellmb/AQUA/src/tasks/lintfix.md)**  | Automatically fix lint errors non-destructively                  |
+|**[gulp {id}-gpa](https://github.com/daniellmb/AQUA/src/tasks/gpa.md)**           | Analyze the source against complexity thresholds                 |
+|**[gulp {id}-unit](https://github.com/daniellmb/AQUA/src/tasks/unit.md)**         | Run unit tests against the source code                           |
+|**[gulp {id}-chk](https://github.com/daniellmb/AQUA/src/tasks/chk.md)**           | Type check the source code                                       |
+|**[gulp {id}-min](https://github.com/daniellmb/AQUA/src/tasks/min.md)**           | Minify the source code and create source map                     |
+|**[gulp {id}-e2e](https://github.com/daniellmb/AQUA/src/tasks/e2e.md)**           | Run end-to-end tests against the minified code                   |
+|**[gulp {id}-doc](https://github.com/daniellmb/AQUA/src/tasks/doc.md)**           | Generate documentation from code annotations	                    |
+|**[gulp {id}-wch](https://github.com/daniellmb/AQUA/src/tasks/wch.md)**           | Watch for file changes and automatically run tasks               |
 
 
-Runs the tasks below in the following order:
-
-  1. `{id}-lint`
-  1. `{id}-min`
-
-Any tasks that are not configured for the project are simply skipped.
-
-### id-e2e
-
-Unit tests are not enough, you also need to run end-to-end tests (aka integration tests) against your application to verify behavior.
-
-Runs the tasks below in the following order:
-
-  1. `webdriver-update`
-  1. `{id}-e2e`
-
-### id-doc
-
-Generate documentation from code annotations using [JSDoc](http://usejsdoc.org/).
-
-Runs the tasks below in the following order:
-
-  1. `{id}-clean`
-  1. `{id}-doc`
-
-### id-wch
-
-Watch for file changes and automatically run all but you end-to-end tests when something is updated. Great for those who use TDD and Red &gt; Green &gt; Refactor.
-
-#### Customization
+#### Console Customization
 
 Avoid a lot needless typing! You can create a shortcut that will open the command prompt at any folder you want.
 
@@ -253,11 +110,11 @@ Also now that you have a shortcut you can customize your command window using `R
 
 #### Canceling a Task
 
-So you ran `gulp {id}-wch` and you want to stop watching for changes to the project source files. Or maybe you accidentally typed `gulp {id}-e2e` and don't want to wait for all the end-to-end tests to complete? Pressing <kbd>Ctrl</kbd>+<kbd>c</kbd> will pause the task and ask if you want to `Terminate batch job (Y/N)?` typing <kbd>y</kbd> <kbd>enter</kbd> will cancel the task.
+So you ran `gulp aqa-wch` and you want to stop watching for changes to the project source files. Or maybe you accidentally typed `gulp aqa-e2e` and don't want to wait for all the end-to-end tests to complete? Pressing <kbd>Ctrl</kbd>+<kbd>c</kbd> will pause the task and ask if you want to `Terminate batch job (Y/N)?` typing <kbd>y</kbd> <kbd>enter</kbd> will cancel the task.
 
 #### Quiet Mode
 
-If there is any issues found by the quality checks such as a lint error or failing unit test the system will beep, unless `--shh` is included. For example `gulp clp-unit --shh`
+If there is any issues found by the quality checks such as a lint error or failing unit test the system will beep, unless `--shh` is included. For example `gulp aqa-unit --shh`
 
 ### Run from Chrome Browser
 
@@ -304,7 +161,7 @@ Unit tests are written in [Jasmine](http://jasmine.github.io/1.3/introduction.ht
 
 ### Debugging
 
-Unit tests can be run from the commandline with `gulp {id}-unit` or in your favorite browser.
+Unit tests can be run from the commandline with `gulp aqa-unit` or in your favorite browser.
 Debugging can be done by setting break points in the source code, using	`console.log` and `debugger;` statements.
 
 
@@ -370,7 +227,7 @@ Used to configure AQUA settings that apply to an individual project
 
   * `id`: **Required** String; a short but unique id for the project
   * `name`: **Required** String; a descriptive name of the project
-  * `src`: **Required** Array; Where to find all source code written for the project
+  * `src`: *Optional* Array; Where to find all source code written for the project
   * `by`: *Optional* String; name and email of the the teams or individuals that worked on the project
   * `readme`: *Optional* String; Where to find the markdown file of the project readme (used as the index documentation page)
   * `alljs`: *Optional* Array; Where to find all the JavaScript written for the project, including specs (used for linting)

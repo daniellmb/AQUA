@@ -17,6 +17,7 @@
   },
   "alljs": "./!(coverage|docs|externs|node_modules)/!(bower_components)/*.js",
   "types": [
+    "util",
     "events",
     "stream",
     "fs",

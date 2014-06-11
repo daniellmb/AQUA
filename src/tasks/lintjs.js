@@ -13,10 +13,15 @@
 
 /**
  * @constructor
- * @implements {Task}
+ * @extends {Base}
+ * @param {string} name - The task name.
+ * @param {string} warning - The task config warning.
  */
-function LintJS() {
+function LintJS(name, warning) {
+  var base = /** @type {Function} */(require('./base'));
 
+  // reuse Base's constructor
+  base.call(this, name, warning);
 }
 
 
@@ -37,8 +42,8 @@ LintJS.prototype.run = function(aqua, cfg, gulp) {
 
   // lint all JavaScript against anti-patterns
   gulp.src(cfg.alljs)
-    .pipe(lintJs())
-    .pipe(jshint.reporter(function() {
+      .pipe(lintJs())
+      .pipe(jshint.reporter(function() {
         // show on the first error only
         if (no_errors) {
           aqua.log('Lint Check: ' + aqua.colors.yellow('Lint errors found'));
@@ -58,34 +63,6 @@ LintJS.prototype.run = function(aqua, cfg, gulp) {
 
 
 /**
- * Create Project Task to lint source code
- * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg - AQUA project configuration.
- * @param {!Gulp} gulp - Gulp instance.
- */
-LintJS.prototype.reg = function(aqua, cfg, gulp) {
-
-  var id = cfg.id.toLowerCase(),
-      task = this;
-
-  //TODO: register the project with AQUA
-
-  // create task to lint all JavaScript in the project
-  gulp.task(id + '-lint', [], function(done) {
-    // check if project is configured properly
-    if (task.canRun(cfg)) {
-      // run the task
-      task.run(aqua, cfg, gulp);
-    } else {
-      aqua.warn('linting source code not configured');
-    }
-    done();
-  });
-
-};
-
-
-/**
  * Check if the project is properly configured to run the task
  * @param {!ProjConfig} pcfg - AQUA project config JSON.
  * @return {boolean}
@@ -98,10 +75,16 @@ LintJS.prototype.canRun = function(pcfg) {
 /**
  * Return information about what the task is for and how to run it.
  * @return {string}
-*/
+ */
 LintJS.prototype.about = function() {
   return '`gulp {id}-lint` to validate source files against anti-patterns';
 };
+
+
+/**
+ * Inherit from the base AQUA task.
+ */
+LintJS.prototype.__proto__ = require('./base').prototype;
 
 
 (function closure() {
@@ -109,5 +92,5 @@ LintJS.prototype.about = function() {
    * Export an instance of the task
    * @type {LintJS}
    */
-  module.exports = new LintJS();
+  module.exports = new LintJS('lint', 'linting source code not configured');
 }());

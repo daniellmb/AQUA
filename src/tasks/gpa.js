@@ -13,10 +13,15 @@
 
 /**
  * @constructor
- * @implements {Task}
+ * @extends {Base}
+ * @param {string} name - The task name.
+ * @param {string} warning - The task warning.
  */
-function GPA() {
+function GPA(name, warning) {
+  var base = /** @type {Function} */(require('./base'));
 
+  // reuse Base's constructor
+  base.call(this, name, warning);
 }
 
 
@@ -68,34 +73,6 @@ GPA.prototype.run = function(aqua, cfg, gulp) {
 
 
 /**
- * Create Project Task to check source code complexity
- * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg - AQUA project configuration.
- * @param {!Gulp} gulp - Gulp instance.
- */
-GPA.prototype.reg = function(aqua, cfg, gulp) {
-
-  var id = cfg.id.toLowerCase(),
-      task = this;
-
-  //TODO: register the project with AQUA
-
-  // create task to check the gpa of the project source code
-  gulp.task(id + '-gpa', [], function(done) {
-    // check if project is configured properly
-    if (task.canRun(cfg)) {
-      // run the task
-      task.run(aqua, cfg, gulp);
-    } else {
-      aqua.warn('checking source code complexity not configured');
-    }
-    done();
-  });
-
-};
-
-
-/**
  * Check if the project is properly configured to run the task
  * @param {!ProjConfig} pcfg - AQUA project config JSON.
  * @return {boolean}
@@ -114,10 +91,15 @@ GPA.prototype.about = function() {
 };
 
 
+/**
+ * Inherit from the base AQUA task.
+ */
+GPA.prototype.__proto__ = require('./base').prototype;
+
 (function closure() {
   /**
    * Export an instance of the task
    * @type {GPA}
    */
-  module.exports = new GPA();
+  module.exports = new GPA('gpa', 'checking source code complexity not configured');
 }());
