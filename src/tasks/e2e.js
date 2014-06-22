@@ -38,7 +38,7 @@ E2E.prototype.run = function(aqua, pcfg, gulp) {
   var gProtractor = require('gulp-protractor'),
       protractor = gProtractor.protractor;
 
-  aqua.log('run task', pcfg.id + '-e2e');
+  //aqua.log('run task', pcfg.id + '-e2e');
 
   // run end-to-end tests
   gulp.src(pcfg.e2e.tests)

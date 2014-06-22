@@ -6,18 +6,22 @@ before_script:
 after_script:
 - codeclimate < test/coverage/aqa/lcov.info
 notifications:
+  # publish build status to IRC channel: #aqua
   irc:
     channels:
     - chat.freenode.net#aqua
+    on_success: always
+    on_failure: always
     template:
     - ! '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
     - ! 'Change view : %{compare_url}'
     - ! 'Build details : %{build_url}'
+  # publish build status to HipChat room: http://www.hipchat.com/gpMy91MRw
   hipchat:
     rooms:
-    - secure: Lw4FyQDrHRPSep8EYekx6cYr0QmS6I480g3C/hGjybUlz+1hv5e45v0NBMyrexEXkCD8erC2uI07znow9INeax7HHOHlq3DaAn0xAqsh2qDx2Kzxp3Ac6qQD+PHssDbST2zLwwbu6SbTKi/B3OEYDHi0tvqyD5j6iXIr0GUnCTY=
-    template:
-    - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
+      secure: Lw4FyQDrHRPSep8EYekx6cYr0QmS6I480g3C/hGjybUlz+1hv5e45v0NBMyrexEXkCD8erC2uI07znow9INeax7HHOHlq3DaAn0xAqsh2qDx2Kzxp3Ac6qQD+PHssDbST2zLwwbu6SbTKi/B3OEYDHi0tvqyD5j6iXIr0GUnCTY=
+    on_success: always
+    on_failure: always
 addons:
   sauce_connect: true
 env:
