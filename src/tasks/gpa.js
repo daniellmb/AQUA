@@ -3,7 +3,6 @@
  *
  * ### Responsibilities
  * - analyze the JavaScript source code against complexity thresholds.
- * - register task to check code complexity.
  *
  * @module gpa
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
@@ -16,12 +15,13 @@
  * @extends {Base}
  * @param {string} name - The task name.
  * @param {string} warning - The task warning.
+ * @param {Array=} opt_deps - The optional task dependency tasks.
  */
-function GPA(name, warning) {
+function GPA(name, warning, opt_deps) {
   var base = /** @type {Function} */(require('./base'));
 
   // reuse Base's constructor
-  base.call(this, name, warning);
+  base.call(this, name, warning, opt_deps);
 }
 
 

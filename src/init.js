@@ -10,18 +10,34 @@
 
 
 (function closure() {
+
   /**
-   * Take the project config files and generate gulp tasks for them.
-   * @param {Array} cfgs - Array of AQUA project configuration objects
-   * @this {AQUA}
-   * @return {Gulp}
+   * Create project agnostic tasks
+   * @param {AQUA} aqua - AQUA instance.
+   * @param {Gulp} gulp - Gulp instance.
+   * @param {Logger} log - log4js logger instance
    */
-  module.exports = function(cfgs) {
-    var aqua = /** @type {AQUA} */(this),
-        tasks = (aqua.tasks),
-        util = aqua.util,
-        gulp = /** @type {Gulp} */(require('gulp')),
-        log = aqua.logger.create('init');
+  function projectAgnosticTasks(aqua, gulp, log) {
+    // load node modules needed
+    var gProtractor = require('gulp-protractor');
+
+    // Downloads the latest selenium webdriver
+    gulp.task('webdriver_update', [], gProtractor.webdriver_update);
+
+    // Starts the standalone selenium server
+    gulp.task('webdriver_standalone', [], gProtractor.webdriver_standalone);
+  }
+
+  /**
+   * Create project dependant tasks
+   * @param {AQUA} aqua - AQUA instance.
+   * @param {Array} cfgs - Array of AQUA project configuration objects
+   * @param {Gulp} gulp - Gulp instance.
+   * @param {Logger} log - log4js logger instance
+   */
+  function projectDependantTasks(aqua, cfgs, gulp, log) {
+    var tasks = (aqua.tasks),
+        util = aqua.util;
 
     // loop through the AQUA project configurations
     cfgs.forEach(function(cfg) {
@@ -40,6 +56,24 @@
         tasks[key].reg(aqua, cfg, gulp);
       });
     });
+  }
+
+  /**
+   * Take the project config files and generate gulp tasks for them.
+   * @param {Array} cfgs - Array of AQUA project configuration objects
+   * @this {AQUA}
+   * @return {Gulp}
+   */
+  module.exports = function(cfgs) {
+    var aqua = /** @type {AQUA} */(this),
+        gulp = /** @type {Gulp} */(require('gulp')),
+        log = /** @type {Logger} */(aqua.logger.create('init'));
+
+    // create project agnostic tasks
+    projectAgnosticTasks(aqua, gulp, log);
+
+    // create project dependant tasks
+    projectDependantTasks(aqua, cfgs, gulp, log);
 
     // return the gulp instance
     return gulp;

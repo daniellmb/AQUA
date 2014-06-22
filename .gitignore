@@ -3,7 +3,7 @@
 # package managers #
 ####################
 node_modules/
-npm-debug.log
+*.log
 
 # generated files #
 ############################
@@ -23,3 +23,6 @@ Icon?
 ehthumbs.db
 Thumbs.db
 .idea/
+
+# Ignore json file with saucelabs credentials
+sauce.json

@@ -1,5 +1,5 @@
 # AQUA: Automated QUality Analysis
-[![Build Status][travis-image]][travis-url] [![Coverage Status][coverage-image]][coverage-url] [![Code GPA][cc-image]][cc-url]  [![Dependency Status][depstat-image]][depstat-url] [![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url] [![Test Coverage][coverage-image]][coverage-url] [![Code GPA][gpa-image]][gpa-url] [![Open Issues][issues-image]][issues-url] [![GitTip][tip-image]][tip-url]
 
 ## About
 
@@ -20,20 +20,22 @@ While nothing is stopping you from simply editing a JavaScript file and committi
 ### JavaScript
 
   * Lint Source Code for Syntax Errors and Anti-Patterns
-  * Automatically fix lint errors non-destructively
+  * Automatically fix lint errors non-destructively (TODO)
   * Analyze Code Against Complexity Thresholds
-  * Type Checking Source Code
-  * Advanced Minification
+  * Type Checking Source Code (TODO)
+  * Advanced Minification (TODO)
   * Unit Test Runnner
   * Code Coverage Reports
   * End-to-end Test Runner
-  * Documentation Generation
+  * Documentation Generation (TODO)
 
 ### CSS
+TODO: pull requests welcome :)
 
   * Lint StyleSheets for Syntax Errors and Anti-Patterns
 
 ### C&#35;
+TODO: pull requests welcome :)
 
   * Lint Source Code for Syntax Errors and Anti-Patterns (via [FxCop](http://msdn.microsoft.com/en-us/library/bb429476.aspx))
   * Analyze Code Against Complexity Thresholds (via [Code Metrics PowerTool](http://www.microsoft.com/en-us/download/details.aspx?id=38196))
@@ -231,13 +233,13 @@ Used to configure AQUA settings that apply to an individual project
   * `by`: *Optional* String; name and email of the the teams or individuals that worked on the project
   * `readme`: *Optional* String; Where to find the markdown file of the project readme (used as the index documentation page)
   * `alljs`: *Optional* Array; Where to find all the JavaScript written for the project, including specs (used for linting)
-  * `globals`: *Optional* Array; Where to find file(s) containing the expected global variables used by your project.
   * `unit`: *Optional* Object; Everything needed to run unit tests
+    * `globals`: *Optional* Array; Where to find file(s) containing the expected global variables used by your project.
 	  * `tests`: **Required** Array; Where to find all of the projects unit tests
 	  * `deps`: *Optional* Array; Where to find the scripts the project depends on (such as AngularJS or jQuery)
 	  * `mocks`: *Optional* Array; Where to find any mocks used by the project unit tests
   * `e2e`: *Optional* Object; Everything needed to run end-to-end tests
-	  * `tests`: **Required** Array; Where to find all of hte projects end-to-end tests
+	  * `tests`: **Required** Array; Where to find all of the projects end-to-end tests
 	  * `pgobj`: *Optional* Array; Where to find the page objects used by the project end-to-end tests
   * `types`: *Optional* Array; Where to find all type definitions used by the project
   * `type`: *Optional* String; Used to indicate the type of project (such as Node.js)
@@ -364,13 +366,13 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[cc-url]: https://codeclimate.com/github/daniellmb/AQUA
-[cc-image]: https://codeclimate.com/github/daniellmb/AQUA.png
-[npm-url]: https://npmjs.org/package/aqua
-[npm-image]: https://badge.fury.io/js/aqua.png
-[travis-url]: https://travis-ci.org/daniellmb/aqua
-[travis-image]: https://api.travis-ci.org/daniellmb/AQUA.png
+[gpa-url]: https://codeclimate.com/github/daniellmb/AQUA
+[gpa-image]: http://img.shields.io/codeclimate/github/daniellmb/AQUA.svg?style=flat
+[issues-url]: https://github.com/daniellmb/AQUA/issues
+[issues-image]: http://img.shields.io/github/issues/daniellmb/aqua.svg?style=flat
+[travis-url]: https://travis-ci.org/daniellmb/AQUA
+[travis-image]: http://img.shields.io/travis/daniellmb/AQUA.svg?style=flat
 [coverage-url]: https://codeclimate.com/github/daniellmb/AQUA
-[coverage-image]: https://codeclimate.com/github/daniellmb/AQUA/coverage.png
-[depstat-url]: https://david-dm.org/daniellmb/aqua
-[depstat-image]: https://david-dm.org/daniellmb/aqua/dev-status.png?theme=shields.io
+[coverage-image]: http://img.shields.io/codeclimate/coverage/github/daniellmb/AQUA.svg?style=flat
+[tip-url]: https://www.gittip.com/daniellmb/
+[tip-image]: http://img.shields.io/gittip/daniellmb.svg?style=flat

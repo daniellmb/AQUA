@@ -1,10 +1,28 @@
 language: node_js
 node_js:
+- '0.11'
 - '0.10'
 before_script:
 - npm install -g codeclimate-test-reporter
 after_script:
 - codeclimate < test/coverage/aqa/lcov.info
+notifications:
+  irc:
+    channels:
+    - chat.freenode.net#aqua
+    template:
+    - ! '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
+    - ! 'Change view : %{compare_url}'
+    - ! 'Build details : %{build_url}'
+  hipchat:
+    rooms:
+    - secure: Lw4FyQDrHRPSep8EYekx6cYr0QmS6I480g3C/hGjybUlz+1hv5e45v0NBMyrexEXkCD8erC2uI07znow9INeax7HHOHlq3DaAn0xAqsh2qDx2Kzxp3Ac6qQD+PHssDbST2zLwwbu6SbTKi/B3OEYDHi0tvqyD5j6iXIr0GUnCTY=
+    template:
+    - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
+addons:
+  sauce_connect: true
 env:
   global:
-    secure: tsipXq8wv3G0ySgaxUWzCdpvEGXW6ZNe+bXpzHeMCp2I2jQZuLEZgmDzqBYqotCKi0aFG+lIyYqaGAKIXboXyGFCXcuMRd+D4hxP1gYvcgEiCZzUYykTFgxYKN9pgMHjVBNZgPr/PUDYsIM/9K8jd6HXR9V+NKM+G3fPs7szBsU=
+  - secure: tsipXq8wv3G0ySgaxUWzCdpvEGXW6ZNe+bXpzHeMCp2I2jQZuLEZgmDzqBYqotCKi0aFG+lIyYqaGAKIXboXyGFCXcuMRd+D4hxP1gYvcgEiCZzUYykTFgxYKN9pgMHjVBNZgPr/PUDYsIM/9K8jd6HXR9V+NKM+G3fPs7szBsU=
+  - secure: n8Z8Kexxd6oPKflAKg8HKVM8/DcH6SpvEBuWR48d7W0BNvyNRFHTONIAVs79blE144J7A3e4pZtmtb0vLWgeRym6tCIxuS/vMXUtd0pMlvrhxiFFp9pGpQffXWCfdW0W2AABPv0CdODBFOUXMnYbi2UX76zTB36RPH1fGMi1wbI=
+  - secure: QlYicDZo3IYY/qrACLP5MciOA5U3O1VJZNkqSDlknCF5APDg3Gbgd1I7DTjQ/MJ7WV7ldbgZNrIoCM7IMQNbZuqNiD8lXacId4A18/WQdgY9MdP5HJ0n7lk9iKDkgqtKerie1zdAbAZJ5QstchKfnn+DB83BziFapPRV0AEj9A0=

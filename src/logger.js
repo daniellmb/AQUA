@@ -62,7 +62,7 @@
    * Create a new logger. There are two optional arguments
    * @param {string=} opt_name - Defaults to `aqua`.
    * @param {string=} opt_level - Defaults to the global level.
-   * @return {Object} logger instance
+   * @return {Logger} logger instance
    * */
   exports.create = function(opt_name, opt_level) {
     // get dependencies

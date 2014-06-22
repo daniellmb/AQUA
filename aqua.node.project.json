@@ -17,14 +17,8 @@
   },
   "alljs": "./!(coverage|docs|externs|node_modules)/!(bower_components)/*.js",
   "types": [
-    "util",
-    "events",
-    "stream",
-    "fs",
-    "path",
-    "modules/gulp-jshint",
-    "modules/gulp-istanbul",
-    "modules/lodash",
+    "util", "events", "stream", "fs", "path",
+    "modules/*",
     "./test/types/*.js"
   ]
 }

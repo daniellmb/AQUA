@@ -1,4 +1,4 @@
-baseUrl = 'http://localhost';
+baseUrl = 'http://localhost:63342';
 
 // checks if a given console log message is an error
 function isError(log) {
@@ -58,6 +58,8 @@ function exportUtilityMethods() {
  */
 exports.config = {
 
+  //seleniumServerJar: '../node_modules/protractor/selenium/selenium-server-standalone-2.42.0.jar',
+
   capabilities: {
     'browserName': 'chrome',
     'chromeOptions': {
@@ -65,7 +67,8 @@ exports.config = {
         'incognito',
         'disable-extensions',
         'start-maximized',
-        'enable-crash-reporter-for-testing'
+        'enable-crash-reporter-for-testing',
+        'test-type'
       ]
     },
     'loggingPrefs': {

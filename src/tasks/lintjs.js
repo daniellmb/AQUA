@@ -3,7 +3,6 @@
  *
  * ### Responsibilities
  * - lint JavaScript source code.
- * - register task to run linting.
  *
  * @module lintjs
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
@@ -15,13 +14,14 @@
  * @constructor
  * @extends {Base}
  * @param {string} name - The task name.
- * @param {string} warning - The task config warning.
+ * @param {string} warning - The task warning.
+ * @param {Array=} opt_deps - The optional task dependency tasks.
  */
-function LintJS(name, warning) {
+function LintJS(name, warning, opt_deps) {
   var base = /** @type {Function} */(require('./base'));
 
   // reuse Base's constructor
-  base.call(this, name, warning);
+  base.call(this, name, warning, opt_deps);
 }
 
 
@@ -50,15 +50,14 @@ LintJS.prototype.run = function(aqua, cfg, gulp) {
           aqua.error(arguments);
         }
         no_errors = false;
-      }))
-      .pipe(jshint.reporter('default'))
-      .pipe(jshint.reporter('fail'))
-      .on('error', aqua.error)
-      .on('end', function() {
+      }).on('end', function() {
         if (no_errors) {
           aqua.log('Lint Check: ' + aqua.colors.green('No errors found'));
         }
-      });
+      }))
+      .pipe(jshint.reporter('default'))
+      .pipe(jshint.reporter('fail'))
+      .on('error', aqua.error);
 };
 
 

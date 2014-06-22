@@ -1,6 +1,6 @@
 {
   "name": "aqua",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "AQUA: Automated QUality Analysis; used to raise the visibility of code quality and increase awareness within teams by getting immediate feedback about code smells before they become technical debt.",
   "author": "Daniel Lamb <dlamb.open.source@gmail.com> (daniellmb.com)",
   "homepage": "https://github.com/daniellmb/AQUA",
@@ -20,11 +20,17 @@
     "url": "git://github.com/daniellmb/AQUA.git"
   },
   "keywords": [
-    "code quality",
-    "automated",
-    "unit test",
-    "e2e test",
-    "documentation"
+    "automate", "automation",
+    "analysis", "analyze",
+    "code quality", "code style",
+    "test", "testing", "unit", "unit test", "TDD",
+    "functional", "end-to-end", "e2e test", "BDD",
+    "istanbul", "halstead", "cyclomatic", "complexity",
+    "lint", "jslint", "jshint", "checker",
+    "closure linter", "closure compiler",
+    "instrument", "instrumentation",
+    "analytics", "metrics", "stats", "statistics",
+    "report", "documentation"
   ],
   "scripts": {
     "test": "gulp aqa-unit"
@@ -55,6 +61,7 @@
     "karma-ios-launcher": "latest",
     "karma-sauce-launcher": "latest",
     "karma-nyan-reporter": "latest",
+    "karma-story-reporter": "latest",
     "karma-coveralls": "latest",
     "colors": "latest",
     "glob": "latest",

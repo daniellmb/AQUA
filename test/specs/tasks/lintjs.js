@@ -51,12 +51,26 @@ describe('lintjs', function() {
   });
 
   describe('run', function() {
-    var jshint, mockReq;
+    var jshint, reporter, mockReq;
 
     beforeEach(function() {
       // mock jshint
       jshint = jasmine.createSpy('jshint').andReturn('jshint');
-      jshint.reporter = jasmine.createSpy('reporter').andCallFake(function(name) { return name; });
+      // mock jshint reporter instance
+      reporter = {
+        on: jasmine.createSpy('on').andReturn('on')
+      };
+      // mock jshint reporter
+      jshint.reporter = function(rpt) {
+        if (typeof rpt === 'string') {
+          // return reporter type (aka name)
+          return rpt;
+        } else {
+          // return mock reporter instance
+          return reporter;
+        }
+      };
+      spyOn(jshint, 'reporter').andCallThrough();
 
       // mock require
       mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return jshint; });
@@ -95,7 +109,7 @@ describe('lintjs', function() {
       task.run(aqua, cfg, gulp);
       // assert
       expect(jshint.reporter).toHaveBeenCalled();
-      expect(gulp.pipe).toHaveBeenCalledWith(jasmine.any(Function));
+      expect(gulp.pipe).toHaveBeenCalledWith('on');
     });
     it('should use the default reporter', function() {
       // arrange
@@ -125,7 +139,7 @@ describe('lintjs', function() {
       // act
       task.run(aqua, cfg, gulp);
       // assert
-      expect(gulp.on).toHaveBeenCalledWith('end', jasmine.any(Function));
+      expect(reporter.on).toHaveBeenCalledWith('end', jasmine.any(Function));
     });
 
     describe('when error found', function() {
@@ -154,7 +168,7 @@ describe('lintjs', function() {
         // arrange
         task.run(aqua, cfg, gulp);
         var onErr = jshint.reporter.calls[0].args[0],
-            onDone = gulp.on.calls[1].args[1];
+            onDone = reporter.on.calls[0].args[1];
         // act
         onErr();
         onDone();
@@ -167,7 +181,7 @@ describe('lintjs', function() {
       it('should log "no errors found" to the console', function() {
         // arrange
         task.run(aqua, cfg, gulp);
-        var onDone = gulp.on.calls[1].args[1];
+        var onDone = reporter.on.calls[0].args[1];
         // act
         onDone();
         // assert

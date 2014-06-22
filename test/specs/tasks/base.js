@@ -11,14 +11,12 @@
 describe('base', function() {
   'use strict';
 
-  var task, aqua, cfg, gulp, ERR_MSG, OK_MSG,
+  var Task, task, aqua, cfg, gulp, ERR_MSG, OK_MSG,
       rewire = require('rewire'),
       root = '../../../',
       src = root + 'src/tasks/';
 
   beforeEach(function() {
-    var Task;
-
     // get AQUA
     aqua = rewire(root);
 
@@ -51,6 +49,40 @@ describe('base', function() {
     // act
     // assert
     expect(typeof task).toBe('object');
+  });
+
+  describe('constructor', function() {
+    it('should set the name property', function() {
+      // arrange
+      var name = 'name';
+      // act
+      var result = new Task(name);
+      // assert
+      expect(result.name).toBe(name);
+    });
+    it('should set the warning property', function() {
+      // arrange
+      var warning = 'warning';
+      // act
+      var result = new Task(null, warning);
+      // assert
+      expect(result.warning).toBe(warning);
+    });
+    it('should set the deps property', function() {
+      // arrange
+      var deps = 'deps';
+      // act
+      var result = new Task(null, null, deps);
+      // assert
+      expect(result.deps).toBe(deps);
+    });
+    it('should default the deps property to an empty array', function() {
+      // arrange
+      // act
+      var result = new Task();
+      // assert
+      expect(result.deps).toEqual([]);
+    });
   });
 
   describe('run', function() {

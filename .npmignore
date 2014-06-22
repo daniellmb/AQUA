@@ -1,5 +1,6 @@
 node_modules/
-npm-debug.log
+*.log
+docs/**/
 coverage/
 .coverdata/
 .coverrun
@@ -12,3 +13,4 @@ Icon?
 ehthumbs.db
 Thumbs.db
 .idea/
+sauce.json

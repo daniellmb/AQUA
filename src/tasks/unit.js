@@ -3,7 +3,6 @@
  *
  * ### Responsibilities
  * - unit testing projects
- * - register task to run unit tests.
  *
  * @module unit
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
@@ -15,13 +14,14 @@
  * @constructor
  * @extends {Base}
  * @param {string} name - The task name.
- * @param {string} warning - The task config warning.
+ * @param {string} warning - The task warning.
+ * @param {Array=} opt_deps - The optional task dependency tasks.
  */
-function Unit(name, warning) {
+function Unit(name, warning, opt_deps) {
   var base = /** @type {Function} */(require('./base'));
 
   // reuse Base's constructor
-  base.call(this, name, warning);
+  base.call(this, name, warning, opt_deps);
 }
 
 

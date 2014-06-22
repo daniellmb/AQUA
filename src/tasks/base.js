@@ -16,10 +16,12 @@
  * @implements {Task}
  * @param {string} name - The task name.
  * @param {string} warning - The task config warning.
+ * @param {Array=} opt_deps - The optional task dependency tasks.
  */
-var Base = function(name, warning) {
+var Base = function(name, warning, opt_deps) {
   this.name = name;
   this.warning = warning;
+  this.deps = opt_deps || [];
 };
 
 Base.prototype = {
@@ -44,12 +46,13 @@ Base.prototype = {
     var id = cfg.id.toLowerCase(),
         task = this;
 
-    //console.log(id, task.name);
+    // debug task registrations
+    //aqua.logger.create().debug('create task', id + '-' + task.name, task.deps);
 
     //TODO: register the project with AQUA
 
     // create task to lint all JavaScript in the project
-    gulp.task(id + '-' + task.name, [], function(done) {
+    gulp.task(id + '-' + task.name, this.deps, function(done) {
       // check if project is configured properly
       if (task.canRun(cfg, aqua.cfg)) {
         // run the task
