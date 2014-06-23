@@ -1,10 +1,14 @@
 language: node_js
+
 node_js:
 - '0.10'
+
 before_script:
 - npm install -g codeclimate-test-reporter
+
 after_script:
 - codeclimate < test/coverage/aqa/lcov.info
+
 notifications:
   # publish build status to IRC channel: #aqua
   irc:
@@ -13,17 +17,28 @@ notifications:
     on_success: always
     on_failure: always
     template:
-    - ! '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
-    - ! 'Change view : %{compare_url}'
-    - ! 'Build details : %{build_url}'
+    - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
+    - 'Change view : %{compare_url}'
+    - 'Build details : %{build_url}'
+  # publish status to gitter chat room: https://gitter.im/daniellmb/AQUA
+  webhooks:
+    urls:
+    - https://webhooks.gitter.im/e/c6101affa890143a1a45
+    on_success: always
+    on_failure: always
+    on_start: false
   # publish build status to HipChat room: http://www.hipchat.com/gpMy91MRw
   hipchat:
     rooms:
-      secure: Lw4FyQDrHRPSep8EYekx6cYr0QmS6I480g3C/hGjybUlz+1hv5e45v0NBMyrexEXkCD8erC2uI07znow9INeax7HHOHlq3DaAn0xAqsh2qDx2Kzxp3Ac6qQD+PHssDbST2zLwwbu6SbTKi/B3OEYDHi0tvqyD5j6iXIr0GUnCTY=
+    - secure: Lw4FyQDrHRPSep8EYekx6cYr0QmS6I480g3C/hGjybUlz+1hv5e45v0NBMyrexEXkCD8erC2uI07znow9INeax7HHOHlq3DaAn0xAqsh2qDx2Kzxp3Ac6qQD+PHssDbST2zLwwbu6SbTKi/B3OEYDHi0tvqyD5j6iXIr0GUnCTY=
+    template:
+    - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
     on_success: always
     on_failure: always
+
 addons:
   sauce_connect: true
+
 env:
   global:
   - secure: tsipXq8wv3G0ySgaxUWzCdpvEGXW6ZNe+bXpzHeMCp2I2jQZuLEZgmDzqBYqotCKi0aFG+lIyYqaGAKIXboXyGFCXcuMRd+D4hxP1gYvcgEiCZzUYykTFgxYKN9pgMHjVBNZgPr/PUDYsIM/9K8jd6HXR9V+NKM+G3fPs7szBsU=
