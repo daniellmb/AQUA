@@ -51,11 +51,13 @@ AQUA is designed to play well with the following types of projects.
   * Web Projects
   * Node.js Projects
 
-## Projects Using AQUA
+### Setup
 
-  * [AQUA](https://www.npmjs.org/package/aqua) NodeJS Project +1 for dogfooding
-  * [ToDoMVC](demos/angularjs) AngularJS Project
-  * [ToDoMVC](demos/vanillajs) VanillaJS Project
+You'll need to have [node.js](http://nodejs.org/download/) v10+ installed.
+
+1. navigate to your project root
+1. run `npm install aqua -save-dev` for windows you may need to add `-msvs_version=2012`
+1. install gulp globally `npm install gulp -g`
 
 ## Workflow
 
@@ -125,16 +127,7 @@ If there is any issues found by the quality checks such as a lint error or faili
 - Run `gulp-devtools` from the your project root folder (where your gulpfile.js is located)
 - Open Chrome Dev tools, find the Gulp tab. The AQUA/Gulp tasks are now accessible from Chrome.
 
-### Environment Prep
-
-You'll need to have [node.js](http://nodejs.org/download/) v10+ installed.
-
-1. navigate to your project root
-1. run `npm install`
-  1. for windows you may need to add `-msvs_version=2012`
-1. install gulp globally `npm install gulp -g`
-
-## Troubleshooting
+### Troubleshooting
 During install some of you may encounter some issues.
 
 Most issues can be solved by one of the following tips, but if are unable to find a solution feel free to an issue via the repository issue tracker.
