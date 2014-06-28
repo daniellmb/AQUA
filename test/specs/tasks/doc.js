@@ -125,6 +125,24 @@ describe('doc', function() {
     });
   });
 
+  describe('getTemplate', function() {
+    var acfg;
+    beforeEach(function() {
+      // reset mock aqua config
+      acfg = {
+        docs: {}
+      };
+    });
+
+    it('should extend the default template', function() {
+      // arrange
+      // act
+      var result = task.getTemplate(acfg, cfg);
+      // assert
+      expect(result).toEqual(task.template);
+    });
+  });
+
   describe('run', function() {
     var doc, mockReq, path, lodash;
 
@@ -155,7 +173,6 @@ describe('doc', function() {
         switch (name) {
           case 'gulp-jsdoc': return doc;
           case 'path': return path;
-          case 'lodash': return lodash;
           default: throw 'Unexpected require ' + name;
         }
       });
@@ -166,6 +183,7 @@ describe('doc', function() {
       // add spies
       spyOn(task, 'getSrc').andReturn('getSrc');
       spyOn(task, 'getExtras').andReturn('getExtras');
+      spyOn(task, 'getTemplate').andReturn('getTemplate');
     });
 
     it('should load dependencies', function() {
@@ -195,7 +213,7 @@ describe('doc', function() {
       // act
       task.run(aqua, cfg, gulp);
       // assert
-      expect(doc).toHaveBeenCalledWith('join', 'assign', task.options);
+      expect(doc).toHaveBeenCalledWith('join', 'getTemplate', task.options);
       expect(gulp.pipe).toHaveBeenCalledWith('on');
     });
     it('should listen for errors', function() {

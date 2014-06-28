@@ -99,6 +99,25 @@ DOC.prototype.getExtras = function(acfg) {
 
 
 /**
+ * Extend the default template options with project spesific settings
+ * @param {!AquaConfig} acfg - AQUA configuration.
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
+ * @return {Object} template options
+ */
+DOC.prototype.getTemplate = function(acfg, pcfg) {
+  // load node modules needed
+  var _ = require('lodash');
+
+  // extend default template options
+  return _.assign(this.template, {
+    systemName: pcfg.name,
+    theme: acfg.docs.theme,
+    footer: this.getExtras(acfg)
+  });
+};
+
+
+/**
  * Check source code complexity
  * @param {!AQUA} aqua - AQUA instance.
  * @param {!ProjConfig} cfg - AQUA project configuration.
@@ -108,7 +127,6 @@ DOC.prototype.run = function(aqua, cfg, gulp) {
   // load node modules needed
   var jsdoc = /** @type {Function} */(require('gulp-jsdoc')),
       path = require('path'),
-      _ = require('lodash'),
       acfg = aqua.cfg;
 
   //aqua.log(' > run task', cfg.id + '-doc');
@@ -117,13 +135,9 @@ DOC.prototype.run = function(aqua, cfg, gulp) {
   gulp.src(this.getSrc(cfg))
       .pipe(jsdoc(
           path.join(acfg.docs.dir, cfg.id.toLowerCase()),
-          _.assign(this.template, {
-            systemName: cfg.name,
-            theme: acfg.docs.theme,
-            footer: this.getExtras(acfg)
-          }),
-          this.options
-      ).on('error', aqua.error));
+          this.getTemplate(acfg, cfg), this.options)
+          .on('error', aqua.error)
+      );
 };
 
 
