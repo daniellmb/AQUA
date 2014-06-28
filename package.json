@@ -1,11 +1,9 @@
 {
   "name": "aqua",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "AQUA: Automated QUality Analysis; used to raise the visibility of code quality and increase awareness within teams by getting immediate feedback about code smells before they become technical debt.",
   "author": "Daniel Lamb <dlamb.open.source@gmail.com> (daniellmb.com)",
   "homepage": "https://github.com/daniellmb/AQUA",
-  "maintainers": [],
-  "contributors": [],
   "bugs": {
     "url": "https://github.com/daniellmb/AQUA/issues"
   },
@@ -19,24 +17,11 @@
     "type": "git",
     "url": "git://github.com/daniellmb/AQUA.git"
   },
-  "keywords": [
-    "automate", "automation",
-    "analysis", "analyze",
-    "code quality", "code style",
-    "test", "testing", "unit", "unit test", "TDD",
-    "functional", "end-to-end", "e2e test", "BDD",
-    "istanbul", "halstead", "cyclomatic", "complexity",
-    "lint", "jslint", "jshint", "checker",
-    "closure linter", "closure compiler",
-    "instrument", "instrumentation",
-    "analytics", "metrics", "stats", "statistics",
-    "report", "documentation"
-  ],
   "scripts": {
     "test": "gulp aqa-unit"
   },
   "main" : "./index.js",
-  "devDependencies": {
+  "dependencies": {
     "gulp": "latest",
     "gulp-util": "latest",
     "gulp-jshint": "latest",
@@ -76,5 +61,18 @@
   },
   "engines": {
     "node": ">= 0.10"
-  }
+  },
+  "keywords": [
+    "automate", "automation",
+    "analysis", "analyze",
+    "code quality", "code style",
+    "test", "testing", "unit", "unit test", "TDD",
+    "functional", "end-to-end", "e2e test", "BDD",
+    "istanbul", "halstead", "cyclomatic", "complexity",
+    "lint", "jslint", "jshint", "checker",
+    "closure linter", "closure compiler",
+    "instrument", "instrumentation",
+    "analytics", "metrics", "stats", "statistics",
+    "report", "documentation"
+  ]
 }

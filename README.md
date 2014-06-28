@@ -1,5 +1,5 @@
 # AQUA: Automated QUality Analysis
-[![Build Status][travis-image]][travis-url] [![Test Coverage][coverage-image]][coverage-url] [![Code GPA][gpa-image]][gpa-url] [![Open Issues][issues-image]][issues-url] [![GitTip][tip-image]][tip-url]
+[![Build Status][travis-image]][travis-url] [![Test Coverage][coverage-image]][coverage-url] [![Code GPA][gpa-image]][gpa-url] [![Open Issues][issues-image]][issues-url] [![IRC Channel][irc-image]][irc-url] [![Gitter][gitter-image]][gitter-url] [![GitTip][tip-image]][tip-url]
 
 ## About
 
@@ -27,7 +27,7 @@ While nothing is stopping you from simply editing a JavaScript file and committi
   * Unit Test Runnner
   * Code Coverage Reports
   * End-to-end Test Runner
-  * Documentation Generation (TODO)
+  * Documentation Generation
 
 ### CSS
 TODO: pull requests welcome :)
@@ -372,7 +372,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [issues-image]: http://img.shields.io/github/issues/daniellmb/aqua.svg?style=flat
 [travis-url]: https://travis-ci.org/daniellmb/AQUA
 [travis-image]: http://img.shields.io/travis/daniellmb/AQUA.svg?style=flat
-[coverage-url]: https://codeclimate.com/github/daniellmb/AQUA
+[coverage-url]: https://codeclimate.com/github/daniellmb/AQUA/code?sort=covered_percent&sort_direction=desc
 [coverage-image]: http://img.shields.io/codeclimate/coverage/github/daniellmb/AQUA.svg?style=flat
 [tip-url]: https://www.gittip.com/daniellmb/
 [tip-image]: http://img.shields.io/gittip/daniellmb.svg?style=flat
+[irc-url]: http://webchat.freenode.net/?channels=aqua
+[irc-image]: http://img.shields.io/badge/irc-%23aqua-brightgreen.svg?style=flat
+[gitter-url]: https://gitter.im/daniellmb/AQUA
+[gitter-image]: http://img.shields.io/badge/gitter-daniellmb/aqua-brightgreen.svg?style=flat
+[hipchat-url]: http://www.hipchat.com/gpMy91MRw
+[hipchat-image]: http://img.shields.io/badge/hipchat-aqua-brightgreen.svg?style=flat

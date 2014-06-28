@@ -7,6 +7,7 @@ module.exports = {
     // tasks are listed in the order they should run
     lintjs: require('./src/tasks/lintjs'),
     gpa: require('./src/tasks/gpa'),
+    doc: require('./src/tasks/doc'),
     unit: require('./src/tasks/unit'),
     e2e: require('./src/tasks/e2e')
   },
