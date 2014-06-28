@@ -1,5 +1,5 @@
 # AQUA: Automated QUality Analysis
-[![Build Status][travis-image]][travis-url] [![Test Coverage][coverage-image]][coverage-url] [![Code GPA][gpa-image]][gpa-url] [![Open Issues][issues-image]][issues-url] [![IRC Channel][irc-image]][irc-url] [![Gitter][gitter-image]][gitter-url] [![GitTip][tip-image]][tip-url]
+[![Build Status][travis-image]][travis-url] [![Test Coverage][coverage-image]][coverage-url] [![Code GPA][gpa-image]][gpa-url] [![NPM Version][version-image]][version-url] [![IRC Channel][irc-image]][irc-url] [![Gitter][gitter-image]][gitter-url] [![GitTip][tip-image]][tip-url]
 
 ## About
 
@@ -46,7 +46,7 @@ TODO: pull requests welcome :)
 
 ### Environments
 
-aqua is designed to play well with the following types of projects.
+AQUA is designed to play well with the following types of projects.
 
   * Web Projects
   * Node.js Projects
@@ -374,6 +374,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [travis-image]: http://img.shields.io/travis/daniellmb/AQUA.svg?style=flat
 [coverage-url]: https://codeclimate.com/github/daniellmb/AQUA/code?sort=covered_percent&sort_direction=desc
 [coverage-image]: http://img.shields.io/codeclimate/coverage/github/daniellmb/AQUA.svg?style=flat
+[downloads-url]: https://www.npmjs.org/package/aqua
+[downloads-image]: http://img.shields.io/npm/dm/aqua.svg?style=flat
+[version-url]: https://www.npmjs.org/package/aqua
+[version-image]: http://img.shields.io/badge/npm-0.0.3-brightgreen.svg?style=flat
 [tip-url]: https://www.gittip.com/daniellmb/
 [tip-image]: http://img.shields.io/gittip/daniellmb.svg?style=flat
 [irc-url]: http://webchat.freenode.net/?channels=aqua
