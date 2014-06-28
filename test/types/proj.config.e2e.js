@@ -26,4 +26,4 @@ ProjConfigE2ETest.prototype.tests = null;
 Where to find the page objects used by the project end-to-end tests
 @type {Array.<string>}
 */
-ProjConfigE2ETest.prototype.deps = null;
+ProjConfigE2ETest.prototype.pgobj = null;
