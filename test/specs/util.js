@@ -7,13 +7,9 @@
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 /*jshint maxstatements: 100*/
-
-var root = '../../',
-    aqua = require(root);
+'use strict';
 
 describe('util', function() {
-  'use strict';
-
   var util,
       src = '../../src/',
       _ = require('lodash');

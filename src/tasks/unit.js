@@ -7,6 +7,7 @@
  * @module unit
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
+'use strict';
 
 
 
@@ -171,7 +172,7 @@ Unit.prototype.runNodeTests = function(aqua, id, files, gulp) {
 
   // load dependencies
   var jasmine = /** @type {Function} */(require('gulp-jasmine')),
-      ncfg = /** @type {Object} */(require('../../' + aqua.cfg.testing.node)),
+      ncfg = /** @type {NodeConfig} */(require('../../' + aqua.cfg.testing.node)),
       acfg = aqua.cfg, task = this;
 
   // set gulp-jasmine show colors to match AQUA setting

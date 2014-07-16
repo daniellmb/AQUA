@@ -2,15 +2,14 @@
  * @file
  *
  * ### Responsibilities
- * - unit test the AQUA code Doc task.
+ * - unit test the AQUA Doc task.
  *
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 /*jshint maxstatements: 100*/
+'use strict';
 
 describe('doc', function() {
-  'use strict';
-
   var task, aqua, cfg, gulp,
       rewire = require('rewire'),
       root = '../../../',

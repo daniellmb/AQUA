@@ -75,7 +75,7 @@ AQUA.prototype.util = null;
 /**
  * Validate a AQUA configuration file.
  * @param {AquaConfig} cfg
-*/
+ */
 AQUA.prototype.validate = function(cfg) { };
 
 

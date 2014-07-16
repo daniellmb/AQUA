@@ -7,10 +7,9 @@
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 /*jshint maxstatements: 100*/
+'use strict';
 
 describe('e2e', function() {
-  'use strict';
-
   var task, aqua, pcfg, gulp,
       rewire = require('rewire'),
       root = '../../../',

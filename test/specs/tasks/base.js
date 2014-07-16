@@ -7,11 +7,10 @@
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 /*jshint maxstatements: 100*/
+'use strict';
 
 describe('base', function() {
-  'use strict';
-
-  var Task, task, aqua, cfg, gulp, ERR_MSG, OK_MSG,
+  var Task, task, aqua, cfg, gulp,
       rewire = require('rewire'),
       root = '../../../',
       src = root + 'src/tasks/';
@@ -19,9 +18,6 @@ describe('base', function() {
   beforeEach(function() {
     // get AQUA
     aqua = rewire(root);
-
-    ERR_MSG = 'Lint Check: ' + aqua.colors.yellow('Lint errors found');
-    OK_MSG = 'Lint Check: ' + aqua.colors.green('No errors found');
 
     // set task under test
     Task = rewire(src + 'base');

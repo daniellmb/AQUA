@@ -6,6 +6,8 @@
   "src": [
     "./demos/angularjs/js/**/*.js"
   ],
+  "dest": "./demos/angularjs/",
+  "destName": "app.min.js",
   "unit": {
     "deps": [
       "./demos/angularjs/bower_components/**/*.js"
@@ -24,5 +26,7 @@
   },
   "alljs": "./demos/angularjs/!(bower_components)/*.js",
   "types": [
+    "angular-1.2",
+    "./demos/angularjs/test/types/*.js"
   ]
 }

@@ -7,6 +7,7 @@
  * @module doc
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
+'use strict';
 
 
 
@@ -118,7 +119,7 @@ DOC.prototype.getTemplate = function(acfg, pcfg) {
 
 
 /**
- * Check source code complexity
+ * Check generate documentation
  * @param {!AQUA} aqua - AQUA instance.
  * @param {!ProjConfig} cfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.

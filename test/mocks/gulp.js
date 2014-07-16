@@ -18,6 +18,7 @@ global.mockGulp = function() {
     'task': jasmine.createSpy('task').andCallFake(function() { return this; }),
     'src': jasmine.createSpy('src').andCallFake(function() { return this; }),
     'pipe': jasmine.createSpy('pipe').andCallFake(function() { return this; }),
-    'on': jasmine.createSpy('on').andCallFake(function() { return this; })
+    'on': jasmine.createSpy('on').andCallFake(function() { return this; }),
+    'dest': jasmine.createSpy('dest').andCallFake(function() { return this; })
   };
 };

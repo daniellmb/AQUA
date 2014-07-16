@@ -10,13 +10,13 @@ module.exports = {
     // if true, include stack traces in failures.
     includeStackTrace: true,
 
-    // time to wait in milliseconds before a test automatically fails
+    // time to wait in milliseconds before a test automatically fails.
     timeout: 250
   },
 
   // code coverage settings
   coverage: {
-    // used to generate reports and enforce test coverage thresholds
+    // used to generate reports and enforce test coverage thresholds.
     reporters: ['html', 'text', 'json', 'lcovonly']
   }
 };

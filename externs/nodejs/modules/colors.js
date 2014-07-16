@@ -16,21 +16,21 @@ var Colors = function() { };
 
 
 /**
- Cyan text color
- @param {...*} var_args
+ * Cyan text color
+ * @param {...*} var_args
  */
 Colors.prototype.cyan = function(var_args) {};
 
 
 /**
- Yellow text color
- @param {...*} var_args
+ * Yellow text color
+ * @param {...*} var_args
  */
 Colors.prototype.yellow = function(var_args) {};
 
 
 /**
- Green text color
- @param {...*} var_args
+ * Green text color
+ * @param {...*} var_args
  */
 Colors.prototype.green = function(var_args) {};

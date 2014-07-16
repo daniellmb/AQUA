@@ -9,6 +9,7 @@
  * @module e2e
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
+'use strict';
 
 
 
@@ -28,7 +29,7 @@ function E2E(name, warning, opt_deps) {
 
 
 /**
- * Check source code complexity
+ * Run end-to-end tests
  * @param {!AQUA} aqua - AQUA instance.
  * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.

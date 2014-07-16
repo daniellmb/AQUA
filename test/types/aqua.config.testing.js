@@ -11,14 +11,14 @@
  * AQUA testing configurations
  * @constructor
  * @nosideeffects
-*/
+ */
 var AquaConfigTesting = function() { };
 
 
 /**
  * name of the testing framework to use (such as Jasmine)
  * @type {string}
-*/
+ */
 AquaConfigTesting.prototype.framework = '';
 
 

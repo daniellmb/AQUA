@@ -13,6 +13,7 @@
    * logs information to the console as a yellow warning.
    * @this {AQUA}
    * @return {AQUA}
+   * @deprecated perfer using task logger
    */
   module.exports = function() {
     // convert arguments to array

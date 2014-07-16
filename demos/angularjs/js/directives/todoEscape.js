@@ -10,6 +10,12 @@ angular.module('todomvc')
 
 		var ESCAPE_KEY = 27;
 
+    /**
+     * linking function
+     * @param {Object} scope
+     * @param {Object} elem
+     * @param {Object} attrs
+     */
 		return function (scope, elem, attrs) {
 			elem.bind('keydown', function (event) {
 				if (event.keyCode === ESCAPE_KEY) {

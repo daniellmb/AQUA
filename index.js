@@ -9,6 +9,8 @@ module.exports = {
     gpa: require('./src/tasks/gpa'),
     doc: require('./src/tasks/doc'),
     unit: require('./src/tasks/unit'),
+    chk: require('./src/tasks/chk'),
+    min: require('./src/tasks/min'),
     e2e: require('./src/tasks/e2e')
   },
   config: require('./src/config'),

@@ -7,6 +7,7 @@
  * @module gpa
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
+'use strict';
 
 
 

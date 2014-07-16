@@ -1,5 +1,5 @@
 # AQUA: Automated QUality Analysis
-[![Build Status][travis-image]][travis-url] [![Test Coverage][coverage-image]][coverage-url] [![Code GPA][gpa-image]][gpa-url] [![NPM Version][version-image]][version-url] [![IRC Channel][irc-image]][irc-url] [![Gitter][gitter-image]][gitter-url] [![GitTip][tip-image]][tip-url]
+[![Build Status][travis-image]][travis-url] [![Test Coverage][coverage-image]][coverage-url] [![Code GPA][gpa-image]][gpa-url] [![NPM Version][version-image]][version-url] [![IRC Channel][irc-image]][irc-url] [![Gitter][gitter-image]][gitter-url]
 
 ## About
 
@@ -22,12 +22,14 @@ While nothing is stopping you from simply editing a JavaScript file and committi
   * Lint Source Code for Syntax Errors and Anti-Patterns
   * Automatically fix lint errors non-destructively (TODO)
   * Analyze Code Against Complexity Thresholds
-  * Type Checking Source Code (TODO)
-  * Advanced Minification (TODO)
-  * Unit Test Runnner
+  * Type Checking Source Code
+  * Enforce Minimum Typed Percentage Thresholds
+  * Advanced Minification
+  * Unit Test Runner
   * Code Coverage Reports
   * End-to-end Test Runner
   * Documentation Generation
+  * Enforce Test Coverage Thresholds
 
 ### CSS
 TODO: pull requests welcome :)
@@ -39,7 +41,7 @@ TODO: pull requests welcome :)
 
   * Lint Source Code for Syntax Errors and Anti-Patterns (via [FxCop](http://msdn.microsoft.com/en-us/library/bb429476.aspx))
   * Analyze Code Against Complexity Thresholds (via [Code Metrics PowerTool](http://www.microsoft.com/en-us/download/details.aspx?id=38196))
-  * Unit Test Runnner
+  * Unit Test Runner
   * Code Coverage Reports
   * End-to-end Test Runner
   * Documentation Generation
@@ -74,14 +76,14 @@ The Node modules above can the run individually (see tasks below) or chained tog
 
 ### Run from the Command Line
 
-AQUA dynamically creates gulp tasks for you, based on what is configured in your `aqua.project.json` file. Tasks are namespaced with the project **id** in your config file. Any tasks that are not configured for the project are simply skipped.
+AQUA dynamically creates gulp tasks for you, based on what is configured in your `aqua.project.json` file. Tasks are namespaced with all projects **id** in your config file. Any tasks that are not configured for all projects are simply skipped.
 
 | task                                                                                         | does                                                             |
 |----------------------------------------------------------------------------------|------------------------------------------------------------------------------|
 |**gulp**                                                                                      | List all possible tasks for all projects                         |
 |**gulp ?**                                                                                    | List all possible tasks for all projects                         |
 |**gulp {id}**                                                                                 | Run all project tasks in the correct order                       |
-|**gulp {id}-?**                                                                               | List all possible tasks for the project                          |
+|**gulp {id}-?**                                                                               | List all possible tasks for all projects                          |
 |**[gulp {id}-all](https://github.com/daniellmb/AQUA/blob/master/src/tasks/all.md)**           | Run all project tasks in the correct order                       |
 |**[gulp {id}-lint](https://github.com/daniellmb/AQUA/blob/master/src/tasks/lintjs.md)**       | Lint the source code for syntax issues and anti-patterns         |
 |**[gulp {id}-lint-fix](https://github.com/daniellmb/AQUA/blob/master/src/tasks/lintfix.md)**  | Automatically fix lint errors non-destructively                  |
@@ -114,7 +116,7 @@ Also now that you have a shortcut you can customize your command window using `R
 
 #### Canceling a Task
 
-So you ran `gulp aqa-wch` and you want to stop watching for changes to the project source files. Or maybe you accidentally typed `gulp aqa-e2e` and don't want to wait for all the end-to-end tests to complete? Pressing <kbd>Ctrl</kbd>+<kbd>c</kbd> will pause the task and ask if you want to `Terminate batch job (Y/N)?` typing <kbd>y</kbd> <kbd>enter</kbd> will cancel the task.
+So you ran `gulp aqa-wch` and you want to stop watching for changes to all projects source files. Or maybe you accidentally typed `gulp aqa-e2e` and don't want to wait for all the end-to-end tests to complete? Pressing <kbd>Ctrl</kbd>+<kbd>c</kbd> will pause the task and ask if you want to `Terminate batch job (Y/N)?` typing <kbd>y</kbd> <kbd>enter</kbd> will cancel the task.
 
 #### Quiet Mode
 
@@ -178,7 +180,7 @@ Page Object Pattern Goals
 
 ### Debugging
 
-You can pause end-to-end tests for debugging by using `browser.degugger()` for more, see documentation on [Debugging E2E Tests](https://github.com/angular/protractor/blob/master/docs/debugging.md#pausing-to-debug).
+You can pause end-to-end tests for debugging by using `browser.debugger()` for more, see documentation on [Debugging E2E Tests](https://github.com/angular/protractor/blob/master/docs/debugging.md#pausing-to-debug).
 
 
 ## Configuring AQUA
@@ -202,39 +204,51 @@ While it's possible to manually include each set of files individually, it's enc
 
 Used to configure AQUA settings that apply to all of your projects
 
-  * `docs`: **Required** Array; Where to find all source code written for the project
-  * `docs`: *Optional* Object; all setting related to generating documentation
-    * `dir`: **Required** String; Where to put the generated documentation files for the project
+  * `docs`: *Optional* Object; all settings related to generating documentation
+    * `dir`: **Required** String; Where to put the generated documentation files for each project
     * `css`: *Optional* String; location of a stylesheet file to include into all documentation files
     * `js`: *Optional* String; location of a javascript file to include into all documentation files
     * `theme`: *Optional* String; the name of the [docstap theme](https://github.com/terryweiss/docstrap#what-it-looks-like) you want to use
-  * `coverage`: *Optional* Object; all setting related to generating code coverage reports
-    * `dir`: **Required** String; Where to put the generated coverage reports for the project
-  * `testing`: *Optional* Object; all setting related to testing the project
+  * `coverage`: *Optional* Object; all settings related to generating code coverage reports
+    * `dir`: **Required** String; Where to put the generated coverage reports for each project
+  * `testing`: *Optional* Object; all settings related to testing all projects
     * `framework`: **Required** String; Type of testing framework to run the tests in
     * `web`: *Optional* String; location of the Karma config file used to unit test web projects
     * `e2e`: *Optional* String; location of the protractor config file used to test web projects
     * `node`: *Optional* String; location of the config file used to unit test Node.js projects
+  * `thresholds`: *Optional* Object; all settings related to testing all projects
+    * `complexity`: *Optional* Object; configure complexity thresholds for all projects
+      * `cyclomatic`: **Required** Number; cyclomatic complexity threshold
+      * `halstead`: **Required** Number; halstead threshold
+      * `maintainability`: **Required** Number; maintainability index threshold
+    * `coverage`: *Optional* Object; configure test coverage thresholds for all projects
+      * `statements`: **Required** Number; statement coverage threshold
+      * `branches`: **Required** Number; branch coverage threshold
+      * `functions`: **Required** Number; function coverage threshold
+      * `lines`: **Required** Number; line coverage threshold
+    * `percentTyped`: *Optional* Number; amount of the source code that must be typed threshold
 
 ### aqua.project.json
 
 Used to configure AQUA settings that apply to an individual project
 
-  * `id`: **Required** String; a short but unique id for the project
-  * `name`: **Required** String; a descriptive name of the project
-  * `src`: *Optional* Array; Where to find all source code written for the project
-  * `by`: *Optional* String; name and email of the the teams or individuals that worked on the project
-  * `readme`: *Optional* String; Where to find the markdown file of the project readme (used as the index documentation page)
-  * `alljs`: *Optional* Array; Where to find all the JavaScript written for the project, including specs (used for linting)
+  * `id`: **Required** String; a short but unique id for all projects
+  * `name`: **Required** String; a descriptive name of all projects
+  * `src`: *Optional* Array; Where to find all source code written for all projects
+  * `dest`: *Optional* String; Where to output the minified version of the source code
+  * `destName`: *Optional* String; What file name to call the minified version of the source code
+  * `by`: *Optional* String; name and email of the the teams or individuals that worked on all projects
+  * `readme`: *Optional* String; Where to find the markdown file of all projects readme (used as the index documentation page)
+  * `alljs`: *Optional* Array; Where to find all the JavaScript written for all projects, including specs (used for linting)
   * `unit`: *Optional* Object; Everything needed to run unit tests
     * `globals`: *Optional* Array; Where to find file(s) containing the expected global variables used by your project.
-	  * `tests`: **Required** Array; Where to find all of the projects unit tests
-	  * `deps`: *Optional* Array; Where to find the scripts the project depends on (such as AngularJS or jQuery)
-	  * `mocks`: *Optional* Array; Where to find any mocks used by the project unit tests
+	  * `tests`: **Required** Array; Where to find all of all projects unit tests
+	  * `deps`: *Optional* Array; Where to find the scripts all projects depends on (such as AngularJS or jQuery)
+	  * `mocks`: *Optional* Array; Where to find any mocks used by all projects unit tests
   * `e2e`: *Optional* Object; Everything needed to run end-to-end tests
-	  * `tests`: **Required** Array; Where to find all of the projects end-to-end tests
-	  * `pgobj`: *Optional* Array; Where to find the page objects used by the project end-to-end tests
-  * `types`: *Optional* Array; Where to find all type definitions used by the project
+	  * `tests`: **Required** Array; Where to find all of all projects end-to-end tests
+	  * `pgobj`: *Optional* Array; Where to find the page objects used by all projects end-to-end tests
+  * `types`: *Optional* Array; Where to find all type definitions used by all projects
   * `type`: *Optional* String; Used to indicate the type of project (such as Node.js)
 
 ## Example AQUA Config File

@@ -11,14 +11,14 @@
  * AQUA enforce threshold configuration
  * @constructor
  * @nosideeffects
-*/
+ */
 var AquaConfigThresholds = function() { };
 
 
 /**
  * code complexity thresholds config
  * @type {AquaConfigThresholdsComplexity}
-*/
+ */
 AquaConfigThresholds.prototype.complexity = null;
 
 
@@ -27,3 +27,10 @@ AquaConfigThresholds.prototype.complexity = null;
  * @type {AquaConfigThresholdsCoverage}
  */
 AquaConfigThresholds.prototype.coverage = null;
+
+
+/**
+ * minimum amount of the project source code that must be typed.
+ * @type {number}
+ */
+AquaConfigThresholds.prototype.percentTyped = 0;

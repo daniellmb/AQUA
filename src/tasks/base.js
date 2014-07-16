@@ -7,6 +7,7 @@
  * @module base
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
+'use strict';
 
 
 
@@ -25,17 +26,6 @@ var Base = function(name, warning, opt_deps) {
 };
 
 Base.prototype = {
-  run: function() {
-    throw new Error('Run Not Implemented');
-  },
-  canRun: function() {
-    throw new Error('Can Run Not Implemented');
-  },
-  about: function() {
-    throw new Error('About Not Implemented');
-  },
-
-
   /**
    * Create Project Task to lint source code
    * @param {!AQUA} aqua - AQUA instance.
@@ -62,6 +52,17 @@ Base.prototype = {
       }
       done();
     });
+  },
+
+  // the following methods are implemented in derived tasks
+  run: function() {
+    throw new Error('Run Not Implemented');
+  },
+  canRun: function() {
+    throw new Error('Can Run Not Implemented');
+  },
+  about: function() {
+    throw new Error('About Not Implemented');
   }
 };
 

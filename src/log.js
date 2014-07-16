@@ -14,6 +14,7 @@
    * logs information to the console.
    * @this {AQUA}
    * @return {AQUA}
+   * @deprecated perfer using task logger
   */
   module.exports = function() {
 

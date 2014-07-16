@@ -7,10 +7,9 @@
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 /*jshint maxstatements: 100*/
+'use strict';
 
 describe('validate', function() {
-  'use strict';
-
   var validate,
       src = '../../src/';
 

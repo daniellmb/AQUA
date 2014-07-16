@@ -7,10 +7,9 @@
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 /*jshint maxstatements: 100*/
+'use strict';
 
 describe('error', function() {
-  'use strict';
-
   var error,
       src = '../../src/',
       rewire = require('rewire'),

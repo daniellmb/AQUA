@@ -7,10 +7,9 @@
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 /*jshint maxstatements: 100*/
+'use strict';
 
 describe('gpa', function() {
-  'use strict';
-
   var task, aqua, cfg, gulp, ERR_MSG, OK_MSG,
       rewire = require('rewire'),
       root = '../../../',

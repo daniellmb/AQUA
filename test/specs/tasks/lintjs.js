@@ -7,10 +7,9 @@
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
 /*jshint maxstatements: 100*/
+'use strict';
 
 describe('lintjs', function() {
-  'use strict';
-
   var task, aqua, cfg, gulp, ERR_MSG, OK_MSG,
       rewire = require('rewire'),
       root = '../../../',

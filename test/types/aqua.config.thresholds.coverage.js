@@ -11,14 +11,14 @@
  * AQUA thresholds for unit test coverage
  * @constructor
  * @nosideeffects
-*/
+ */
 var AquaConfigThresholdsCoverage = function() { };
 
 
 /**
  * Statement coverage threshold percent, 0 to 100%
  * @type {number}
-*/
+ */
 AquaConfigThresholdsCoverage.prototype.statements = 0;
 
 

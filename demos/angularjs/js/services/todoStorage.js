@@ -11,11 +11,11 @@ angular.module('todomvc')
 
 		return {
 			get: function () {
-				return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+				return JSON.parse(window.localStorage.getItem(STORAGE_ID) || '[]');
 			},
 
 			put: function (todos) {
-				localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
+        window.localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
 			}
 		};
 	});

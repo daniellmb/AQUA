@@ -11,12 +11,12 @@
  * AQUA test coverage configurations
  * @constructor
  * @nosideeffects
-*/
+ */
 var AquaConfigCoverage = function() { };
 
 
 /**
  * Where to output coverage reports
  * @type {string}
-*/
+ */
 AquaConfigCoverage.prototype.report = '';

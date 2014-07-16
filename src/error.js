@@ -15,6 +15,7 @@
    * @param {*} e - error details
    * @return {AQUA}
    * @this {AQUA}
+   * @deprecated perfer using task logger
   */
   module.exports = function(e) {
     var aqua = this;

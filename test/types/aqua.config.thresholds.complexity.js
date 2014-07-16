@@ -11,14 +11,14 @@
  * AQUA thresholds for code complexity
  * @constructor
  * @nosideeffects
-*/
+ */
 var AquaConfigThresholdsComplexity = function() { };
 
 
 /**
  * Cyclomatic complexity threshold
  * @type {number}
-*/
+ */
 AquaConfigThresholdsComplexity.prototype.cyclomatic = 0;
 
 

@@ -6,6 +6,7 @@
  *
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
  */
+/*jshint unused: false*/
 
 
 /**

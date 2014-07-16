@@ -15,10 +15,11 @@
       "./test/mocks/*.js"
     ]
   },
-  "alljs": "./!(coverage|docs|externs|node_modules)/!(bower_components)/*.js",
+  "alljs": "./!(demos|docs|externs|node_modules)/!(bower_components)/*.js",
   "types": [
     "util", "events", "stream", "fs", "path",
     "modules/*",
+    "./externs/jasmine.js",
     "./test/types/*.js"
   ]
 }

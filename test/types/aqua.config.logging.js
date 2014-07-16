@@ -11,14 +11,14 @@
  * AQUA documentation configuration
  * @constructor
  * @nosideeffects
-*/
+ */
 var AquaConfigLogging = function() { };
 
 
 /**
  * The logging level AQUA should run at (INFO, DEBUG, WARN, ERROR etc.)
  * @type {string}
-*/
+ */
 AquaConfigLogging.prototype.level = '';
 
 

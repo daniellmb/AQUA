@@ -18,7 +18,12 @@
    */
   module.exports = function(cfg) {
     // validate AQUA config
-    // validate project config (including sub objects such as .unit is optional but .unit.tests is required)
+
+    // validate project config
+    // including:
+    //  id must be valid for use as folder & file names
+    //  sub objects: such as .unit is optional but .unit.tests is required
+
     // support call chaining
     return this;
   };

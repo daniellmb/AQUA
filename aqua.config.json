@@ -16,7 +16,8 @@
       "branches": 100,
       "functions": 100,
       "lines": 100
-    }
+    },
+    "percentTyped": 90
   },
 	"coverage": {
     "report": "./test/coverage"

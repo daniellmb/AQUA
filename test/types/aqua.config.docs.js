@@ -11,14 +11,14 @@
  * AQUA documentation configuration
  * @constructor
  * @nosideeffects
-*/
+ */
 var AquaConfigDocs = function() { };
 
 
 /**
  * Where put the generated documentation files
  * @type {string}
-*/
+ */
 AquaConfigDocs.prototype.dir = '';
 
 
