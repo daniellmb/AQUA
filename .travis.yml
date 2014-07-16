@@ -5,6 +5,7 @@ node_js:
 
 before_script:
 - npm install -g codeclimate-test-reporter
+- npm config set spin=false
 
 after_script:
 - codeclimate < test/coverage/aqa/lcov.info
