@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="css/vidbg.css" media="screen" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>AQUA by daniellmb</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner contents">
+        <h1>AQUA</h1>
+        <h2>AQUA: Automated QUality Analysis improve code quality by surfacing actionable metrics</h2>
+        <a href="https://github.com/daniellmb/AQUA" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix contents">
+        <section id="main-content">
+<!-- BEGIN README -->
+
+          <h1>
+<a name="aqua-automated-quality-analysis" class="anchor" href="#aqua-automated-quality-analysis"><span class="octicon octicon-link"></span></a>AQUA: Automated QUality Analysis</h1>
+
+<p><a href="https://travis-ci.org/daniellmb/AQUA"><img src="http://img.shields.io/travis/daniellmb/AQUA.svg?style=flat" alt="Build Status"></a> <a href="https://codeclimate.com/github/daniellmb/AQUA/code?sort=covered_percent&amp;sort_direction=desc"><img src="http://img.shields.io/codeclimate/coverage/github/daniellmb/AQUA.svg?style=flat" alt="Test Coverage"></a> <a href="https://codeclimate.com/github/daniellmb/AQUA"><img src="http://img.shields.io/codeclimate/github/daniellmb/AQUA.svg?style=flat" alt="Code GPA"></a> <a href="https://www.npmjs.org/package/aqua"><img src="http://img.shields.io/badge/npm-v0.1.0-brightgreen.svg?style=flat" alt="NPM Version"></a> <a href="http://webchat.freenode.net/?channels=aqua"><img src="http://img.shields.io/badge/irc-%23aqua-brightgreen.svg?style=flat" alt="IRC Channel"></a> <a href="https://gitter.im/daniellmb/AQUA"><img src="http://img.shields.io/badge/gitter-daniellmb/aqua-brightgreen.svg?style=flat" alt="Gitter"></a></p>
+
+<h2>
+<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h2>
+
+<p><a href="https://www.npmjs.org/package/aqua">AQUA</a> improves code quality by surfacing actionable metrics about JavaScript, CSS and C#.</p>
+
+<blockquote>
+<p>AQUA raises the visibility of code quality and increases awareness within teams by giving immediate feedback about code smells before they become technical debt.</p>
+</blockquote>
+
+<p>You are free to structure your projects anyway you like, and still take full advantage of AQUA. Simply create an <code>aqua.project.json</code> file that documents where things are.</p>
+
+<h2>
+<a name="philosophy" class="anchor" href="#philosophy"><span class="octicon octicon-link"></span></a>Philosophy</h2>
+
+<p>The goal of AQUA is to improve code quality, without dictating a strict project structure. <strong>Ramp-up gradually</strong> by only configuring the the parts of AQUA you want to use. Not ready for end-to-end tests yet? Simply don't configure them. Don't want to type check your JavaScript code? Just leave out the "types" section. Even if you just start by linting your code, that will be a great step in the right direction!</p>
+
+<p>While nothing is stopping you from simply editing a JavaScript file and committing it to source control; doing so will cause you to miss out on: linting, cyclomatic complexity analysis, type checking, running both unit and end-to-end tests, as well as documentation generation, and code coverage reports.</p>
+
+<h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<h3>
+<a name="javascript" class="anchor" href="#javascript"><span class="octicon octicon-link"></span></a>JavaScript</h3>
+
+<ul>
+<li>Lint Source Code for Syntax Errors and Anti-Patterns</li>
+<li>Automatically fix lint errors non-destructively (TODO)</li>
+<li>Analyze Code Against Complexity Thresholds</li>
+<li>Type Checking Source Code</li>
+<li>Enforce Minimum Typed Percentage Thresholds</li>
+<li>Advanced Minification</li>
+<li>Unit Test Runner</li>
+<li>Code Coverage Reports</li>
+<li>End-to-end Test Runner</li>
+<li>Documentation Generation</li>
+<li>Enforce Test Coverage Thresholds</li>
+</ul><h3>
+<a name="css" class="anchor" href="#css"><span class="octicon octicon-link"></span></a>CSS</h3>
+
+<p>TODO: pull requests welcome :)</p>
+
+<ul>
+<li>Lint StyleSheets for Syntax Errors and Anti-Patterns</li>
+</ul><h3>
+<a name="c" class="anchor" href="#c"><span class="octicon octicon-link"></span></a>C#</h3>
+
+<p>TODO: pull requests welcome :)</p>
+
+<ul>
+<li>Lint Source Code for Syntax Errors and Anti-Patterns (via <a href="http://msdn.microsoft.com/en-us/library/bb429476.aspx">FxCop</a>)</li>
+<li>Analyze Code Against Complexity Thresholds (via <a href="http://www.microsoft.com/en-us/download/details.aspx?id=38196">Code Metrics PowerTool</a>)</li>
+<li>Unit Test Runner</li>
+<li>Code Coverage Reports</li>
+<li>End-to-end Test Runner</li>
+<li>Documentation Generation</li>
+</ul><h3>
+<a name="environments" class="anchor" href="#environments"><span class="octicon octicon-link"></span></a>Environments</h3>
+
+<p>AQUA is designed to play well with the following types of projects.</p>
+
+<ul>
+<li>Web Projects</li>
+<li>Node.js Projects</li>
+</ul><h3>
+<a name="setup" class="anchor" href="#setup"><span class="octicon octicon-link"></span></a>Setup</h3>
+
+<p>You'll need to have <a href="http://nodejs.org/download/">node.js</a> v10+ installed.</p>
+
+<ol>
+<li>navigate to your project root</li>
+<li>run <code>npm install aqua -save-dev</code> for windows you may need to add <code>-msvs_version=2012</code>
+</li>
+<li>install gulp globally <code>npm install gulp -g</code>
+</li>
+</ol><h2>
+<a name="workflow" class="anchor" href="#workflow"><span class="octicon octicon-link"></span></a>Workflow</h2>
+
+<p><a href="https://www.npmjs.org/package/aqua">AQUA</a> uses <a href="http://gulpjs.com/">Gulp</a> to orchestrate the following suite of <a href="https://www.npmjs.org/">NPM</a> Modules.</p>
+
+<ul>
+<li>
+<a href="https://www.npmjs.org/package/jshint">JSHint</a>: to lint the code &amp; standardize syntax</li>
+<li>
+<a href="https://www.npmjs.org/package/complexity-report">Complexity-Report</a>: for complexity analysis</li>
+<li>
+<a href="https://www.npmjs.org/package/karma">Karma</a>: to run the unit tests</li>
+<li>
+<a href="https://www.npmjs.org/package/gulp-closure-compiler">Closure Compiler</a>: for type checking &amp; minification</li>
+<li>
+<a href="https://www.npmjs.org/package/protractor">Protractor</a>: to run the integration tests</li>
+<li>
+<a href="https://www.npmjs.org/package/jsdoc">JSDoc</a>: to generate documentation</li>
+</ul><p>The Node modules above can the run individually (see tasks below) or chained together.</p>
+
+<h3>
+<a name="run-from-the-command-line" class="anchor" href="#run-from-the-command-line"><span class="octicon octicon-link"></span></a>Run from the Command Line</h3>
+
+<p>AQUA dynamically creates gulp tasks for you, based on what is configured in your <code>aqua.project.json</code> file. Tasks are namespaced with all projects <strong>id</strong> in your config file. Any tasks that are not configured for all projects are simply skipped.</p>
+
+<table>
+<thead><tr>
+<th>task</th>
+<th>does</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>gulp</strong></td>
+<td>List all possible tasks for all projects</td>
+</tr>
+<tr>
+<td><strong>gulp ?</strong></td>
+<td>List all possible tasks for all projects</td>
+</tr>
+<tr>
+<td><strong>gulp {id}</strong></td>
+<td>Run all project tasks in the correct order</td>
+</tr>
+<tr>
+<td><strong>gulp {id}-?</strong></td>
+<td>List all possible tasks for all projects</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/all.md">gulp {id}-all</a></strong></td>
+<td>Run all project tasks in the correct order</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/lintjs.md">gulp {id}-lint</a></strong></td>
+<td>Lint the source code for syntax issues and anti-patterns</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/lintfix.md">gulp {id}-lint-fix</a></strong></td>
+<td>Automatically fix lint errors non-destructively</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/gpa.md">gulp {id}-gpa</a></strong></td>
+<td>Analyze the source against complexity thresholds</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/unit.md">gulp {id}-unit</a></strong></td>
+<td>Run unit tests against the source code</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/chk.md">gulp {id}-chk</a></strong></td>
+<td>Type check the source code</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/min.md">gulp {id}-min</a></strong></td>
+<td>Minify the source code and create source map</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/e2e.md">gulp {id}-e2e</a></strong></td>
+<td>Run end-to-end tests against the minified code</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/doc.md">gulp {id}-doc</a></strong></td>
+<td>Generate documentation from code annotations</td>
+</tr>
+<tr>
+<td><strong><a href="https://github.com/daniellmb/AQUA/blob/master/src/tasks/wch.md">gulp {id}-wch</a></strong></td>
+<td>Watch for file changes and automatically run tasks</td>
+</tr>
+</tbody>
+</table><h4>
+<a name="console-customization" class="anchor" href="#console-customization"><span class="octicon octicon-link"></span></a>Console Customization</h4>
+
+<p>Avoid a lot needless typing! You can create a shortcut that will open the command prompt at any folder you want.</p>
+
+<p>Use the steps below for Windows.</p>
+
+<ol>
+<li>Right-click on your desktop and choose <code>New &gt; Shortcut</code>
+</li>
+<li>For the location paste in (with the folder you want to open):
+<code>C:\Windows\System32\cmd.exe /K "cd /d [Drive/Folder/You/Want/To/Open]"</code>
+</li>
+<li>Click <code>Next</code>, Set a Name and Click <code>Finish</code>
+</li>
+<li>Leave it on your desktop or drag it to your Taskbar to pin it there.</li>
+</ol><p>Also now that you have a shortcut you can customize your command window using <code>Right-click &gt; Properties</code>:</p>
+
+<ul>
+<li>Change the font used to something more readable</li>
+<li>Decrease the font size to show more information</li>
+<li>Increase the window size to reduce line wrapping</li>
+<li>Increase the screen buffer to scroll farther back in the task history</li>
+</ul><h4>
+<a name="canceling-a-task" class="anchor" href="#canceling-a-task"><span class="octicon octicon-link"></span></a>Canceling a Task</h4>
+
+<p>So you ran <code>gulp aqa-wch</code> and you want to stop watching for changes to all projects source files. Or maybe you accidentally typed <code>gulp aqa-e2e</code> and don't want to wait for all the end-to-end tests to complete? Pressing <kbd>Ctrl</kbd>+<kbd>c</kbd> will pause the task and ask if you want to <code>Terminate batch job (Y/N)?</code> typing <kbd>y</kbd> <kbd>enter</kbd> will cancel the task.</p>
+
+<h4>
+<a name="quiet-mode" class="anchor" href="#quiet-mode"><span class="octicon octicon-link"></span></a>Quiet Mode</h4>
+
+<p>If there is any issues found by the quality checks such as a lint error or failing unit test the system will beep, unless <code>--shh</code> is included. For example <code>gulp aqa-unit --shh</code></p>
+
+<h3>
+<a name="run-from-chrome-browser" class="anchor" href="#run-from-chrome-browser"><span class="octicon octicon-link"></span></a>Run from Chrome Browser</h3>
+
+<ul>
+<li>Download the <a href="https://chrome.google.com/webstore/detail/gulp-devtools/ojpmgjhofceebfifeajnjojpokebkkji">Gulp Devtools extension</a> for Chrome Developer Tools from the Chrome Web Store.</li>
+<li>Gun <code>npm install gulp-devtools -g</code>
+</li>
+<li>Run <code>gulp-devtools</code> from the your project root folder (where your gulpfile.js is located)</li>
+<li>Open Chrome Dev tools, find the Gulp tab. The AQUA/Gulp tasks are now accessible from Chrome.</li>
+</ul><h3>
+<a name="troubleshooting" class="anchor" href="#troubleshooting"><span class="octicon octicon-link"></span></a>Troubleshooting</h3>
+
+<p>During install some of you may encounter some issues.</p>
+
+<p>Most issues can be solved by one of the following tips, but if are unable to find a solution feel free to an issue via the repository issue tracker.</p>
+
+<h4>
+<a name="update-npm-bower-or-grunt" class="anchor" href="#update-npm-bower-or-grunt"><span class="octicon octicon-link"></span></a>Update NPM, Bower or Grunt</h4>
+
+<p>Sometimes you may find there is a weird error during install like npm's <em>Error: ENOENT</em>. Usually updating those tools to the latest version solves the issue.</p>
+
+<ul>
+<li>Updating NPM: <code>npm update -g npm</code>
+</li>
+<li>Updating Grunt: <code>npm update -g grunt-cli</code>
+</li>
+<li>Updating Bower: <code>npm update -g bower</code>
+</li>
+</ul><h4>
+<a name="cleaning-npm-and-bower-cache" class="anchor" href="#cleaning-npm-and-bower-cache"><span class="octicon octicon-link"></span></a>Cleaning NPM and Bower cache</h4>
+
+<p>NPM and Bower has a caching system for holding packages that you already installed.
+We found that often cleaning the cache solves some issues.</p>
+
+<ul>
+<li>NPM Clean Cache: <code>npm cache clean</code>
+</li>
+<li>Bower Clean Cache: <code>bower cache clean</code>
+</li>
+</ul><h2>
+<a name="testing" class="anchor" href="#testing"><span class="octicon octicon-link"></span></a>Testing</h2>
+
+<p>To improve efficiency and reduce cognitive load, <em>all</em> tests are written in JavaScipt, using a single testing framework (<a href="http://jasmine.github.io/1.3/introduction.html">Jasmine</a>). This means you can use the same assertion patterns and mocking strategies whether you're writing end-to-end tests for a web project or unit tests for your Node.js project.</p>
+
+<h3>
+<a name="unit-tests" class="anchor" href="#unit-tests"><span class="octicon octicon-link"></span></a>Unit Tests</h3>
+
+<p>Unit tests are written in <a href="http://jasmine.github.io/1.3/introduction.html">Jasmine</a> and for web projects are run with <a href="http://karma-runner.github.io/0.12/index.html">Karma</a>. Unit tests also have access to the <a href="https://github.com/velesin/jasmine-jquery">Jasmine JQuery</a> custom <a href="https://github.com/velesin/jasmine-jquery#jquery-matchers">matchers</a> and fixture loaders for HTML, CSS and JSON.</p>
+
+<h3>
+<a name="debugging" class="anchor" href="#debugging"><span class="octicon octicon-link"></span></a>Debugging</h3>
+
+<p>Unit tests can be run from the commandline with <code>gulp aqa-unit</code> or in your favorite browser.
+Debugging can be done by setting break points in the source code, using <code>console.log</code> and <code>debugger;</code> statements.</p>
+
+<h3>
+<a name="end-to-end-tests" class="anchor" href="#end-to-end-tests"><span class="octicon octicon-link"></span></a>End-to-end Tests</h3>
+
+<h3>
+<a name="page-objects" class="anchor" href="#page-objects"><span class="octicon octicon-link"></span></a>Page Objects</h3>
+
+<p>End to end testing (aka Integration Testing) should be organized using the <a href="https://code.google.com/p/selenium/wiki/PageObjects">PageObject Pattern</a> and run by the <a href="https://github.com/angular/protractor/blob/master/docs/api.md">Protractor API</a>.</p>
+
+<p>Page Objects can be thought of as facing in two directions simultaneously. Facing towards the developer of a test, they represent the services offered by a particular page. Facing away from the developer, they should be the only thing that has a deep knowledge of the structure of the HTML of a page (or part of a page) It's simplest to think of the methods on a Page Object as offering the "services" that a page offers rather than exposing the details and mechanics of the page. As an example, think of the inbox of any web-based email system. Amongst the services that it offers are typically the ability to compose a new email, to choose to read a single email, and to list the subject lines of the emails in the inbox. How these are implemented shouldn't matter to the test.</p>
+
+<p>Page Object Pattern Goals</p>
+
+<ul>
+<li>The public methods represent the services that the page offers</li>
+<li>Try not to expose the internals of the page</li>
+<li>Generally don't make assertions</li>
+<li>Methods return other PageObjects</li>
+<li>Need not represent an entire page</li>
+<li>Different results for the same action are modelled as different methods</li>
+</ul><h3>
+<a name="debugging-1" class="anchor" href="#debugging-1"><span class="octicon octicon-link"></span></a>Debugging</h3>
+
+<p>You can pause end-to-end tests for debugging by using <code>browser.debugger()</code> for more, see documentation on <a href="https://github.com/angular/protractor/blob/master/docs/debugging.md#pausing-to-debug">Debugging E2E Tests</a>.</p>
+
+<h2>
+<a name="configuring-aqua" class="anchor" href="#configuring-aqua"><span class="octicon octicon-link"></span></a>Configuring AQUA</h2>
+
+<h3>
+<a name="patterns" class="anchor" href="#patterns"><span class="octicon octicon-link"></span></a>Patterns</h3>
+
+<p>The AQUA config uses <a href="https://www.npmjs.org/package/glob">glob patterns</a> similar to those in the various Unix shells to find and filter your files. Glob patterns resemble regular expressions somewhat, but have a much simpler syntax. The following character sequences have special meaning within a glob pattern:</p>
+
+<ul>
+<li>
+<code>!</code> negates the pattern</li>
+<li>
+<code>?</code> matches any one character</li>
+<li>
+<code>*</code> matches any number of characters</li>
+<li>
+<code>{!glob}</code> Matches anything that does not match glob</li>
+<li>
+<code>{a,b,c}</code> matches any one of a, b or c</li>
+<li>
+<code>[abc]</code> matches any character in the set a, b or c</li>
+<li>
+<code>[^abc]</code> matches any character not in the set a, b or c</li>
+<li>
+<code>[a-z]</code> matches any character in the range a to z, inclusive. A leading or trailing dash will be interpreted literally</li>
+</ul><p>While it's possible to manually include each set of files individually, it's encouraged that you use convention over configuration. For example say you want all your unit tests in a folder called specs, great, then use a wildcard pattern (<code>specs/*.js</code>) and the correct files will automatically be included as they are added or even renamed over time. All config files paths must be relative to where AQUA is run from.</p>
+
+<h3>
+<a name="aquaconfigjson" class="anchor" href="#aquaconfigjson"><span class="octicon octicon-link"></span></a>aqua.config.json</h3>
+
+<p>Used to configure AQUA settings that apply to all of your projects</p>
+
+<ul>
+<li>
+<code>docs</code>: <em>Optional</em> Object; all settings related to generating documentation
+
+<ul>
+<li>
+<code>dir</code>: <strong>Required</strong> String; Where to put the generated documentation files for each project</li>
+<li>
+<code>css</code>: <em>Optional</em> String; location of a stylesheet file to include into all documentation files</li>
+<li>
+<code>js</code>: <em>Optional</em> String; location of a javascript file to include into all documentation files</li>
+<li>
+<code>theme</code>: <em>Optional</em> String; the name of the <a href="https://github.com/terryweiss/docstrap#what-it-looks-like">docstap theme</a> you want to use</li>
+</ul>
+</li>
+<li>
+<code>coverage</code>: <em>Optional</em> Object; all settings related to generating code coverage reports
+
+<ul>
+<li>
+<code>dir</code>: <strong>Required</strong> String; Where to put the generated coverage reports for each project</li>
+</ul>
+</li>
+<li>
+<code>testing</code>: <em>Optional</em> Object; all settings related to testing all projects
+
+<ul>
+<li>
+<code>framework</code>: <strong>Required</strong> String; Type of testing framework to run the tests in</li>
+<li>
+<code>web</code>: <em>Optional</em> String; location of the Karma config file used to unit test web projects</li>
+<li>
+<code>e2e</code>: <em>Optional</em> String; location of the protractor config file used to test web projects</li>
+<li>
+<code>node</code>: <em>Optional</em> String; location of the config file used to unit test Node.js projects</li>
+</ul>
+</li>
+<li>
+<code>thresholds</code>: <em>Optional</em> Object; all settings related to testing all projects
+
+<ul>
+<li>
+<code>complexity</code>: <em>Optional</em> Object; configure complexity thresholds for all projects
+
+<ul>
+<li>
+<code>cyclomatic</code>: <strong>Required</strong> Number; cyclomatic complexity threshold</li>
+<li>
+<code>halstead</code>: <strong>Required</strong> Number; halstead threshold</li>
+<li>
+<code>maintainability</code>: <strong>Required</strong> Number; maintainability index threshold</li>
+</ul>
+</li>
+<li>
+<code>coverage</code>: <em>Optional</em> Object; configure test coverage thresholds for all projects
+
+<ul>
+<li>
+<code>statements</code>: <strong>Required</strong> Number; statement coverage threshold</li>
+<li>
+<code>branches</code>: <strong>Required</strong> Number; branch coverage threshold</li>
+<li>
+<code>functions</code>: <strong>Required</strong> Number; function coverage threshold</li>
+<li>
+<code>lines</code>: <strong>Required</strong> Number; line coverage threshold</li>
+</ul>
+</li>
+<li>
+<code>percentTyped</code>: <em>Optional</em> Number; amount of the source code that must be typed threshold</li>
+</ul>
+</li>
+</ul><h3>
+<a name="aquaprojectjson" class="anchor" href="#aquaprojectjson"><span class="octicon octicon-link"></span></a>aqua.project.json</h3>
+
+<p>Used to configure AQUA settings that apply to an individual project</p>
+
+<ul>
+<li>
+<code>id</code>: <strong>Required</strong> String; a short but unique id for all projects</li>
+<li>
+<code>name</code>: <strong>Required</strong> String; a descriptive name of all projects</li>
+<li>
+<code>src</code>: <em>Optional</em> Array; Where to find all source code written for all projects</li>
+<li>
+<code>dest</code>: <em>Optional</em> String; Where to output the minified version of the source code</li>
+<li>
+<code>destName</code>: <em>Optional</em> String; What file name to call the minified version of the source code</li>
+<li>
+<code>by</code>: <em>Optional</em> String; name and email of the the teams or individuals that worked on all projects</li>
+<li>
+<code>readme</code>: <em>Optional</em> String; Where to find the markdown file of all projects readme (used as the index documentation page)</li>
+<li>
+<code>alljs</code>: <em>Optional</em> Array; Where to find all the JavaScript written for all projects, including specs (used for linting)</li>
+<li>
+<code>unit</code>: <em>Optional</em> Object; Everything needed to run unit tests
+
+<ul>
+<li>
+<code>globals</code>: <em>Optional</em> Array; Where to find file(s) containing the expected global variables used by your project.
+
+<ul>
+<li>
+<code>tests</code>: <strong>Required</strong> Array; Where to find all of all projects unit tests</li>
+<li>
+<code>deps</code>: <em>Optional</em> Array; Where to find the scripts all projects depends on (such as AngularJS or jQuery)</li>
+<li>
+<code>mocks</code>: <em>Optional</em> Array; Where to find any mocks used by all projects unit tests</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<code>e2e</code>: <em>Optional</em> Object; Everything needed to run end-to-end tests
+
+<ul>
+<li>
+<code>tests</code>: <strong>Required</strong> Array; Where to find all of all projects end-to-end tests</li>
+<li>
+<code>pgobj</code>: <em>Optional</em> Array; Where to find the page objects used by all projects end-to-end tests</li>
+</ul>
+</li>
+<li>
+<code>types</code>: <em>Optional</em> Array; Where to find all type definitions used by all projects</li>
+<li>
+<code>type</code>: <em>Optional</em> String; Used to indicate the type of project (such as Node.js)</li>
+</ul><h2>
+<a name="example-aqua-config-file" class="anchor" href="#example-aqua-config-file"><span class="octicon octicon-link"></span></a>Example AQUA Config File</h2>
+
+<p>Below are some typical configurations that you can cut-n-paste to jump-start your AQUA setup.</p>
+
+<pre>
+{
+  "docs": {
+    "dir": "./docs",
+    "css": "./css/doc.css",
+    "js": "./js/doc.js"
+  },
+    "coverage": {
+    "dir": "./test/coverage"
+  },
+  "testing": {
+    "framework": "jasmine",
+    "web": "./configs/karma.conf.js",
+    "e2e": "./configs/protractor.conf.js",
+    "node": "./configs/node.conf.js"
+  }
+}
+</pre>
+
+<h2>
+<a name="example-project-config-files" class="anchor" href="#example-project-config-files"><span class="octicon octicon-link"></span></a>Example Project Config Files</h2>
+
+<p>Below are some typical configurations that you can cut-n-paste to jump-start your project setup.</p>
+
+<h3>
+<a name="web-project" class="anchor" href="#web-project"><span class="octicon octicon-link"></span></a>Web Project</h3>
+
+<pre>
+{ 
+    "id": "XX",
+    "name": "YOUR PROJECT NAME",
+    "by": "TEAM NAME &lt;yourteam@site.com&gt;",
+    "readme": "./path/to/the/project/markdown/readme.md",
+    "src" : [
+        "./any/number/of/paths/to/the/project/sources/files/*.js"
+    ],
+    "alljs" : [
+        "./any/number/of/paths/to/the/project/source/specs/e2e/etc/*.js"
+    ],
+    "unit" : {
+        "tests": [
+            "./any/number/of/paths/to/the/project/unit/tests/*.js"
+        ],
+        "config": "./path/to/the/project/unit/test/karma.conf.js",
+        "deps": [
+            "./any/number/of/paths/to/the/project/dependencies/*.js"
+        ],
+        "mocks": [
+            "./any/number/of/paths/to/the/unit/test/mocks/*.js"
+        ]
+    },
+    "e2e" : {
+        "tests": [
+            "./any/number/of/paths/to/the/project/e2e/tests/*.js"
+        ],
+        "pgobj": [
+            "./any/number/of/paths/to/the/e2e/test/page/objects/*.js"
+        ]
+    },
+    "types": [
+        "./any/number/of/paths/to/type/definitions/used/by/the/project/*.js"
+    ]
+}
+</pre>
+
+<h3>
+<a name="nodejs-project" class="anchor" href="#nodejs-project"><span class="octicon octicon-link"></span></a>Node.js Project</h3>
+
+<pre>
+{ 
+    "id": "XX",
+    "name": "YOUR PROJECT NAME",
+    "by": "TEAM NAME &lt;yourteam@site.com&gt;",
+    "readme": "./path/to/the/project/markdown/readme.md",
+    "src": [
+        "./any/number/of/paths/to/the/project/sources/files/*.js"
+    ],
+    "type": "nodejs",
+    "unit": {
+        "tests": [
+            "./any/number/of/paths/to/the/project/unit/tests/*.js"
+        ],
+        "config": "./path/to/the/project/unit/test/jasmine.conf.js",
+        "mocks": [
+            "./any/number/of/paths/to/the/unit/test/mocks/*.js"
+        ]
+    },
+    "alljs": [
+        "./any/number/of/paths/to/the/project/source/specs/e2e/etc/*.js"
+    ],
+    "types": [
+        "./any/number/of/paths/to/type/definitions/used/by/the/project/*.js"
+    ]
+}
+</pre>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>(The MIT License)</p>
+
+<p>Copyright (c) 2014 Daniel Lamb <a href="mailto:dlamb.open.source@gmail.com">dlamb.open.source@gmail.com</a></p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+<!-- END README -->
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/daniellmb/AQUA/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/daniellmb/AQUA/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/daniellmb/AQUA">AQUA</a> is maintained by <a href="https://github.com/daniellmb">daniellmb</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-48461602-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+            <script src="js/vidbg.min.js"></script>
+            <script>
+              vidbg(document.body, [
+                {src: 'http://cf.cdn.vid.ly/3l6g3m/webm.webm', type: 'webm'},
+                {src: 'http://cf.cdn.vid.ly/3l6g3m/mp4.mp4', type: 'mp4'},
+                {src: 'http://cf.cdn.vid.ly/3l6g3m/ogv.ogv', type: 'ogg'}
+              ], true);
+            </script>
+  </body>
+</html>
