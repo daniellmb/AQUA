@@ -1,6 +1,6 @@
 {
   "name": "aqua",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "AQUA: Automated QUality Analysis; used to raise the visibility of code quality and increase awareness within teams by getting immediate feedback about code smells before they become technical debt.",
   "author": "Daniel Lamb <dlamb.open.source@gmail.com> (daniellmb.com)",
   "homepage": "https://github.com/daniellmb/AQUA",
@@ -25,6 +25,7 @@
     "colors": "latest",
     "extend": "latest",
     "glob": "latest",
+    "gulp": "latest",
     "gulp-bump": "latest",
     "gulp-clean": "latest",
     "gulp-closure-compiler": "latest",

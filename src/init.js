@@ -60,6 +60,19 @@
   }
 
   /**
+   * Get gulp instance
+   * @return {Gulp} gulp - Gulp instance.
+   */
+  function getGulp() {
+    // try to use parent instance
+    try {
+      return /** @type {Gulp} */(require('../../gulp'))
+    } catch(e) {
+      return /** @type {Gulp} */(require('gulp'))
+    }
+  }
+
+  /**
    * Take the project config files and generate gulp tasks for them.
    * @param {Array} cfgs - Array of AQUA project configuration objects
    * @this {AQUA}
@@ -67,7 +80,7 @@
    */
   module.exports = function(cfgs) {
     var aqua = /** @type {AQUA} */(this),
-        gulp = /** @type {Gulp} */(require('gulp')),
+        gulp = getGulp(),
         log = /** @type {Logger} */(aqua.logger.create('init'));
 
     // create project agnostic tasks

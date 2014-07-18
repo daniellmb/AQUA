@@ -18,6 +18,12 @@ configs/
 demos/
 lib/
 test/
+.closurelinter
+.csslintrc
+.editorconfig
+.jshintrc
+.npmignore
+.jshintignore
 .travis.yml
 aqua.config.json
 aqua.node.project.json
