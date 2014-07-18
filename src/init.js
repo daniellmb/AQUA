@@ -50,10 +50,11 @@
       // loop through the AQUA tasks
       util.forOwn(tasks, function(value, key) {
 
-        log.debug(' - %s', key);
-
         // register each task using the config
         tasks[key].reg(aqua, cfg, gulp);
+
+        // debug the task
+        log.debug('  run %s', tasks[key].about().replace('{id}', cfg.id.toLowerCase()));
       });
     });
   }

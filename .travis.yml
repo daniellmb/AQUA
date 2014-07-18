@@ -4,8 +4,9 @@ node_js:
 - '0.10'
 
 before_script:
-- npm install -g codeclimate-test-reporter
 - npm config set spin=false
+- npm install gulp
+- npm install -g codeclimate-test-reporter
 
 after_script:
 - codeclimate < test/coverage/aqa/lcov.info

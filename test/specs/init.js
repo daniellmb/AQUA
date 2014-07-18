@@ -13,11 +13,17 @@ describe('init', function() {
   var init,
       src = '../../src/',
       rewire = require('rewire'),
+      cfg,
       cfgs;
 
   beforeEach(function() {
     // get method under test
     init = require(src + 'init');
+
+    // mock project config
+    cfg = {
+      id: 'TEST'
+    };
 
     // mock aqua project configs
     cfgs = [];
@@ -25,7 +31,8 @@ describe('init', function() {
     // mock aqua tasks
     global.tasks = {
       test: {
-        reg: jasmine.createSpy('reg')
+        reg: jasmine.createSpy('reg'),
+        about: jasmine.createSpy('about').andReturn('{id}')
       }
     };
 
@@ -68,7 +75,6 @@ describe('init', function() {
   });
   it('should validate the AQUA configuration settings', function() {
     // arrange
-    var cfg = {};
     cfgs.push(cfg);
     // act
     init(cfgs);
@@ -77,7 +83,7 @@ describe('init', function() {
   });
   it('should loop through the tasks', function() {
     // arrange
-    cfgs.push({});
+    cfgs.push(cfg);
     // act
     init(cfgs);
     // assert
@@ -85,7 +91,7 @@ describe('init', function() {
   });
   it('should register each task', function() {
     // arrange
-    var cfgTaskLogger, name = 'test', cfg = {}, gulp = require('gulp');
+    var cfgTaskLogger, name = 'test', gulp = require('gulp');
     cfgs.push(cfg);
     init(cfgs);
     cfgTaskLogger = global.util.forOwn.calls[0].args[1];
@@ -93,6 +99,17 @@ describe('init', function() {
     cfgTaskLogger(null, name);
     // assert
     expect(global.tasks[name].reg).toHaveBeenCalledWith(global, cfg, gulp);
+  });
+  it('should use about to debug the task', function() {
+    // arrange
+    var cfgTaskLogger, name = 'test';
+    cfgs.push(cfg);
+    init(cfgs);
+    cfgTaskLogger = global.util.forOwn.calls[0].args[1];
+    // act
+    cfgTaskLogger(null, name);
+    // assert
+    expect(global.tasks[name].about).toHaveBeenCalled();
   });
   it('should return the gulp instance', function() {
     // arrange

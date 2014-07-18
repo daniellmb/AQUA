@@ -1,7 +1,6 @@
 node_modules/
 *.log
-docs/**/
-coverage/
+docs/
 .coverdata/
 .coverrun
 .DS_Store
@@ -14,3 +13,13 @@ ehthumbs.db
 Thumbs.db
 .idea/
 sauce.json
+
+configs/
+demos/
+lib/
+test/
+.travis.yml
+aqua.config.json
+aqua.node.project.json
+aqua.web.project.json
+gulpfile.js

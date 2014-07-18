@@ -58,8 +58,8 @@ AQUA is designed to play well with the following types of projects.
 You'll need to have [node.js](http://nodejs.org/download/) v10+ installed.
 
 1. navigate to your project root
-1. run `npm install aqua -save-dev` for windows you may need to add `-msvs_version=2012`
-1. install gulp globally `npm install gulp -g`
+1. run `npm install aqua -save-dev` (this will take a few minutes)
+1. install gulp globally `npm install -g gulp`
 
 ## Workflow
 
@@ -134,19 +134,16 @@ During install some of you may encounter some issues.
 
 Most issues can be solved by one of the following tips, but if are unable to find a solution feel free to an issue via the repository issue tracker.
 
-#### Update NPM, Bower or Grunt
+#### Update NPM
 Sometimes you may find there is a weird error during install like npm's *Error: ENOENT*. Usually updating those tools to the latest version solves the issue.
 
 * Updating NPM: `npm update -g npm`
-* Updating Grunt: `npm update -g grunt-cli`
-* Updating Bower: `npm update -g bower`
 
-#### Cleaning NPM and Bower cache
-NPM and Bower has a caching system for holding packages that you already installed.
+#### Cleaning NPM cache
+NPM has a caching system for holding packages that you already installed.
 We found that often cleaning the cache solves some issues.
 
 * NPM Clean Cache: `npm cache clean`
-* Bower Clean Cache: `bower cache clean`
 
 ## Testing
 
