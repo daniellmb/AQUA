@@ -532,6 +532,34 @@ describe('gcc', function() {
 
   });
 
+  describe('getJarPath', function() {
+    var path, mockReq;
+    beforeEach(function() {
+      // mock path module
+      path = {
+        join: jasmine.createSpy('join').andReturn('join')
+      };
+
+      // mock require
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return path; });
+
+      // use dependency injection to inject mock require
+      Task.__set__('require', mockReq);
+      Task.__set__('__dirname', '__dirname');
+      // add spies
+    });
+
+    it('should get jar path based on where the script is running', function() {
+      // arrange
+      // act
+      var result = task.getJarPath(cfg);
+      // assert
+      expect(path.join).toHaveBeenCalledWith('__dirname', '../../lib/gcc/compiler.jar');
+      expect(result).toBe('join');
+    });
+
+  });
+
   describe('run', function() {
     var gccReq, gcc, mockReq;
 
@@ -552,6 +580,7 @@ describe('gcc', function() {
       spyOn(task, 'getSource').andReturn('getSource');
       spyOn(task, 'getGccFlags').andReturn('getGccFlags');
       spyOn(task, 'getFileName').andReturn('getFileName');
+      spyOn(task, 'getJarPath').andReturn('getJarPath');
       spyOn(task, 'handelErrors').andReturn('handelErrors');
     });
 
@@ -591,7 +620,7 @@ describe('gcc', function() {
       expect(gccReq).toHaveBeenCalledWith({
         fileName: 'getFileName',
         compilerFlags: 'getGccFlags',
-        compilerPath: './lib/gcc/compiler.jar',
+        compilerPath: 'getJarPath',
         jscomp_warning: 'reportUnknownTypes'
       });
       expect(gulp.pipe).toHaveBeenCalledWith('gcc-on');

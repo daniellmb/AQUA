@@ -267,6 +267,16 @@ GCC.prototype = {
   },
 
   /**
+   * Gets the GCC jar path.
+   */
+  getJarPath: function() {
+    var path = require('path');
+
+    // get jar path based on where the script is running
+    return path.join(__dirname, '../../lib/gcc/compiler.jar');
+  },
+
+  /**
    * Run Google Closure Compiler Task
    * @param {!AQUA} aqua - AQUA instance.
    * @param {!ProjConfig} pcfg - AQUA project configuration.
@@ -287,7 +297,7 @@ GCC.prototype = {
         .pipe(gcc({
           fileName: fileName,
           compilerFlags: flags,
-          compilerPath: './lib/gcc/compiler.jar',
+          compilerPath: task.getJarPath(),
           jscomp_warning: 'reportUnknownTypes'
         }).on('error', function(e) {
           task.handelErrors(aqua, e);

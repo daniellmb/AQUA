@@ -381,7 +381,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [downloads-url]: https://www.npmjs.org/package/aqua
 [downloads-image]: http://img.shields.io/npm/dm/aqua.svg?style=flat
 [version-url]: https://www.npmjs.org/package/aqua
-[version-image]: http://img.shields.io/badge/npm-v0.1.7-brightgreen.svg?style=flat
+[version-image]: http://img.shields.io/badge/npm-v0.1.8-brightgreen.svg?style=flat
 [tip-url]: https://www.gittip.com/daniellmb/
 [tip-image]: http://img.shields.io/gittip/daniellmb.svg?style=flat
 [irc-url]: http://webchat.freenode.net/?channels=aqua
