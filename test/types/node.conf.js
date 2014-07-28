@@ -1,5 +1,5 @@
 /**
- * Type definition for AQUA project node config.
+ * Type definition for AQUA project test node config.
  *
  * @externs
  * @author Daniel Lamb <dlamb.open.source@gmail.com>
@@ -24,6 +24,7 @@ NodeConfig.prototype.jasmine = null;
 
 /**
  * Code coverage settings
+ * Examples: html, lcovonly, lcov, cobertura, text-summary, text, json, teamcity, clover
  * @type {NodeConfigCoverage}
  */
 NodeConfig.prototype.coverage = null;

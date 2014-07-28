@@ -95,7 +95,7 @@ module.exports = {
 
   /*
    Frameworks to use:
-   jasmine, mocha, qunit
+   jasmine, mocha, qunit, requirejs
   */
   frameworks: ['jasmine'],
 
@@ -118,7 +118,7 @@ module.exports = {
 
   // code coverage settings
   coverage: {
-    // html, lcovonly, lcov, cobertura, text-summary, text, teamcity, clover
+    // html, lcovonly, lcov, cobertura, text-summary, text, json, teamcity, clover
     reporters: ['html', 'text', 'json']
   },
 

@@ -19,10 +19,13 @@
  * @param {Array=} opt_deps - The optional task dependency tasks.
  */
 function Unit(name, warning, opt_deps) {
-  var base = /** @type {Function} */(require('./base'));
+  var task = this, base = /** @type {Function} */(require('./base'));
 
   // reuse Base's constructor
-  base.call(this, name, warning, opt_deps);
+  base.call(task, name, warning, opt_deps);
+
+  // set the pipe nothing const
+  task.PIPE_NOTHING = 'pipe.in.nothing.let.karma.load.the.files.js';
 }
 
 
@@ -60,20 +63,59 @@ Unit.prototype.collect = function(utCfg, src) {
 
 
 /**
+ * Returns a list of files to instrument for coverage
+ * @param {!WebConfig} wcfg - unit test for web configuration
+ * @param {!ProjConfig} pcfg - aqua project configuration
+ * @param {!AQUA} aqua - AQUA instance
+ * @return {Array} list of files to instrument
+ */
+Unit.prototype.getFilesToCover = function(wcfg, pcfg, aqua) {
+  var lowerCase, util = aqua.util;
+
+  // check test config
+  if (this.usingRequireJS(wcfg) && wcfg.files) {
+
+    // lowercase the source files to simplify matching
+    lowerCase = pcfg.src.map(function (path) {
+      return path.toLowerCase();
+    });
+
+    // return only karma files that are also in the project source files
+    return util._.filter(wcfg.files, function (path) {
+      if (path.pattern) {
+        return lowerCase.indexOf('./' + path.pattern) !== -1;
+      }
+      return false;
+    });
+
+  } else {
+
+    // use the project source files
+    return pcfg.src;
+  }
+};
+
+
+/**
  * Configure test coverage settings for karma
- * @param {!Object} wcfg - unit test for web configuration
+ * @param {!WebConfig} wcfg - unit test for web configuration
  * @param {!ProjConfig} pcfg - aqua project configuration
  * @param {!AQUA} aqua - AQUA instance.
  */
 Unit.prototype.getCoverageConfig = function(wcfg, pcfg, aqua) {
   // load dependencies
-  var path = require('path'), folder,
-      acfg = aqua.cfg, util = aqua.util;
+  var path = require('path'), folder, list,
+      task = this, acfg = aqua.cfg, util = aqua.util;
 
   // set coverage preprocessor
   wcfg.preprocessors = {};
-  util.forEach(pcfg.src, function(path) {
-    wcfg.preprocessors[path] = ['coverage'];
+
+  // get a list of files to instrument for coverage
+  list = task.getFilesToCover(wcfg, pcfg, aqua);
+
+  // add coverage preprocessor for appropriate files
+  util.forEach(list, function (path) {
+    wcfg.preprocessors[path.pattern || path] = ['coverage'];
   });
 
   // add coverage reporter
@@ -94,6 +136,66 @@ Unit.prototype.getCoverageConfig = function(wcfg, pcfg, aqua) {
   });
 };
 
+/**
+ * Validate node.js unit test config
+ * @param {WebConfig} wcfg - web test configuration.
+ * @return {boolean} true if test project is configured to use require.jd
+ */
+Unit.prototype.usingRequireJS = function (wcfg) {
+  return wcfg.frameworks.indexOf('requirejs') !== -1;
+};
+
+/**
+ * Validate web unit test config
+ * @param {WebConfig} wcfg - web test configuration.
+ * @throws {Error} throws error if config is invalid.
+ */
+Unit.prototype.validateWebConfig = function (wcfg) {
+
+  // reporters are required
+  if (!wcfg.reporters || wcfg.reporters.length === 0) {
+    throw new Error('Unit test reporters are required');
+  }
+
+};
+
+/**
+ * Validate node.js unit test config
+ * @param {NodeConfig} ncfg - node test configuration.
+ * @throws {Error} throws error if config is invalid.
+ */
+Unit.prototype.validateNodeConfig = function (ncfg) {
+  // add as needed
+};
+
+/**
+ * Unit test web projects
+ * @param {string} location - the relative configuration file location.
+ * @param {Function} validate - validate the test configuration.
+ * @return {WebConfig|NodeConfig} test configuration.
+ */
+Unit.prototype.getTestConfig = function (location, validate) {
+  var path = require('path'),
+      backTwo = '../../',
+      tcfg;
+
+  try {
+    // try to use parent location
+    tcfg = /** @type {WebConfig|NodeConfig} */(require(path.join(__dirname, backTwo, backTwo, location)));
+  } catch (e) {
+    // use default test configs
+    tcfg = /** @type {WebConfig|NodeConfig} */(require(path.join(__dirname, backTwo, location)));
+  }
+
+  this.log.debug('test config', tcfg);
+
+  // validate the test config
+  validate(tcfg);
+
+  //return test configuration
+  return tcfg;
+};
+
 
 /**
  * Unit test web projects
@@ -104,9 +206,9 @@ Unit.prototype.getCoverageConfig = function(wcfg, pcfg, aqua) {
  */
 Unit.prototype.testWeb = function(aqua, pcfg, files, gulp) {
   // load dependencies
-  var karma = /** @type {Function} */(require('gulp-karma')),
-      wcfg = /** @type {Object} */(require('../../' + aqua.cfg.testing.web)),
-      acfg = aqua.cfg, task = this;
+  var task = this, acfg = aqua.cfg,
+      karma = /** @type {Function} */(require('gulp-karma')),
+      wcfg = /** @type {WebConfig} */(task.getTestConfig(acfg.testing.web, task.validateWebConfig));
 
   // merge the web config with dynamic settings
   wcfg = aqua.util.assign(wcfg, {
@@ -124,7 +226,11 @@ Unit.prototype.testWeb = function(aqua, pcfg, files, gulp) {
     task.getCoverageConfig(wcfg, pcfg, aqua);
   }
 
-  task.log.debug('karma config', wcfg);
+  // check if running tests using AMD
+  if (task.usingRequireJS(wcfg)) {
+    // work around issue #7 in gulp-karma
+    files = [task.PIPE_NOTHING];
+  }
 
   // get files needed for testing
   gulp.src(files)
@@ -171,9 +277,9 @@ Unit.prototype.testNode = function(aqua, pcfg, files, gulp) {
 Unit.prototype.runNodeTests = function(aqua, id, files, gulp) {
 
   // load dependencies
-  var jasmine = /** @type {Function} */(require('gulp-jasmine')),
-      ncfg = /** @type {NodeConfig} */(require('../../' + aqua.cfg.testing.node)),
-      acfg = aqua.cfg, task = this;
+  var acfg = aqua.cfg, task = this,
+      jasmine = /** @type {Function} */(require('gulp-jasmine')),
+      ncfg = /** @type {NodeConfig} */(task.getTestConfig(acfg.testing.node, task.validateNodeConfig));
 
   // set gulp-jasmine show colors to match AQUA setting
   if (acfg.logging && !acfg.logging.colors) {
@@ -181,8 +287,6 @@ Unit.prototype.runNodeTests = function(aqua, id, files, gulp) {
     // default is true so we only need to set when false
     ncfg.jasmine.showColors = acfg.logging.colors;
   }
-
-  task.log.debug(ncfg);
 
   // run unit tests
   gulp.src(files)

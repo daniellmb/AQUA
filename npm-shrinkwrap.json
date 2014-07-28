@@ -3563,6 +3563,11 @@
       "from": "karma-phantomjs-launcher@latest",
       "resolved": "https://registry.npmjs.org/karma-phantomjs-launcher/-/karma-phantomjs-launcher-0.1.4.tgz"
     },
+    "karma-requirejs": {
+      "version": "0.2.2",
+      "from": "karma-requirejs@",
+      "resolved": "https://registry.npmjs.org/karma-requirejs/-/karma-requirejs-0.2.2.tgz"
+    },
     "karma-safari-launcher": {
       "version": "0.1.1",
       "from": "karma-safari-launcher@latest",
@@ -4536,6 +4541,11 @@
           }
         }
       }
+    },
+    "requirejs": {
+      "version": "2.1.14",
+      "from": "requirejs@~2.1",
+      "resolved": "https://registry.npmjs.org/requirejs/-/requirejs-2.1.14.tgz"
     },
     "rewire": {
       "version": "2.1.0",

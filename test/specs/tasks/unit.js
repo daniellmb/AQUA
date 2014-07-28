@@ -51,6 +51,15 @@ describe('unit', function() {
     expect(typeof task).toBe('object');
   });
 
+  describe('constructor', function() {
+    it('should set the PIPE_NOTHING constant', function() {
+      // arrange
+      // act
+      // assert
+      expect(task.PIPE_NOTHING).toBe('pipe.in.nothing.let.karma.load.the.files.js');
+    });
+  });
+
   describe('collect', function() {
     var utCfg, src;
     beforeEach(function() {
@@ -130,6 +139,69 @@ describe('unit', function() {
     });
   });
 
+  describe('getFilesToCover', function() {
+    var wcfg, usingRequire;
+    beforeEach(function() {
+      // mock web test config
+      wcfg = {};
+
+      // mock using require.js function result
+      usingRequire = false;
+
+      // add spies
+      spyOn(task, 'usingRequireJS').andCallFake(function(){
+        return usingRequire;
+      });
+    });
+
+    it('should check if the project is using require.js', function() {
+      // arrange
+      // act
+      task.getFilesToCover(wcfg, cfg, aqua);
+      // assert
+      expect(task.usingRequireJS).toHaveBeenCalledWith(wcfg);
+    });
+
+    describe('when not using require.js', function(){
+      beforeEach(function() {
+        // extend project config
+        cfg.src = ['FOO'];
+
+        // add spies
+      });
+
+      it('should return the project source files', function() {
+        // arrange
+        // act
+        var result = task.getFilesToCover(wcfg, cfg, aqua);
+        // assert
+        expect(result).toBe(cfg.src);
+      });
+    });
+
+    describe('when using require.js', function(){
+      beforeEach(function() {
+        // mock using require.js
+        usingRequire = true;
+
+        // extend project config
+        cfg.src = ['./FOO', './BAR', './ZAB'];
+
+        // mock web test files config
+        wcfg.files = ['foo', {pattern:'bar'}, {pattern:'baz'}];
+      });
+
+      it('should filter the test files to match the source files', function() {
+        // arrange
+        // act
+        var result = task.getFilesToCover(wcfg, cfg, aqua);
+        // assert
+        expect(result).toEqual([{pattern:'bar'}]);
+      });
+    });
+
+  });
+
   describe('getCoverageConfig', function() {
     var path, mockReq, wcfg;
     beforeEach(function() {
@@ -164,6 +236,7 @@ describe('unit', function() {
 
       // add spies
       spyOn(aqua.util, 'forEach');
+      spyOn(task, 'getFilesToCover');
     });
 
     it('should load dependencies', function() {
@@ -172,6 +245,13 @@ describe('unit', function() {
       task.getCoverageConfig(wcfg, cfg, aqua);
       // assert
       expect(mockReq).toHaveBeenCalledWith('path');
+    });
+    it('should get the files to cover', function() {
+      // arrange
+      // act
+      task.getCoverageConfig(wcfg, cfg, aqua);
+      // assert
+      expect(task.getFilesToCover).toHaveBeenCalledWith(wcfg, cfg, aqua);
     });
     it('should loop through the source files', function() {
       // arrange
@@ -222,8 +302,180 @@ describe('unit', function() {
     });
   });
 
+  describe('usingRequireJS', function() {
+    var tcfg;
+    beforeEach(function() {
+      // test config
+      tcfg = {
+        frameworks: []
+      };
+
+      // add spies
+    });
+
+    it('should return true when requirejs is used', function() {
+      // arrange
+      tcfg.frameworks.push('foo', 'requirejs', 'bar');
+      // act
+      var result = task.usingRequireJS(tcfg);
+      // assert
+      expect(result).toBe(true);
+    });
+    it('should return false when requirejs is not used', function() {
+      // arrange
+      // act
+      var result = task.usingRequireJS(tcfg);
+      // assert
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('validateWebConfig', function(){
+    var tcfg;
+    beforeEach(function() {
+      // test config
+      tcfg = {};
+
+      // add spies
+    });
+
+    it('should exist', function() {
+      // arrange
+      // act
+      // assert
+      expect(typeof task.validateWebConfig).toBe('function');
+    });
+
+    it('should throw an error when reporters is not set', function() {
+      // arrange
+      // act
+      function shouldThrow() {
+        task.validateWebConfig(tcfg);
+      }
+      // assert
+      expect(shouldThrow).toThrow(new Error('Unit test reporters are required'));
+    });
+
+    it('should throw an error when reporters is empty', function() {
+      // arrange
+      tcfg.reporters = [];
+      // act
+      function shouldThrow() {
+        task.validateWebConfig(tcfg);
+      }
+      // assert
+      expect(shouldThrow).toThrow(new Error('Unit test reporters are required'));
+    });
+
+    it('should not throw an error when reporters properly set', function() {
+      // arrange
+      tcfg.reporters = ['foo'];
+      // act
+      function shouldNotThrow() {
+        task.validateWebConfig(tcfg);
+      }
+      // assert
+      expect(shouldNotThrow).not.toThrow();
+    });
+  });
+
+  describe('validateNodeConfig', function(){
+    var tcfg;
+    beforeEach(function() {
+      // test config
+      tcfg = {};
+
+      // add spies
+    });
+
+    it('should exist', function() {
+      // arrange
+      // act
+      // assert
+      expect(typeof task.validateNodeConfig).toBe('function');
+    });
+
+    it('should not throw an error when properly configured', function() {
+      // arrange
+      // act
+      function shouldNotThrow() {
+        task.validateNodeConfig(tcfg);
+      }
+      // assert
+      expect(shouldNotThrow).not.toThrow();
+    });
+
+  });
+
+  describe('getTestConfig', function(){
+    var path, mockReq, tcfg, validate;
+    beforeEach(function() {
+      // test config
+      tcfg = {};
+
+      // mock config validate method
+      validate = jasmine.createSpy('validate');
+
+      // mock path module
+      path = {
+        join: jasmine.createSpy('join').andCallFake(function() {
+          return Array.prototype.slice.call(arguments).join('');
+        })
+      };
+
+      // mock require
+      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+        switch (name) {
+          case 'path': return path;
+          case '__dirname../../../../foo': return 'file found';
+          case '__dirname../../../../bar': throw new Error('file not found');
+          default: return name;
+        }
+      });
+
+      // use dependency injection to inject mock require
+      task.__set__('require', mockReq);
+      task.__set__('__dirname', '__dirname')
+
+      // add spies
+    });
+
+    it('should try to load the parent config', function() {
+      // arrange
+      // act
+      task.getTestConfig('foo', validate);
+      // assert
+      expect(validate).toHaveBeenCalledWith('file found');
+    });
+
+    it('should load the default config', function() {
+      // arrange
+      // act
+      task.getTestConfig('bar', validate);
+      // assert
+      expect(validate).toHaveBeenCalledWith('__dirname../../bar');
+    });
+
+    it('should validate the config', function() {
+      // arrange
+      // act
+      task.getTestConfig('baz', validate);
+      // assert
+      expect(validate).toHaveBeenCalledWith('__dirname../../../../baz');
+    });
+
+    it('should return the config', function() {
+      // arrange
+      // act
+      var result = task.getTestConfig('foo', validate);
+      // assert
+      expect(result).toBe('file found');
+    });
+
+  });
+
   describe('testWeb', function() {
-    var karma, wcfg, mockReq, files;
+    var karma, wcfg, mockReq, files, usingRequire;
 
     beforeEach(function() {
       files = ['foo', 'bar'];
@@ -239,13 +491,17 @@ describe('unit', function() {
 
       // mock karma
       karma = jasmine.createSpy('karma').andReturn('karma');
+
+      // mock web test config
       wcfg = {};
+
+      // mock using require.js function result
+      usingRequire = false;
 
       // mock require
       mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
         switch (name) {
           case 'gulp-karma': return karma;
-          case '../../' + aqua.cfg.testing.web: return wcfg;
           default: throw 'Unexpected require ' + name;
         }
       });
@@ -254,8 +510,12 @@ describe('unit', function() {
       task.__set__('require', mockReq);
 
       // add spies
+      spyOn(task, 'getTestConfig').andReturn(wcfg);
       spyOn(aqua.util, 'assign').andReturn(wcfg);
       spyOn(task, 'getCoverageConfig');
+      spyOn(task, 'usingRequireJS').andCallFake(function(){
+        return usingRequire;
+      });
       spyOn(task, 'enforceThresholds');
     });
 
@@ -323,6 +583,21 @@ describe('unit', function() {
       task.testWeb(aqua, cfg, files, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+    });
+
+    describe('when using require.js', function(){
+      beforeEach(function() {
+        // mock using require.js
+        usingRequire = true;
+      });
+
+      it('should NOT look up the files needed for testing', function() {
+        // arrange
+        // act
+        task.testWeb(aqua, cfg, files, gulp);
+        // assert
+        expect(gulp.src).toHaveBeenCalledWith([task.PIPE_NOTHING]);
+      });
     });
   });
 
@@ -414,7 +689,6 @@ describe('unit', function() {
       mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
         switch (name) {
           case 'gulp-jasmine': return gulpJasmine;
-          case '../../test': return mockNodeCfg;
           default: throw 'Unexpected require ' + name;
         }
       });
@@ -423,6 +697,7 @@ describe('unit', function() {
       task.__set__('require', mockReq);
 
       // add spies
+      spyOn(task, 'getTestConfig').andReturn(mockNodeCfg);
       spyOn(task, 'createReports').andReturn('createReports');
       spyOn(task, 'enforceThresholds');
     });
