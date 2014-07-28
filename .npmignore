@@ -15,7 +15,6 @@ Thumbs.db
 sauce.json
 
 demos/
-lib/
 test/
 .closurelinter
 .csslintrc
