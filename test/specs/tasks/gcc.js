@@ -70,7 +70,7 @@ describe('gcc', function() {
       // act
       var result = task.getSource(cfg);
       // assert
-      expect(result).toEqual(['./test/sourceonly.js', 'foo.js']);
+      expect(result).toEqual(['./externs/sourceonly.js', 'foo.js']);
     });
 
   });

@@ -38,7 +38,7 @@ GCC.prototype = {
     var src = pcfg.src.slice();
 
     // add source only before everything (removed with dead-code)
-    src.unshift('./test/sourceonly.js');
+    src.unshift('./externs/sourceonly.js');
 
     return src;
   },
