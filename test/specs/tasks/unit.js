@@ -10,7 +10,7 @@
 'use strict';
 
 describe('unit', function() {
-  var task, aqua, cfg, gulp, OK_MSG,
+  var task, aqua, pcfg, gulp, OK_MSG,
       rewire = require('rewire'),
       root = '../../../',
       src = root + 'src/tasks/';
@@ -31,7 +31,7 @@ describe('unit', function() {
     aqua.config({});
 
     // mock project config
-    cfg = {
+    pcfg = {
       id: 'TEST'
     };
 
@@ -157,7 +157,7 @@ describe('unit', function() {
     it('should check if the project is using require.js', function() {
       // arrange
       // act
-      task.getFilesToCover(wcfg, cfg, aqua);
+      task.getFilesToCover(wcfg, pcfg, aqua);
       // assert
       expect(task.usingRequireJS).toHaveBeenCalledWith(wcfg);
     });
@@ -165,7 +165,7 @@ describe('unit', function() {
     describe('when not using require.js', function(){
       beforeEach(function() {
         // extend project config
-        cfg.src = ['FOO'];
+        pcfg.src = ['FOO'];
 
         // add spies
       });
@@ -173,9 +173,9 @@ describe('unit', function() {
       it('should return the project source files', function() {
         // arrange
         // act
-        var result = task.getFilesToCover(wcfg, cfg, aqua);
+        var result = task.getFilesToCover(wcfg, pcfg, aqua);
         // assert
-        expect(result).toBe(cfg.src);
+        expect(result).toBe(pcfg.src);
       });
     });
 
@@ -185,7 +185,7 @@ describe('unit', function() {
         usingRequire = true;
 
         // extend project config
-        cfg.src = ['./FOO', './BAR', './ZAB'];
+        pcfg.src = ['./FOO', './BAR', './ZAB'];
 
         // mock web test files config
         wcfg.files = ['foo', {pattern:'bar'}, {pattern:'baz'}];
@@ -194,7 +194,7 @@ describe('unit', function() {
       it('should filter the test files to match the source files', function() {
         // arrange
         // act
-        var result = task.getFilesToCover(wcfg, cfg, aqua);
+        var result = task.getFilesToCover(wcfg, pcfg, aqua);
         // assert
         expect(result).toEqual([{pattern:'bar'}]);
       });
@@ -242,27 +242,27 @@ describe('unit', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.getCoverageConfig(wcfg, cfg, aqua);
+      task.getCoverageConfig(wcfg, pcfg, aqua);
       // assert
       expect(mockReq).toHaveBeenCalledWith('path');
     });
     it('should get the files to cover', function() {
       // arrange
       // act
-      task.getCoverageConfig(wcfg, cfg, aqua);
+      task.getCoverageConfig(wcfg, pcfg, aqua);
       // assert
-      expect(task.getFilesToCover).toHaveBeenCalledWith(wcfg, cfg, aqua);
+      expect(task.getFilesToCover).toHaveBeenCalledWith(wcfg, pcfg, aqua);
     });
     it('should loop through the source files', function() {
       // arrange
       // act
-      task.getCoverageConfig(wcfg, cfg, aqua);
+      task.getCoverageConfig(wcfg, pcfg, aqua);
       // assert
-      expect(aqua.util.forEach).toHaveBeenCalledWith(cfg.src, jasmine.any(Function));
+      expect(aqua.util.forEach).toHaveBeenCalledWith(pcfg.src, jasmine.any(Function));
     });
     it('should set coverage preprocessor for source files', function() {
       // arrange
-      task.getCoverageConfig(wcfg, cfg, aqua);
+      task.getCoverageConfig(wcfg, pcfg, aqua);
       var loop = aqua.util.forEach.calls[0].args[1];
       // act
       loop('file');
@@ -272,27 +272,27 @@ describe('unit', function() {
     it('should add coverage reporter', function() {
       // arrange
       // act
-      task.getCoverageConfig(wcfg, cfg, aqua);
+      task.getCoverageConfig(wcfg, pcfg, aqua);
       // assert
       expect(wcfg.reporters).toEqual(['coverage']);
     });
     it('should set coverage report output folder', function() {
       // arrange
       // act
-      task.getCoverageConfig(wcfg, cfg, aqua);
+      task.getCoverageConfig(wcfg, pcfg, aqua);
       // assert
-      expect(path.join).toHaveBeenCalledWith(aqua.cfg.coverage.report, cfg.id.toLowerCase());
+      expect(path.join).toHaveBeenCalledWith(aqua.cfg.coverage.report, pcfg.id.toLowerCase());
     });
     it('should loop through the coverage reporters', function() {
       // arrange
       // act
-      task.getCoverageConfig(wcfg, cfg, aqua);
+      task.getCoverageConfig(wcfg, pcfg, aqua);
       // assert
       expect(aqua.util.forEach).toHaveBeenCalledWith(wcfg.coverage.reporters, jasmine.any(Function));
     });
     it('should add coverage reporters', function() {
       // arrange
-      task.getCoverageConfig(wcfg, cfg, aqua);
+      task.getCoverageConfig(wcfg, pcfg, aqua);
       var loop = aqua.util.forEach.calls[1].args[1];
       // act
       loop('reporter');
@@ -440,10 +440,21 @@ describe('unit', function() {
       // add spies
     });
 
+    it('should use project level config override', function() {
+      // arrange
+      pcfg.unit = {
+        config: 'proj-confg'
+      }
+      // act
+      task.getTestConfig(pcfg, 'foo', validate);
+      // assert
+      expect(validate).toHaveBeenCalledWith('__dirname../../../../proj-confg');
+    });
+
     it('should try to load the parent config', function() {
       // arrange
       // act
-      task.getTestConfig('foo', validate);
+      task.getTestConfig(pcfg, 'foo', validate);
       // assert
       expect(validate).toHaveBeenCalledWith('file found');
     });
@@ -451,7 +462,7 @@ describe('unit', function() {
     it('should load the default config', function() {
       // arrange
       // act
-      task.getTestConfig('bar', validate);
+      task.getTestConfig(pcfg, 'bar', validate);
       // assert
       expect(validate).toHaveBeenCalledWith('__dirname../../bar');
     });
@@ -459,7 +470,7 @@ describe('unit', function() {
     it('should validate the config', function() {
       // arrange
       // act
-      task.getTestConfig('baz', validate);
+      task.getTestConfig(pcfg, 'baz', validate);
       // assert
       expect(validate).toHaveBeenCalledWith('__dirname../../../../baz');
     });
@@ -467,7 +478,7 @@ describe('unit', function() {
     it('should return the config', function() {
       // arrange
       // act
-      var result = task.getTestConfig('foo', validate);
+      var result = task.getTestConfig(pcfg, 'foo', validate);
       // assert
       expect(result).toBe('file found');
     });
@@ -522,14 +533,14 @@ describe('unit', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.testWeb(aqua, cfg, files, gulp);
+      task.testWeb(aqua, pcfg, files, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-karma');
     });
     it('should merge the web config with dynamic settings', function() {
       // arrange
       // act
-      task.testWeb(aqua, cfg, files, gulp);
+      task.testWeb(aqua, pcfg, files, gulp);
       // assert
       expect(aqua.util.assign).toHaveBeenCalledWith(wcfg, {
         logLevel: 'level',
@@ -542,21 +553,21 @@ describe('unit', function() {
       // arrange
       aqua.cfg.coverage = {};
       // act
-      task.testWeb(aqua, cfg, files, gulp);
+      task.testWeb(aqua, pcfg, files, gulp);
       // assert
-      expect(task.getCoverageConfig).toHaveBeenCalledWith(wcfg, cfg, aqua);
+      expect(task.getCoverageConfig).toHaveBeenCalledWith(wcfg, pcfg, aqua);
     });
     it('should look up the files needed for testing', function() {
       // arrange
       // act
-      task.testWeb(aqua, cfg, files, gulp);
+      task.testWeb(aqua, pcfg, files, gulp);
       // assert
       expect(gulp.src).toHaveBeenCalledWith(files);
     });
     it('should run unit tests with karma', function() {
       // arrange
       // act
-      task.testWeb(aqua, cfg, files, gulp);
+      task.testWeb(aqua, pcfg, files, gulp);
       // assert
       expect(karma).toHaveBeenCalled();
       expect(gulp.pipe).toHaveBeenCalledWith('karma');
@@ -564,23 +575,23 @@ describe('unit', function() {
     it('should listen for when the task is complete', function() {
       // arrange
       // act
-      task.testWeb(aqua, cfg, files, gulp);
+      task.testWeb(aqua, pcfg, files, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('end', jasmine.any(Function));
     });
     it('should call enforceThresholds when the task is done', function() {
       // arrange
-      task.testWeb(aqua, cfg, files, gulp);
+      task.testWeb(aqua, pcfg, files, gulp);
       var onEnd = gulp.on.calls[0].args[1];
       // act
       onEnd();
       // assert
-      expect(task.enforceThresholds).toHaveBeenCalledWith(aqua, cfg.id, gulp);
+      expect(task.enforceThresholds).toHaveBeenCalledWith(aqua, pcfg.id, gulp);
     });
     it('should listen for errors', function() {
       // arrange
       // act
-      task.testWeb(aqua, cfg, files, gulp);
+      task.testWeb(aqua, pcfg, files, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
     });
@@ -594,7 +605,7 @@ describe('unit', function() {
       it('should NOT look up the files needed for testing', function() {
         // arrange
         // act
-        task.testWeb(aqua, cfg, files, gulp);
+        task.testWeb(aqua, pcfg, files, gulp);
         // assert
         expect(gulp.src).toHaveBeenCalledWith([task.PIPE_NOTHING]);
       });
@@ -622,21 +633,21 @@ describe('unit', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.testNode(aqua, cfg, files, gulp);
+      task.testNode(aqua, pcfg, files, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-istanbul');
     });
     it('should look up the source code to instrument', function() {
       // arrange
       // act
-      task.testNode(aqua, cfg, files, gulp);
+      task.testNode(aqua, pcfg, files, gulp);
       // assert
-      expect(gulp.src).toHaveBeenCalledWith(cfg.src);
+      expect(gulp.src).toHaveBeenCalledWith(pcfg.src);
     });
     it('should instrument source code for coverage', function() {
       // arrange
       // act
-      task.testNode(aqua, cfg, files, gulp);
+      task.testNode(aqua, pcfg, files, gulp);
       // assert
       expect(istanbul).toHaveBeenCalled();
       expect(gulp.pipe).toHaveBeenCalledWith('istanbul');
@@ -644,23 +655,23 @@ describe('unit', function() {
     it('should listen for when instrumentation finishes', function() {
       // arrange
       // act
-      task.testNode(aqua, cfg, files, gulp);
+      task.testNode(aqua, pcfg, files, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('finish', jasmine.any(Function));
     });
     it('should run tests when instrumentation finishes', function() {
       // arrange
-      task.testNode(aqua, cfg, files, gulp);
+      task.testNode(aqua, pcfg, files, gulp);
       var done = gulp.on.calls[0].args[1];
       // act
       done();
       // assert
-      expect(task.runNodeTests).toHaveBeenCalledWith(aqua, cfg.id, files, gulp);
+      expect(task.runNodeTests).toHaveBeenCalledWith(aqua, pcfg, files, gulp);
     });
     it('should listen for errors', function() {
       // arrange
       // act
-      task.testNode(aqua, cfg, files, gulp);
+      task.testNode(aqua, pcfg, files, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
     });
@@ -705,7 +716,7 @@ describe('unit', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.runNodeTests(aqua, cfg.id, files, gulp);
+      task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-jasmine');
     });
@@ -715,7 +726,7 @@ describe('unit', function() {
         colors: false
       };
       // act
-      task.runNodeTests(aqua, cfg.id, files, gulp);
+      task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
       var args = gulpJasmine.calls[0].args[0];
       expect(args.showColors).toBe(false);
@@ -723,14 +734,14 @@ describe('unit', function() {
     it('should look up the files to unit test', function() {
       // arrange
       // act
-      task.runNodeTests(aqua, cfg.id, files, gulp);
+      task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
       expect(gulp.src).toHaveBeenCalledWith(files);
     });
     it('should run the unit tests', function() {
       // arrange
       // act
-      task.runNodeTests(aqua, cfg.id, files, gulp);
+      task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
       expect(gulpJasmine).toHaveBeenCalled();
       expect(gulp.pipe).toHaveBeenCalledWith('jasmine');
@@ -738,7 +749,7 @@ describe('unit', function() {
     it('should create code coverage reports', function() {
       // arrange
       // act
-      task.runNodeTests(aqua, cfg.id, files, gulp);
+      task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
       expect(task.createReports).toHaveBeenCalled();
       expect(gulp.pipe).toHaveBeenCalledWith('createReports');
@@ -746,23 +757,23 @@ describe('unit', function() {
     it('should listen for when reports have been written', function() {
       // arrange
       // act
-      task.runNodeTests(aqua, cfg.id, files, gulp);
+      task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('end', jasmine.any(Function));
     });
     it('should run enforce thresholds when reports exist', function() {
       // arrange
-      task.runNodeTests(aqua, cfg.id, files, gulp);
+      task.runNodeTests(aqua, pcfg, files, gulp);
       var done = gulp.on.calls[0].args[1];
       // act
       done();
       // assert
-      expect(task.enforceThresholds).toHaveBeenCalledWith(aqua, cfg.id, gulp);
+      expect(task.enforceThresholds).toHaveBeenCalledWith(aqua, pcfg.id, gulp);
     });
     it('should listen for errors', function() {
       // arrange
       // act
-      task.runNodeTests(aqua, cfg.id, files, gulp);
+      task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
     });
@@ -809,21 +820,21 @@ describe('unit', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.createReports(aqua.cfg, ncfg, cfg.id);
+      task.createReports(aqua.cfg, ncfg, pcfg.id);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-istanbul');
     });
     it('should build the report output path', function() {
       // arrange
       // act
-      task.createReports(aqua.cfg, ncfg, cfg.id);
+      task.createReports(aqua.cfg, ncfg, pcfg.id);
       // assert
-      expect(path.join).toHaveBeenCalledWith(aqua.cfg.coverage.report, cfg.id.toLowerCase());
+      expect(path.join).toHaveBeenCalledWith(aqua.cfg.coverage.report, pcfg.id.toLowerCase());
     });
     it('should write coverage reports', function() {
       // arrange
       // act
-      task.createReports(aqua.cfg, ncfg, cfg.id);
+      task.createReports(aqua.cfg, ncfg, pcfg.id);
       // assert
       expect(istanbul.writeReports).toHaveBeenCalledWith({
         dir: 'join',
@@ -833,7 +844,7 @@ describe('unit', function() {
     it('should return the report writer', function() {
       // arrange
       // act
-      var result = task.createReports(aqua.cfg, ncfg, cfg.id);
+      var result = task.createReports(aqua.cfg, ncfg, pcfg.id);
       // assert
       expect(result).toBe('writeReports');
     });
@@ -874,28 +885,28 @@ describe('unit', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.enforceThresholds(aqua, cfg.id, gulp);
+      task.enforceThresholds(aqua, pcfg.id, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-istanbul-enforcer');
     });
     it('should look up whatever (not using if)', function() {
       // arrange
       // act
-      task.enforceThresholds(aqua, cfg.id, gulp);
+      task.enforceThresholds(aqua, pcfg.id, gulp);
       // assert
       expect(gulp.src).toHaveBeenCalledWith('.');
     });
     it('should build output path', function() {
       // arrange
       // act
-      task.enforceThresholds(aqua, cfg.id, gulp);
+      task.enforceThresholds(aqua, pcfg.id, gulp);
       // assert
-      expect(path.join).toHaveBeenCalledWith(aqua.cfg.coverage.report, cfg.id.toLowerCase());
+      expect(path.join).toHaveBeenCalledWith(aqua.cfg.coverage.report, pcfg.id.toLowerCase());
     });
     it('should enforce coverage thresholds', function() {
       // arrange
       // act
-      task.enforceThresholds(aqua, cfg.id, gulp);
+      task.enforceThresholds(aqua, pcfg.id, gulp);
       // assert
       expect(enforcer).toHaveBeenCalledWith({
         thresholds: aqua.cfg.thresholds.coverage,
@@ -906,14 +917,14 @@ describe('unit', function() {
     it('should listen for errors', function() {
       // arrange
       // act
-      task.enforceThresholds(aqua, cfg.id, gulp);
+      task.enforceThresholds(aqua, pcfg.id, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('error', jasmine.any(Function));
     });
     it('should listen for when the task is finished', function() {
       // arrange
       // act
-      task.enforceThresholds(aqua, cfg.id, gulp);
+      task.enforceThresholds(aqua, pcfg.id, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('end', jasmine.any(Function));
     });
@@ -921,7 +932,7 @@ describe('unit', function() {
     describe('when error found', function() {
       it('should log errors to the console', function() {
         // arrange
-        task.enforceThresholds(aqua, cfg.id, gulp);
+        task.enforceThresholds(aqua, pcfg.id, gulp);
         var onErr = gulp.on.calls[0].args[1],
             err = {message: ''};
         // act
@@ -932,7 +943,7 @@ describe('unit', function() {
       });
       it('should not log "at minimum thresholds" to the console', function() {
         // arrange
-        task.enforceThresholds(aqua, cfg.id, gulp);
+        task.enforceThresholds(aqua, pcfg.id, gulp);
         var onErr = gulp.on.calls[0].args[1],
             onDone = gulp.on.calls[1].args[1],
             err = {message: ''};
@@ -946,7 +957,7 @@ describe('unit', function() {
     describe('when no errors', function() {
       it('should log "at minimum thresholds" to the console', function() {
         // arrange
-        task.enforceThresholds(aqua, cfg.id, gulp);
+        task.enforceThresholds(aqua, pcfg.id, gulp);
         var onDone = gulp.on.calls[1].args[1];
         // act
         onDone();
@@ -969,38 +980,38 @@ describe('unit', function() {
     it('should default project type to web', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(task.testWeb).toHaveBeenCalled();
     });
     it('should collect files needed for testing', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(task.collect).toHaveBeenCalled();
     });
     it('should support testing web projects', function() {
       // arrange
-      cfg.type = 'web';
+      pcfg.type = 'web';
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
-      expect(task.testWeb).toHaveBeenCalledWith(aqua, cfg, files, gulp);
+      expect(task.testWeb).toHaveBeenCalledWith(aqua, pcfg, files, gulp);
     });
     it('should support testing node.js projects', function() {
       // arrange
-      cfg.type = 'nodejs';
+      pcfg.type = 'nodejs';
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
-      expect(task.testNode).toHaveBeenCalledWith(aqua, cfg, files, gulp);
+      expect(task.testNode).toHaveBeenCalledWith(aqua, pcfg, files, gulp);
     });
     it('should show a warning for unsupported project types', function() {
       // arrange
-      cfg.type = 'foo';
+      pcfg.type = 'foo';
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(aqua.error).toHaveBeenCalledWith('unsupported project type:', 'foo');
     });
@@ -1017,10 +1028,10 @@ describe('unit', function() {
 
     it('should return true if the task can run', function() {
       // arrange
-      cfg.src = [];
-      cfg.unit = {};
+      pcfg.src = [];
+      pcfg.unit = {};
       // act
-      var result = task.canRun(cfg, aqua.cfg);
+      var result = task.canRun(pcfg, aqua.cfg);
       // assert
       expect(result).toBe(true);
     });

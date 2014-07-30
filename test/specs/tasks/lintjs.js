@@ -10,7 +10,7 @@
 'use strict';
 
 describe('lintjs', function() {
-  var task, aqua, cfg, gulp, ERR_MSG, OK_MSG,
+  var task, aqua, pcfg, gulp, ERR_MSG, OK_MSG,
       rewire = require('rewire'),
       root = '../../../',
       src = root + 'src/tasks/';
@@ -29,7 +29,7 @@ describe('lintjs', function() {
     aqua.config({});
 
     // mock project config
-    cfg = {
+    pcfg = {
       id: 'TEST'
     };
 
@@ -82,22 +82,22 @@ describe('lintjs', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-jshint');
     });
     it('should look up all javascript', function() {
       // arrange
-      cfg.alljs = 'pathtojs';
+      pcfg.alljs = 'pathtojs';
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gulp.src).toHaveBeenCalledWith('pathtojs');
     });
     it('should lint all JavaScript against anti-patterns', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(jshint).toHaveBeenCalled();
       expect(gulp.pipe).toHaveBeenCalledWith('jshint');
@@ -105,7 +105,7 @@ describe('lintjs', function() {
     it('should use a custom reporter', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(jshint.reporter).toHaveBeenCalled();
       expect(gulp.pipe).toHaveBeenCalledWith('on');
@@ -113,7 +113,7 @@ describe('lintjs', function() {
     it('should use the default reporter', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(jshint.reporter.callCount).toBeGreaterThan(1);
       expect(gulp.pipe).toHaveBeenCalledWith('default');
@@ -121,7 +121,7 @@ describe('lintjs', function() {
     it('should use the fail reporter', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(jshint.reporter.callCount).toBeGreaterThan(2);
       expect(gulp.pipe).toHaveBeenCalledWith('fail');
@@ -129,14 +129,14 @@ describe('lintjs', function() {
     it('should listen for errors', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
     });
     it('should listen for when the task is done', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(reporter.on).toHaveBeenCalledWith('end', jasmine.any(Function));
     });
@@ -144,7 +144,7 @@ describe('lintjs', function() {
     describe('when error found', function() {
       it('should log "lint errors found" to the console', function() {
         // arrange
-        task.run(aqua, cfg, gulp);
+        task.run(aqua, pcfg, gulp);
         var onErr = jshint.reporter.calls[0].args[0];
         // act
         onErr();
@@ -154,7 +154,7 @@ describe('lintjs', function() {
       });
       it('should log "lint errors found" to the console once', function() {
         // arrange
-        task.run(aqua, cfg, gulp);
+        task.run(aqua, pcfg, gulp);
         var onErr = jshint.reporter.calls[0].args[0];
         // act
         onErr();
@@ -165,7 +165,7 @@ describe('lintjs', function() {
       });
       it('should not log "no errors found" to the console', function() {
         // arrange
-        task.run(aqua, cfg, gulp);
+        task.run(aqua, pcfg, gulp);
         var onErr = jshint.reporter.calls[0].args[0],
             onDone = reporter.on.calls[0].args[1];
         // act
@@ -179,7 +179,7 @@ describe('lintjs', function() {
     describe('when no errors', function() {
       it('should log "no errors found" to the console', function() {
         // arrange
-        task.run(aqua, cfg, gulp);
+        task.run(aqua, pcfg, gulp);
         var onDone = reporter.on.calls[0].args[1];
         // act
         onDone();
@@ -192,9 +192,9 @@ describe('lintjs', function() {
   describe('canRun', function() {
     it('should return true if the task can run', function() {
       // arrange
-      cfg.alljs = [];
+      pcfg.alljs = [];
       // act
-      var result = task.canRun(cfg);
+      var result = task.canRun(pcfg);
       // assert
       expect(result).toBe(true);
     });

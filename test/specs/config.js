@@ -11,12 +11,12 @@
 
 describe('config', function() {
   var config,
-      cfg,
+      acfg,
       src = '../../src/';
 
   beforeEach(function() {
     //reset config
-    cfg = {
+    acfg = {
       logging: {
         level: 'level',
         colors: 'colors',
@@ -55,28 +55,28 @@ describe('config', function() {
   it('should configure logging', function() {
     // arrange
     // act
-    config(cfg);
+    config(acfg);
     // assert
-    expect(global.cfg).toBe(cfg);
+    expect(global.cfg).toBe(acfg);
   });
   it('should create the config logger', function() {
     // arrange
-    var lcfg = cfg.logging;
+    var lcfg = acfg.logging;
     // act
-    config(cfg);
+    config(acfg);
     // assert
     expect(global.logger.setup).toHaveBeenCalledWith(lcfg.level, lcfg.colors, lcfg.loggers);
   });
   it('should loop through the tasks', function() {
     // arrange
     // act
-    config(cfg);
+    config(acfg);
     // assert
     expect(global.util.forOwn).toHaveBeenCalledWith(global.tasks, jasmine.any(Function));
   });
   it('should configure the task loggers', function() {
     // arrange
-    config(cfg);
+    config(acfg);
     var cfgTaskLogger = global.util.forOwn.calls[0].args[1],
         name = 'task-name';
     // act
@@ -87,17 +87,17 @@ describe('config', function() {
   });
   it('should set the AQUA config', function() {
     // arrange
-    cfg.logging = undefined;
+    acfg.logging = undefined;
     // act
-    config(cfg);
+    config(acfg);
     // assert
-    expect(global.cfg).toBe(cfg);
+    expect(global.cfg).toBe(acfg);
   });
   it('should support call chaining', function() {
     // arrange
-    cfg.logging = undefined;
+    acfg.logging = undefined;
     // act
-    var result = config(cfg);
+    var result = config(acfg);
     // assert
     expect(result).toBe(global);
   });

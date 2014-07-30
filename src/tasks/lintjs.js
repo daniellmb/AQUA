@@ -29,20 +29,20 @@ function LintJS(name, warning, opt_deps) {
 /**
  * Lint JavaScript source code
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg - AQUA project configuration.
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.
  */
-LintJS.prototype.run = function(aqua, cfg, gulp) {
+LintJS.prototype.run = function(aqua, pcfg, gulp) {
   // load node modules needed
   var lintJs = /** @type {Function} */(require('gulp-jshint')),
       jshint = /** @type {JSHint} */(require('gulp-jshint'));
 
-  //aqua.log(' > run task', cfg.id + '-lint');
+  //aqua.log(' > run task', pcfg.id + '-lint');
 
   var no_errors = true;
 
   // lint all JavaScript against anti-patterns
-  gulp.src(cfg.alljs)
+  gulp.src(pcfg.alljs)
       .pipe(lintJs())
       .pipe(jshint.reporter(function() {
         // show on the first error only

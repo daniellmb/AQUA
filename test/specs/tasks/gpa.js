@@ -10,7 +10,7 @@
 'use strict';
 
 describe('gpa', function() {
-  var task, aqua, cfg, gulp, ERR_MSG, OK_MSG,
+  var task, aqua, pcfg, gulp, ERR_MSG, OK_MSG,
       rewire = require('rewire'),
       root = '../../../',
       src = root + 'src/tasks/';
@@ -29,7 +29,7 @@ describe('gpa', function() {
     aqua.config({});
 
     // mock project config
-    cfg = {
+    pcfg = {
       id: 'TEST'
     };
 
@@ -71,22 +71,22 @@ describe('gpa', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-complexity');
     });
     it('should look up the javascript source code', function() {
       // arrange
-      cfg.src = 'pathtosrc';
+      pcfg.src = 'pathtosrc';
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gulp.src).toHaveBeenCalledWith('pathtosrc');
     });
     it('should provide default complexity thresholds', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gpa).toHaveBeenCalledWith(defaults);
       expect(gulp.pipe).toHaveBeenCalledWith('bar');
@@ -108,7 +108,7 @@ describe('gpa', function() {
         }
       };
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gpa).toHaveBeenCalledWith(expected);
       expect(gulp.pipe).toHaveBeenCalledWith('bar');
@@ -116,7 +116,7 @@ describe('gpa', function() {
     it('should check the complexity of the JavaScript source code', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gpa).toHaveBeenCalled();
       expect(gulp.pipe).toHaveBeenCalledWith('bar');
@@ -124,14 +124,14 @@ describe('gpa', function() {
     it('should listen for errors', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('error', jasmine.any(Function));
     });
     it('should listen for when the task is finished', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gulp.on).toHaveBeenCalledWith('finish', jasmine.any(Function));
     });
@@ -139,7 +139,7 @@ describe('gpa', function() {
     describe('when error found', function() {
       it('should log "complexity issues found" to the console', function() {
         // arrange
-        task.run(aqua, cfg, gulp);
+        task.run(aqua, pcfg, gulp);
         var onErr = gulp.on.calls[0].args[1];
         // act
         onErr();
@@ -149,7 +149,7 @@ describe('gpa', function() {
       });
       it('should not log "no issues found" to the console', function() {
         // arrange
-        task.run(aqua, cfg, gulp);
+        task.run(aqua, pcfg, gulp);
         var onErr = gulp.on.calls[0].args[1],
             onDone = gulp.on.calls[1].args[1];
         // act
@@ -163,7 +163,7 @@ describe('gpa', function() {
     describe('when no errors', function() {
       it('should log "no issues found" to the console', function() {
         // arrange
-        task.run(aqua, cfg, gulp);
+        task.run(aqua, pcfg, gulp);
         var onDone = gulp.on.calls[1].args[1];
         // act
         onDone();
@@ -177,9 +177,9 @@ describe('gpa', function() {
   describe('canRun', function() {
     it('should return true if the task can run', function() {
       // arrange
-      cfg.src = [];
+      pcfg.src = [];
       // act
-      var result = task.canRun(cfg);
+      var result = task.canRun(pcfg);
       // assert
       expect(result).toBe(true);
     });

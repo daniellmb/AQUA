@@ -20,7 +20,6 @@ While nothing is stopping you from simply editing a JavaScript file and committi
 ### JavaScript
 
   * Lint Source Code for Syntax Errors and Anti-Patterns
-  * Automatically fix lint errors non-destructively (TODO)
   * Analyze Code Against Complexity Thresholds
   * Type Checking Source Code
   * Enforce Minimum Typed Percentage Thresholds
@@ -30,6 +29,8 @@ While nothing is stopping you from simply editing a JavaScript file and committi
   * End-to-end Test Runner
   * Documentation Generation
   * Enforce Test Coverage Thresholds
+  * Graph CommonJS and AMD module dependencies (TODO)
+  * Automatically fix lint errors non-destructively (TODO)
 
 ### CSS
 TODO: pull requests welcome :)
@@ -50,7 +51,7 @@ TODO: pull requests welcome :)
 
 AQUA is designed to play well with the following types of projects.
 
-  * Web Projects
+  * Web Projects (including AMD/RequireJS)
   * Node.js Projects
 
 ### Setup
@@ -381,7 +382,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [downloads-url]: https://www.npmjs.org/package/aqua
 [downloads-image]: http://img.shields.io/npm/dm/aqua.svg?style=flat
 [version-url]: https://www.npmjs.org/package/aqua
-[version-image]: http://img.shields.io/badge/npm-v0.1.8-brightgreen.svg?style=flat
+[version-image]: http://img.shields.io/badge/npm-v0.2.0-brightgreen.svg?style=flat
 [tip-url]: https://www.gittip.com/daniellmb/
 [tip-image]: http://img.shields.io/gittip/daniellmb.svg?style=flat
 [irc-url]: http://webchat.freenode.net/?channels=aqua

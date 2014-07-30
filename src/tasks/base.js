@@ -29,11 +29,11 @@ Base.prototype = {
   /**
    * Create Project Task to lint source code
    * @param {!AQUA} aqua - AQUA instance.
-   * @param {!ProjConfig} cfg - AQUA project configuration.
+   * @param {!ProjConfig} pcfg - AQUA project configuration.
    * @param {!Gulp} gulp - Gulp instance.
    */
-  reg: function(aqua, cfg, gulp) {
-    var id = cfg.id.toLowerCase(),
+  reg: function(aqua, pcfg, gulp) {
+    var id = pcfg.id.toLowerCase(),
         task = this;
 
     // debug task registrations
@@ -44,9 +44,9 @@ Base.prototype = {
     // create task to lint all JavaScript in the project
     gulp.task(id + '-' + task.name, this.deps, function(done) {
       // check if project is configured properly
-      if (task.canRun(cfg, aqua.cfg)) {
+      if (task.canRun(pcfg, aqua.cfg)) {
         // run the task
-        task.run(aqua, cfg, gulp);
+        task.run(aqua, pcfg, gulp);
       } else {
         aqua.warn(task.warning);
       }

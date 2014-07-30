@@ -170,14 +170,20 @@ Unit.prototype.validateNodeConfig = function (ncfg) {
 
 /**
  * Unit test web projects
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @param {string} location - the relative configuration file location.
  * @param {Function} validate - validate the test configuration.
  * @return {WebConfig|NodeConfig} test configuration.
  */
-Unit.prototype.getTestConfig = function (location, validate) {
+Unit.prototype.getTestConfig = function (pcfg, location, validate) {
   var path = require('path'),
       backTwo = '../../',
       tcfg;
+
+  // check for project level override
+  if (pcfg.unit && pcfg.unit.config) {
+    location = pcfg.unit.config;
+  }
 
   try {
     // try to use parent location
@@ -208,7 +214,7 @@ Unit.prototype.testWeb = function(aqua, pcfg, files, gulp) {
   // load dependencies
   var task = this, acfg = aqua.cfg,
       karma = /** @type {Function} */(require('gulp-karma')),
-      wcfg = /** @type {WebConfig} */(task.getTestConfig(acfg.testing.web, task.validateWebConfig));
+      wcfg = /** @type {WebConfig} */(task.getTestConfig(pcfg, acfg.testing.web, task.validateWebConfig));
 
   // merge the web config with dynamic settings
   wcfg = aqua.util.assign(wcfg, {
@@ -261,7 +267,7 @@ Unit.prototype.testNode = function(aqua, pcfg, files, gulp) {
       .pipe(istanbul(/* instrument source code for coverage */))
       .on('finish', function() {
         // run unit tests
-        task.runNodeTests(aqua, pcfg.id, files, gulp);
+        task.runNodeTests(aqua, pcfg, files, gulp);
       })
       .on('error', aqua.error);
 };
@@ -270,16 +276,16 @@ Unit.prototype.testNode = function(aqua, pcfg, files, gulp) {
 /**
  * Run Node.js unit tests
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!string} id - AQUA project id.
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @param {!Array.<string>} files - files needed for testing.
  * @param {!Gulp} gulp - Gulp instance.
  */
-Unit.prototype.runNodeTests = function(aqua, id, files, gulp) {
+Unit.prototype.runNodeTests = function(aqua, pcfg, files, gulp) {
 
   // load dependencies
   var acfg = aqua.cfg, task = this,
       jasmine = /** @type {Function} */(require('gulp-jasmine')),
-      ncfg = /** @type {NodeConfig} */(task.getTestConfig(acfg.testing.node, task.validateNodeConfig));
+      ncfg = /** @type {NodeConfig} */(task.getTestConfig(pcfg, acfg.testing.node, task.validateNodeConfig));
 
   // set gulp-jasmine show colors to match AQUA setting
   if (acfg.logging && !acfg.logging.colors) {
@@ -291,10 +297,10 @@ Unit.prototype.runNodeTests = function(aqua, id, files, gulp) {
   // run unit tests
   gulp.src(files)
       .pipe(jasmine(ncfg.jasmine))
-      .pipe(task.createReports(acfg, ncfg, id))
+      .pipe(task.createReports(acfg, ncfg, pcfg.id))
       .on('end', function() {
         // enforce thresholds
-        task.enforceThresholds(aqua, id, gulp);
+        task.enforceThresholds(aqua, pcfg.id, gulp);
       })
       .on('error', aqua.error);
 };
@@ -359,7 +365,7 @@ Unit.prototype.enforceThresholds = function(aqua, id, gulp) {
  * @param {!Gulp} gulp - Gulp instance.
  */
 Unit.prototype.run = function(aqua, pcfg, gulp) {
-  //aqua.log(' > run task', cfg.id + '-unit');
+  //aqua.log(' > run task', pcfg.id + '-unit');
 
   // default project type to web
   pcfg.type = pcfg.type ? pcfg.type : 'web';

@@ -13,20 +13,20 @@ describe('init', function() {
   var init,
       src = '../../src/',
       rewire = require('rewire'),
-      cfg,
-      cfgs;
+      pcfg,
+      pcfgs;
 
   beforeEach(function() {
     // get method under test
     init = require(src + 'init');
 
     // mock project config
-    cfg = {
+    pcfg = {
       id: 'TEST'
     };
 
     // mock aqua project configs
-    cfgs = [];
+    pcfgs = [];
 
     // mock aqua tasks
     global.tasks = {
@@ -62,49 +62,49 @@ describe('init', function() {
     // arrange
     spyOn(Array.prototype, 'forEach').andCallThrough();
     // act
-    init(cfgs);
+    init(pcfgs);
     // assert
-    expect(cfgs.forEach).toHaveBeenCalled();
+    expect(pcfgs.forEach).toHaveBeenCalled();
   });
   it('should create the init logger', function() {
     // arrange
     // act
-    init(cfgs);
+    init(pcfgs);
     // assert
     expect(global.logger.create).toHaveBeenCalledWith('init');
   });
   it('should validate the AQUA configuration settings', function() {
     // arrange
-    cfgs.push(cfg);
+    pcfgs.push(pcfg);
     // act
-    init(cfgs);
+    init(pcfgs);
     // assert
-    expect(global.validate).toHaveBeenCalledWith(cfg);
+    expect(global.validate).toHaveBeenCalledWith(pcfg);
   });
   it('should loop through the tasks', function() {
     // arrange
-    cfgs.push(cfg);
+    pcfgs.push(pcfg);
     // act
-    init(cfgs);
+    init(pcfgs);
     // assert
     expect(global.util.forOwn).toHaveBeenCalledWith(global.tasks, jasmine.any(Function));
   });
   it('should register each task', function() {
     // arrange
     var cfgTaskLogger, name = 'test', gulp = require('gulp');
-    cfgs.push(cfg);
-    init(cfgs);
+    pcfgs.push(pcfg);
+    init(pcfgs);
     cfgTaskLogger = global.util.forOwn.calls[0].args[1];
     // act
     cfgTaskLogger(null, name);
     // assert
-    expect(global.tasks[name].reg).toHaveBeenCalledWith(global, cfg, gulp);
+    expect(global.tasks[name].reg).toHaveBeenCalledWith(global, pcfg, gulp);
   });
   it('should use about to debug the task', function() {
     // arrange
     var cfgTaskLogger, name = 'test';
-    cfgs.push(cfg);
-    init(cfgs);
+    pcfgs.push(pcfg);
+    init(pcfgs);
     cfgTaskLogger = global.util.forOwn.calls[0].args[1];
     // act
     cfgTaskLogger(null, name);

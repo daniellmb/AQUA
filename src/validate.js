@@ -12,11 +12,11 @@
 (function closure() {
   /**
    * Validate an AQUA configuration file
-   * @param {AquaConfig} cfg - an AQUA configuration object to validate
+   * @param {AquaConfig} acfg - an AQUA configuration object to validate
    * @return {AQUA}
    * @this {AQUA}
    */
-  module.exports = function(cfg) {
+  module.exports = function(acfg) {
     // validate AQUA config
 
     // validate project config

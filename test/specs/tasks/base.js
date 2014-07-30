@@ -10,7 +10,7 @@
 'use strict';
 
 describe('base', function() {
-  var Task, task, aqua, cfg, gulp,
+  var Task, task, aqua, pcfg, gulp,
       rewire = require('rewire'),
       root = '../../../',
       src = root + 'src/tasks/';
@@ -27,7 +27,7 @@ describe('base', function() {
     aqua.config({});
 
     // mock project config
-    cfg = {
+    pcfg = {
       id: 'TEST'
     };
 
@@ -103,7 +103,7 @@ describe('base', function() {
     it('should create task to lint all JavaScript in the project', function() {
       // arrange
       // act
-      task.reg(aqua, cfg, gulp);
+      task.reg(aqua, pcfg, gulp);
       // assert
       expect(gulp.task).toHaveBeenCalledWith('test-task', [], jasmine.any(Function));
     });
@@ -123,7 +123,7 @@ describe('base', function() {
       it('should show warning if not supported', function() {
         // arrange
         canRun = false;
-        task.reg(aqua, cfg, gulp);
+        task.reg(aqua, pcfg, gulp);
         arg = gulp.task.calls[0].args[2];
         // act
         arg(done);
@@ -132,16 +132,16 @@ describe('base', function() {
       });
       it('should only run if project is configured properly', function() {
         // arrange
-        task.reg(aqua, cfg, gulp);
+        task.reg(aqua, pcfg, gulp);
         arg = gulp.task.calls[0].args[2];
         // act
         arg(done);
         // assert
-        expect(task.canRun).toHaveBeenCalledWith(cfg, aqua.cfg);
+        expect(task.canRun).toHaveBeenCalledWith(pcfg, aqua.cfg);
       });
       it('should run the done callback', function() {
         // arrange
-        task.reg(aqua, cfg, gulp);
+        task.reg(aqua, pcfg, gulp);
         arg = gulp.task.calls[0].args[2];
         // act
         arg(done);

@@ -10,7 +10,7 @@
 'use strict';
 
 describe('doc', function() {
-  var task, aqua, cfg, gulp,
+  var task, aqua, pcfg, gulp,
       rewire = require('rewire'),
       root = '../../../',
       src = root + 'src/tasks/';
@@ -26,7 +26,7 @@ describe('doc', function() {
     aqua.config({});
 
     // mock project config
-    cfg = {
+    pcfg = {
       id: 'TEST'
     };
 
@@ -49,49 +49,49 @@ describe('doc', function() {
   describe('getSrc', function() {
     beforeEach(function() {
       // extend the default config
-      cfg.src = [];
+      pcfg.src = [];
 
       // add spies
-      spyOn(cfg.src, 'slice').andCallThrough();
+      spyOn(pcfg.src, 'slice').andCallThrough();
     });
 
     it('should copy the source array', function() {
       // arrange
       // act
-      task.getSrc(cfg);
+      task.getSrc(pcfg);
       // assert
-      expect(cfg.src.slice).toHaveBeenCalled();
+      expect(pcfg.src.slice).toHaveBeenCalled();
     });
     it('should check for optional type definitions', function() {
       // arrange
-      cfg.types = ['types'];
+      pcfg.types = ['types'];
       // act
-      var result = task.getSrc(cfg);
+      var result = task.getSrc(pcfg);
       // assert
-      expect(result).toEqual(cfg.types);
+      expect(result).toEqual(pcfg.types);
     });
     it('should check for optional readme file', function() {
       // arrange
-      cfg.readme = 'readme';
+      pcfg.readme = 'readme';
       // act
-      var result = task.getSrc(cfg);
+      var result = task.getSrc(pcfg);
       // assert
-      expect(result).toEqual([cfg.readme]);
+      expect(result).toEqual([pcfg.readme]);
     });
     it('should check for optional page objects', function() {
       // arrange
-      cfg.e2e = {
+      pcfg.e2e = {
         pgobj: ['pgobj']
       };
       // act
-      var result = task.getSrc(cfg);
+      var result = task.getSrc(pcfg);
       // assert
-      expect(result).toEqual(cfg.e2e.pgobj);
+      expect(result).toEqual(pcfg.e2e.pgobj);
     });
     it('should return the list of sources', function() {
       // arrange
       // act
-      var result = task.getSrc(cfg);
+      var result = task.getSrc(pcfg);
       // assert
       expect(result).toEqual([]);
     });
@@ -136,7 +136,7 @@ describe('doc', function() {
     it('should extend the default template', function() {
       // arrange
       // act
-      var result = task.getTemplate(acfg, cfg);
+      var result = task.getTemplate(acfg, pcfg);
       // assert
       expect(result).toEqual(task.template);
     });
@@ -188,29 +188,29 @@ describe('doc', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-jsdoc');
     });
     it('should look up the sources to generate docs from', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
-      expect(task.getSrc).toHaveBeenCalledWith(cfg);
+      expect(task.getSrc).toHaveBeenCalledWith(pcfg);
       expect(gulp.src).toHaveBeenCalledWith('getSrc');
     });
     it('should build the output path', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
-      expect(path.join).toHaveBeenCalledWith(aqua.cfg.docs.dir, cfg.id.toLowerCase());
+      expect(path.join).toHaveBeenCalledWith(aqua.cfg.docs.dir, pcfg.id.toLowerCase());
     });
     it('should check the complexity of the JavaScript source code', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(doc).toHaveBeenCalledWith('join', 'getTemplate', task.options);
       expect(gulp.pipe).toHaveBeenCalledWith('on');
@@ -218,7 +218,7 @@ describe('doc', function() {
     it('should listen for errors', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(doc.on).toHaveBeenCalledWith('error', aqua.error);
     });
@@ -233,9 +233,9 @@ describe('doc', function() {
           dir: 'dir'
         }
       };
-      cfg.src = [];
+      pcfg.src = [];
       // act
-      var result = task.canRun(cfg, acfg);
+      var result = task.canRun(pcfg, acfg);
       // assert
       expect(result).toBe(true);
     });

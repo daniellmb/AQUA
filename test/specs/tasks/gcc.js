@@ -10,7 +10,7 @@
 'use strict';
 
 describe('gcc', function() {
-  var Task, task, aqua, cfg, gulp,
+  var Task, task, aqua, pcfg, gulp,
       rewire = require('rewire'),
       root = '../../../',
       src = root + 'src/tasks/',
@@ -39,7 +39,7 @@ describe('gcc', function() {
     aqua.config({});
 
     // mock project config
-    cfg = {
+    pcfg = {
       id: 'TEST'
     };
 
@@ -66,9 +66,9 @@ describe('gcc', function() {
 
     it('should prepend sourceonly.js', function() {
       // arrange
-      cfg.src = ['foo.js'];
+      pcfg.src = ['foo.js'];
       // act
-      var result = task.getSource(cfg);
+      var result = task.getSource(pcfg);
       // assert
       expect(result).toEqual(['./externs/sourceonly.js', 'foo.js']);
     });
@@ -84,7 +84,7 @@ describe('gcc', function() {
       it('should use the project id to build a unique name', function() {
         // arrange
         // act
-        var result = task.getFileName(cfg);
+        var result = task.getFileName(pcfg);
         // assert
         expect(result).toBe('test.js');
       });
@@ -94,9 +94,9 @@ describe('gcc', function() {
       it('should use it to as the file name', function() {
         // arrange
         var name = 'foo.bar';
-        cfg.destName = name;
+        pcfg.destName = name;
         // act
-        var result = task.getFileName(cfg);
+        var result = task.getFileName(pcfg);
         // assert
         expect(result).toBe(name);
       });
@@ -116,7 +116,7 @@ describe('gcc', function() {
       it('should do nothing', function() {
         // arrange
         // act
-        var result = task.getNodeExterns(cfg, externs);
+        var result = task.getNodeExterns(pcfg, externs);
         // assert
         expect(result).toBe(externs);
       });
@@ -125,9 +125,9 @@ describe('gcc', function() {
     describe('when a node.js project', function() {
       it('should append the core externs', function() {
         // arrange
-        cfg.type = 'nodejs';
+        pcfg.type = 'nodejs';
         // act
-        var result = task.getNodeExterns(cfg, externs);
+        var result = task.getNodeExterns(pcfg, externs);
         // assert
         expect(result).toEqual([
           'foo.bar.js',
@@ -153,7 +153,7 @@ describe('gcc', function() {
       it('should do nothing', function() {
         // arrange
         // act
-        var result = task.getGlobals(cfg, externs, glob);
+        var result = task.getGlobals(pcfg, externs, glob);
         // assert
         expect(result).toEqual(['foo.baz.js']);
       });
@@ -162,11 +162,11 @@ describe('gcc', function() {
     describe('when there are project globals', function() {
       it('should append the globals', function() {
         // arrange
-        cfg.unit = {
+        pcfg.unit = {
           globals: ['global1.js', 'global2.js']
         };
         // act
-        var result = task.getGlobals(cfg, externs, glob);
+        var result = task.getGlobals(pcfg, externs, glob);
         // assert
         expect(result).toEqual([
           'global2.js',
@@ -192,7 +192,7 @@ describe('gcc', function() {
       // arrange
       pattern = './pattern.js';
       // act
-      var result = task.findFiles(cfg, pattern, glob);
+      var result = task.findFiles(pcfg, pattern, glob);
       // assert
       expect(result).toEqual([
         './pattern.js'
@@ -203,7 +203,7 @@ describe('gcc', function() {
       it('should use the externs folder', function() {
         // arrange
         // act
-        var result = task.findFiles(cfg, pattern, glob);
+        var result = task.findFiles(pcfg, pattern, glob);
         // assert
         expect(result).toEqual([
           './externs/pattern.js'
@@ -214,9 +214,9 @@ describe('gcc', function() {
     describe('when cfg is a node.js project', function() {
       it('should use the nodejs externs folder', function() {
         // arrange
-        cfg.type = 'nodejs';
+        pcfg.type = 'nodejs';
         // act
-        var result = task.findFiles(cfg, pattern, glob);
+        var result = task.findFiles(pcfg, pattern, glob);
         // assert
         expect(result).toEqual([
           './externs/nodejs/pattern.js'
@@ -244,7 +244,7 @@ describe('gcc', function() {
       it('should do nothing', function() {
         // arrange
         // act
-        var result = task.getProjTypes(cfg, externs, glob);
+        var result = task.getProjTypes(pcfg, externs, glob);
         // assert
         expect(result).toEqual(['foo.bar.baz.js']);
       });
@@ -253,7 +253,7 @@ describe('gcc', function() {
     describe('when there are project types', function() {
       beforeEach(function() {
         // mock project types
-        cfg.types = [
+        pcfg.types = [
           'bundled',
           './not.bundled.js'
         ];
@@ -263,19 +263,19 @@ describe('gcc', function() {
       it('should search for externs files', function() {
         // arrange
         // act
-        task.getProjTypes(cfg, externs, glob);
+        task.getProjTypes(pcfg, externs, glob);
         // assert
-        expect(task.findFiles).toHaveBeenCalledWith(cfg, 'bundled', glob);
-        expect(task.findFiles).toHaveBeenCalledWith(cfg, './not.bundled.js', glob);
+        expect(task.findFiles).toHaveBeenCalledWith(pcfg, 'bundled', glob);
+        expect(task.findFiles).toHaveBeenCalledWith(pcfg, './not.bundled.js', glob);
       });
 
       describe('when the file is missing', function() {
         it('should write a warning to the console', function() {
           // arrange
           noMatches = true;
-          cfg.types = ['missing.js'];
+          pcfg.types = ['missing.js'];
           // act
-          task.getProjTypes(cfg, externs, glob);
+          task.getProjTypes(pcfg, externs, glob);
           // assert
           expect(task.log.warn).toHaveBeenCalledWith('Type file not found: missing.js');
         });
@@ -284,7 +284,7 @@ describe('gcc', function() {
       it('should append the type definitions', function() {
         // arrange
         // act
-        var result = task.getProjTypes(cfg, externs, glob);
+        var result = task.getProjTypes(pcfg, externs, glob);
         // assert
         expect(result).toEqual([
           'foo.bar.baz.js',
@@ -316,21 +316,21 @@ describe('gcc', function() {
     it('should append nodejs externs', function() {
       // arrange
       // act
-      var result = task.getExterns(cfg);
+      var result = task.getExterns(pcfg);
       // assert
       expect(result).toContain('getNodeExterns');
     });
     it('should append globals', function() {
       // arrange
       // act
-      var result = task.getExterns(cfg);
+      var result = task.getExterns(pcfg);
       // assert
       expect(result).toContain('getGlobals');
     });
     it('should append project type definitions', function() {
       // arrange
       // act
-      var result = task.getExterns(cfg);
+      var result = task.getExterns(pcfg);
       // assert
       expect(result).toContain('getProjTypes');
     });
@@ -362,7 +362,7 @@ describe('gcc', function() {
         // arrange
         task.name = 'chk';
         // act
-        task.getConditionalFlags(flags, cfg);
+        task.getConditionalFlags(flags, pcfg);
         // assert
         expect(flags.summary_detail_level).toBe(3);
       });
@@ -371,9 +371,9 @@ describe('gcc', function() {
     describe('when pcfg.dest is set', function() {
       it('should set source map flags', function() {
         // arrange
-        cfg.dest = 'dest';
+        pcfg.dest = 'dest';
         // act
-        task.getConditionalFlags(flags, cfg);
+        task.getConditionalFlags(flags, pcfg);
         // assert
         expect(flags.create_source_map).toBe('join');
         expect(flags.source_map_format).toBe('V3');
@@ -383,9 +383,9 @@ describe('gcc', function() {
     describe('node.js project', function() {
       it('should set the language in to ECMASCRIPT5_STRICT', function() {
         // arrange
-        cfg.type = 'nodejs';
+        pcfg.type = 'nodejs';
         // act
-        task.getConditionalFlags(flags, cfg);
+        task.getConditionalFlags(flags, pcfg);
         // assert
         expect(flags.language_in).toBe('ECMASCRIPT5_STRICT');
       });
@@ -395,7 +395,7 @@ describe('gcc', function() {
       it('should set the language in to ECMASCRIPT3', function() {
         // arrange
         // act
-        task.getConditionalFlags(flags, cfg);
+        task.getConditionalFlags(flags, pcfg);
         // assert
         expect(flags.language_in).toBe('ECMASCRIPT3');
       });
@@ -413,15 +413,15 @@ describe('gcc', function() {
     it('should get the externs list', function() {
       // arrange
       // act
-      task.getGccFlags(cfg);
+      task.getGccFlags(pcfg);
       // assert
-      expect(task.getExterns).toHaveBeenCalledWith(cfg);
+      expect(task.getExterns).toHaveBeenCalledWith(pcfg);
     });
 
     it('should set the default gcc flags', function() {
       // arrange
       // act
-      var result = task.getGccFlags(cfg);
+      var result = task.getGccFlags(pcfg);
       // assert
       expect(result).toEqual({
         warning_level: 'VERBOSE',
@@ -435,9 +435,9 @@ describe('gcc', function() {
     it('should set the conditional gcc flags', function() {
       // arrange
       // act
-      task.getGccFlags(cfg);
+      task.getGccFlags(pcfg);
       // assert
-      expect(task.getConditionalFlags).toHaveBeenCalledWith(jasmine.any(Object), cfg);
+      expect(task.getConditionalFlags).toHaveBeenCalledWith(jasmine.any(Object), pcfg);
     });
 
   });
@@ -552,7 +552,7 @@ describe('gcc', function() {
     it('should get jar path based on where the script is running', function() {
       // arrange
       // act
-      var result = task.getJarPath(cfg);
+      var result = task.getJarPath(pcfg);
       // assert
       expect(path.join).toHaveBeenCalledWith('__dirname', '../../lib/gcc/compiler.jar');
       expect(result).toBe('join');
@@ -587,35 +587,35 @@ describe('gcc', function() {
     it('should load dependencies', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(mockReq).toHaveBeenCalledWith('gulp-closure-compiler');
     });
     it('should look up the javascript source code', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gulp.src).toHaveBeenCalledWith('getSource');
     });
     it('should get the GCC options', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
-      expect(task.getGccFlags).toHaveBeenCalledWith(cfg);
+      expect(task.getGccFlags).toHaveBeenCalledWith(pcfg);
     });
     it('should get the output file name', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
-      expect(task.getFileName).toHaveBeenCalledWith(cfg);
+      expect(task.getFileName).toHaveBeenCalledWith(pcfg);
     });
     it('should run GCC the JavaScript source code', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gccReq).toHaveBeenCalledWith({
         fileName: 'getFileName',
@@ -628,7 +628,7 @@ describe('gcc', function() {
     it('should listen for errors', function() {
       // arrange
       // act
-      task.run(aqua, cfg, gulp);
+      task.run(aqua, pcfg, gulp);
       // assert
       expect(gcc.on).toHaveBeenCalledWith('error', jasmine.any(Function));
     });
@@ -637,7 +637,7 @@ describe('gcc', function() {
       it('should call handelErrors', function() {
         // arrange
         var e = {};
-        task.run(aqua, cfg, gulp);
+        task.run(aqua, pcfg, gulp);
         var onErr = gcc.on.calls[0].args[1];
         // act
         onErr(e);

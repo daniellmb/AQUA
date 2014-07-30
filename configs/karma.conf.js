@@ -1,18 +1,13 @@
 if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
   var fs = require('fs');
-  if (!fs.existsSync('sauce.json')) {
-    console.log(['Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment ',
-      'variables are set or create a sauce.json with your credentials.'].join(''));
-    process.exit(1);
-  } else {
+  if (fs.existsSync('sauce.json')) {
     var credentials = require('../sauce');
-    /** set SL username */
+    // set SL username
     process.env.SAUCE_USERNAME = credentials.username;
-    /** set SL access key */
+    // set SL access key
     process.env.SAUCE_ACCESS_KEY = credentials.accessKey;
   }
 }
-
 
 /**
  * Define SauceLabs browsers

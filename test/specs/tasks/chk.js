@@ -10,7 +10,7 @@
 'use strict';
 
 describe('chk', function() {
-  var task, aqua, cfg, gulp,
+  var task, aqua, pcfg, gulp,
       rewire = require('rewire'),
       root = '../../../',
       src = root + 'src/tasks/';
@@ -26,7 +26,7 @@ describe('chk', function() {
     aqua.config({});
 
     // mock project config
-    cfg = {
+    pcfg = {
       id: 'TEST'
     };
 
@@ -49,10 +49,10 @@ describe('chk', function() {
   describe('canRun', function() {
     it('should return true if the task can run', function() {
       // arrange
-      cfg.src = [];
-      cfg.types = [];
+      pcfg.src = [];
+      pcfg.types = [];
       // act
-      var result = task.canRun(cfg);
+      var result = task.canRun(pcfg);
       // assert
       expect(result).toBe(true);
     });

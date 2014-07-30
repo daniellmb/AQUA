@@ -17,19 +17,19 @@ function Task() { }
 /**
  * Executes the task
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg - AQUA project config JSON.
+ * @param {!ProjConfig} pcfg - AQUA project config JSON.
  * @param {!Gulp} gulp - Gulp instance.
  */
-Task.prototype.run = function(aqua, cfg, gulp) { };
+Task.prototype.run = function(aqua, pcfg, gulp) { };
 
 
 /**
  * Registers the task with AQUA
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg - AQUA project config JSON.
+ * @param {!ProjConfig} pcfg - AQUA project config JSON.
  * @param {!Gulp} gulp - Gulp instance.
  */
-Task.prototype.reg = function(aqua, cfg, gulp) { };
+Task.prototype.reg = function(aqua, pcfg, gulp) { };
 
 
 /**

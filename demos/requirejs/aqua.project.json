@@ -1,0 +1,22 @@
+{
+  "id": "rjs",
+  "name": "RequireJS Example",
+  "by": "Daniel Lamb <dlamb.open.source@gmail.com>",
+  "readme": "./demos/requirejs/readme.md",
+  "src": [
+    "./demos/requirejs/js/**/*.js"
+  ],
+  "unit": {
+    "deps": [
+      "./demos/requirejs/bower_components/**/*.js"
+    ],
+    "tests": [
+      "./demos/requirejs/test/*.js"
+    ],
+    "config": "./demos/requirejs/test/karma.conf.js"
+  },
+  "alljs": "./demos/requirejs/!(bower_components)/*.js",
+  "types": [
+    "./demos/requirejs/test/types/*.js"
+  ]
+}

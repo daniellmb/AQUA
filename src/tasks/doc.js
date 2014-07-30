@@ -47,26 +47,26 @@ function DOC(name, warning, opt_deps) {
 
 /**
  * Get the sources to generate documentation from
- * @param {!ProjConfig} cfg - AQUA project configuration.
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @return {Array} list of sources
  */
-DOC.prototype.getSrc = function(cfg) {
+DOC.prototype.getSrc = function(pcfg) {
   // copy the source array
-  var src = cfg.src.slice();
+  var src = pcfg.src.slice();
 
   // check for optional type definitions
-  if (cfg.types) {
-    src = src.concat(cfg.types);
+  if (pcfg.types) {
+    src = src.concat(pcfg.types);
   }
 
   // check for optional readme file
-  if (cfg.readme) {
-    src.push(cfg.readme);
+  if (pcfg.readme) {
+    src.push(pcfg.readme);
   }
 
   // check for optional page objects
-  if (cfg.e2e && cfg.e2e.pgobj) {
-    src = src.concat(cfg.e2e.pgobj);
+  if (pcfg.e2e && pcfg.e2e.pgobj) {
+    src = src.concat(pcfg.e2e.pgobj);
   }
 
   // return the list of sources
@@ -121,22 +121,22 @@ DOC.prototype.getTemplate = function(acfg, pcfg) {
 /**
  * Check generate documentation
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg - AQUA project configuration.
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.
  */
-DOC.prototype.run = function(aqua, cfg, gulp) {
+DOC.prototype.run = function(aqua, pcfg, gulp) {
   // load node modules needed
   var jsdoc = /** @type {Function} */(require('gulp-jsdoc')),
       path = require('path'),
       acfg = aqua.cfg;
 
-  //aqua.log(' > run task', cfg.id + '-doc');
+  //aqua.log(' > run task', pcfg.id + '-doc');
 
   // generate documentation from code comments
-  gulp.src(this.getSrc(cfg))
+  gulp.src(this.getSrc(pcfg))
       .pipe(jsdoc(
-          path.join(acfg.docs.dir, cfg.id.toLowerCase()),
-          this.getTemplate(acfg, cfg), this.options)
+          path.join(acfg.docs.dir, pcfg.id.toLowerCase()),
+          this.getTemplate(acfg, pcfg), this.options)
           .on('error', aqua.error)
       );
 };

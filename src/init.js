@@ -31,30 +31,30 @@
   /**
    * Create project dependant tasks
    * @param {AQUA} aqua - AQUA instance.
-   * @param {Array} cfgs - Array of AQUA project configuration objects
+   * @param {Array} pcfgs - Array of AQUA project configuration objects
    * @param {Gulp} gulp - Gulp instance.
    * @param {Logger} log - log4js logger instance
    */
-  function projectDependantTasks(aqua, cfgs, gulp, log) {
+  function projectDependantTasks(aqua, pcfgs, gulp, log) {
     var tasks = (aqua.tasks),
         util = aqua.util;
 
     // loop through the AQUA project configurations
-    cfgs.forEach(function(cfg) {
+    pcfgs.forEach(function(pcfg) {
 
-      log.debug('%s Project', cfg.name);
+      log.debug('%s Project', pcfg.name);
 
       // validate the AQUA project configuration
-      aqua.validate(cfg);
+      aqua.validate(pcfg);
 
       // loop through the AQUA tasks
       util.forOwn(tasks, function(value, key) {
 
         // register each task using the config
-        tasks[key].reg(aqua, cfg, gulp);
+        tasks[key].reg(aqua, pcfg, gulp);
 
         // debug the task
-        log.debug('  run %s', tasks[key].about().replace('{id}', cfg.id.toLowerCase()));
+        log.debug('  run %s', tasks[key].about().replace('{id}', pcfg.id.toLowerCase()));
       });
     });
   }
@@ -74,11 +74,11 @@
 
   /**
    * Take the project config files and generate gulp tasks for them.
-   * @param {Array} cfgs - Array of AQUA project configuration objects
+   * @param {Array} pcfgs - Array of AQUA project configuration objects
    * @this {AQUA}
    * @return {Gulp}
    */
-  module.exports = function(cfgs) {
+  module.exports = function(pcfgs) {
     var aqua = /** @type {AQUA} */(this),
         gulp = getGulp(),
         log = /** @type {Logger} */(aqua.logger.create('init'));
@@ -87,7 +87,7 @@
     projectAgnosticTasks(aqua, gulp, log);
 
     // create project dependant tasks
-    projectDependantTasks(aqua, cfgs, gulp, log);
+    projectDependantTasks(aqua, pcfgs, gulp, log);
 
     // return the gulp instance
     return gulp;

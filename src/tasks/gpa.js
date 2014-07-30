@@ -29,10 +29,10 @@ function GPA(name, warning, opt_deps) {
 /**
  * Check source code complexity
  * @param {!AQUA} aqua - AQUA instance.
- * @param {!ProjConfig} cfg - AQUA project configuration.
+ * @param {!ProjConfig} pcfg - AQUA project configuration.
  * @param {!Gulp} gulp - Gulp instance.
  */
-GPA.prototype.run = function(aqua, cfg, gulp) {
+GPA.prototype.run = function(aqua, pcfg, gulp) {
   // load node modules needed
   var complexity = /** @type {Function} */(require('gulp-complexity')),
       noErrors = true,
@@ -42,7 +42,7 @@ GPA.prototype.run = function(aqua, cfg, gulp) {
         maintainability: [100]
       };
 
-  //aqua.log(' > run task', cfg.id + '-gpa');
+  //aqua.log(' > run task', pcfg.id + '-gpa');
 
   //TODO: refactor this part into it's own method
   // check for complexity settings
@@ -58,7 +58,7 @@ GPA.prototype.run = function(aqua, cfg, gulp) {
   }
 
   // check JavaScript source code complexity
-  gulp.src(cfg.src)
+  gulp.src(pcfg.src)
       .pipe(complexity(enforce))
       .on('error', function() {
         noErrors = false;

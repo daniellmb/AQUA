@@ -38,16 +38,16 @@ AQUA.prototype.error = function(var_args) { };
 
 /**
  * Configure AQUA
- * @param {AquaConfig} cfg - configure AQUA
+ * @param {AquaConfig} acfg - configure AQUA
  */
-AQUA.prototype.config = function(cfg) { };
+AQUA.prototype.config = function(acfg) { };
 
 
 /**
  * Take the project config files and generate gulp tasks for them
- * @param {Array.<Object>} cfgs - Array of AQUA project configurations
+ * @param {Array.<Object>} pcfgs - Array of AQUA project configurations
  */
-AQUA.prototype.init = function(cfgs) { };
+AQUA.prototype.init = function(pcfgs) { };
 
 
 /**
@@ -74,9 +74,9 @@ AQUA.prototype.util = null;
 
 /**
  * Validate a AQUA configuration file.
- * @param {AquaConfig} cfg
+ * @param {AquaConfig} acfg
  */
-AQUA.prototype.validate = function(cfg) { };
+AQUA.prototype.validate = function(acfg) { };
 
 
 /**

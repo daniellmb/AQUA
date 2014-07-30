@@ -12,15 +12,15 @@
 (function closure() {
   /**
    * configure AQUA
-   * @param {AquaConfig} cfg - AQUA configuration object
+   * @param {AquaConfig} acfg - AQUA configuration object
    * @return {AQUA}
    * @this {AQUA}
    */
-  module.exports = function(cfg) {
+  module.exports = function(acfg) {
     var aqua = this, log,
         tasks = aqua.tasks,
         util = aqua.util,
-        lcfg = cfg.logging;
+        lcfg = acfg.logging;
 
     // configure logging
     if (lcfg) {
@@ -37,11 +37,11 @@
         tasks[key].log = aqua.logger.create(key);
       });
 
-      log.debug('AQUA configuration', cfg);
+      log.debug('AQUA configuration', acfg);
     }
 
     // set the AQUA config
-    aqua.cfg = cfg;
+    aqua.cfg = acfg;
 
     // support call chaining
     return aqua;

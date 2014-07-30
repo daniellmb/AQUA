@@ -290,7 +290,7 @@ GCC.prototype = {
         flags = task.getGccFlags(pcfg),
         fileName = task.getFileName(pcfg);
 
-    //aqua.log(' > run task', cfg.id + '-gcc');
+    //aqua.log(' > run task', pcfg.id + '-gcc');
 
     // run google closure compiler
     gulp.src(src)

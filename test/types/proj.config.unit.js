@@ -37,6 +37,13 @@ ProjConfigUnitTest.prototype.mocks = null;
 
 
 /**
+ * Where to find the project level karma config (optional override).
+ * @type {string}
+ */
+ProjConfigUnitTest.prototype.config = '';
+
+
+/**
  * Where to find all of your unit tests
  * @type {Array.<string>}
  */
