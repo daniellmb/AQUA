@@ -66,31 +66,31 @@ var x = 'fruit';
 or
 
 ```javascript
-    var /** @type {string} */ x = 'fruit';
+var /** @type {string} */ x = 'fruit';
 ```
 
 ### Property declarations
 
 ```javascript
-    /** @type {string} */
-    x.prop = 'fruit';
+/** @type {string} */
+x.prop = 'fruit';
 ```
 or
 
 ```javascript
-    var x = {
-      /** @type {string} */
-      prop : 'fruit'
-    };
+var x = {
+  /** @type {string} */
+  prop : 'fruit'
+};
 ```
 
 ### Catch declarations
 
 ```javascript
 try {
-  ...
+  // ...
 } catch (/** @type {string} */ e) {
-  ...
+  // ...
 }
 ```
 
@@ -99,7 +99,7 @@ try {
 Type cast precede a parenthesized expression.
 
 ```javascript
-    var x = /** @type {string} */ (fruit);
+var x = /** @type {string} */ (fruit);
 ```
 
 ## Prerequisite
