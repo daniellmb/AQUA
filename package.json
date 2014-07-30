@@ -1,9 +1,9 @@
 {
   "name": "aqua",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "AQUA: Automated QUality Analysis; used to raise the visibility of code quality and increase awareness within teams by getting immediate feedback about code smells before they become technical debt.",
   "author": "Daniel Lamb <dlamb.open.source@gmail.com> (daniellmb.com)",
-  "homepage": "https://github.com/daniellmb/AQUA",
+  "homepage": "http://daniellmb.github.io/AQUA/",
   "bugs": {
     "url": "https://github.com/daniellmb/AQUA/issues"
   },
@@ -82,6 +82,12 @@
     "testing",
     "unit",
     "unit test",
+    "AMD",
+    "commonjs",
+    "gragh",
+    "chart",
+    "dependency",
+    "requirejs",
     "TDD",
     "functional",
     "end-to-end",

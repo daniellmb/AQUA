@@ -1,8 +1,7 @@
 define([
-  'app',
   'directives/todoFocus',
   'angularMocks'
-], function(app, todoFocus, mocks) {
+], function(todoFocus, mocks) {
   'use strict';
 
   describe('directives', function() {
@@ -17,7 +16,7 @@ define([
     }));
 
     describe('todoFocus directive', function() {
-      it('should print current version', function() {
+      it('should focus on truthy expression', function() {
         var el = angular.element('<input todo-focus="focus">');
         scope.focus = false;
 

@@ -70,22 +70,37 @@ Unit.prototype.collect = function(utCfg, src) {
  * @return {Array} list of files to instrument
  */
 Unit.prototype.getFilesToCover = function(wcfg, pcfg, aqua) {
-  var lowerCase, util = aqua.util;
+  var util = aqua.util;
 
   // check test config
   if (this.usingRequireJS(wcfg) && wcfg.files) {
 
-    // lowercase the source files to simplify matching
-    lowerCase = pcfg.src.map(function (path) {
-      return path.toLowerCase();
-    });
-
     // return only karma files that are also in the project source files
     return util._.filter(wcfg.files, function (path) {
+      var match = false;
+
       if (path.pattern) {
-        return lowerCase.indexOf('./' + path.pattern) !== -1;
+
+        // loop through the project source files
+        pcfg.src.forEach(function (source) {
+
+          // check for partial path match
+          if (source.toLowerCase().indexOf(path.pattern.toLowerCase()) > -1) {
+
+            // found match
+            match = true;
+
+            // stop looking
+            return false;
+          }
+
+          // keep looping
+          return true;
+        });
       }
-      return false;
+
+      // return filter boolean
+      return match;
     });
 
   } else {
