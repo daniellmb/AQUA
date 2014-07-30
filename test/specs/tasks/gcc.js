@@ -61,6 +61,9 @@ describe('gcc', function() {
 
   describe('getSource', function() {
     beforeEach(function() {
+      // mock __dirname
+      Task.__set__('__dirname', 'root/folder/name');
+
       // add spies
     });
 
@@ -70,7 +73,7 @@ describe('gcc', function() {
       // act
       var result = task.getSource(pcfg);
       // assert
-      expect(result).toEqual(['./externs/sourceonly.js', 'foo.js']);
+      expect(result).toEqual(['root/externs/sourceonly.js', 'foo.js']);
     });
 
   });

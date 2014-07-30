@@ -73,7 +73,7 @@ describe('unit', function() {
       // act
       var result = task.collect(utCfg, src);
       // assert
-      expect(result[0]).toContain('sourceonly.js');
+      expect(result[0]).toContain('externs/sourceonly.js');
     });
     it('should include globals if configured', function() {
       // arrange

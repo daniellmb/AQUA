@@ -37,7 +37,7 @@ function Unit(name, warning, opt_deps) {
  */
 Unit.prototype.collect = function(utCfg, src) {
   // start with "sourceonly"
-  var files = ['./test/sourceonly.js'];
+  var files = ['./externs/sourceonly.js'];
 
   // check for globals
   if (utCfg.globals) {

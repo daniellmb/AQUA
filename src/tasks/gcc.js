@@ -31,14 +31,15 @@ GCC.prototype = {
   /**
    * Return the source code list.
    * @param {!ProjConfig} pcfg - AQUA project configuration.
-   * @return {Array} list of source code
+   * @return {Array.<string>} list of source code
    */
   getSource: function(pcfg) {
     // make an immutable copy
-    var src = pcfg.src.slice();
+    var src = pcfg.src.slice(),
+        path = require('path');
 
     // add source only before everything (removed with dead-code)
-    src.unshift('./externs/sourceonly.js');
+    src.unshift(path.join(__dirname, '../../externs/sourceonly.js'));
 
     return src;
   },
@@ -55,8 +56,8 @@ GCC.prototype = {
   /**
    * Return a list of node.js specific externs.
    * @param {!ProjConfig} pcfg - AQUA project configuration.
-   * @param {Array} externs - the current list of externs to append to.
-   * @return {Array} externs list.
+   * @param {Array.<string>} externs - the current list of externs to append to.
+   * @return {Array.<string>} externs list.
    */
   getNodeExterns: function(pcfg, externs) {
     // check project type
@@ -75,9 +76,9 @@ GCC.prototype = {
   /**
    * Append the list of globals used by the project.
    * @param {!ProjConfig} pcfg - AQUA project configuration.
-   * @param {Array} externs - the current list of externs to append to.
+   * @param {Array.<string>} externs - the current list of externs to append to.
    * @param {Glob} glob - the glob function.
-   * @return {Array} externs list.
+   * @return {Array.<string>} externs list.
    */
   getGlobals: function(pcfg, externs, glob) {
     if (pcfg.unit && pcfg.unit.globals) {
@@ -118,9 +119,9 @@ GCC.prototype = {
   /**
    * Return a list of project specific type definition files (externs).
    * @param {!ProjConfig} pcfg - AQUA project configuration.
-   * @param {Array} externs - the current list of externs to append to.
+   * @param {Array.<string>} externs - the current list of externs to append to.
    * @param {Glob} glob - the glob function.
-   * @return {Array} project externs list.
+   * @return {Array.<string>} project externs list.
    */
   getProjTypes: function(pcfg, externs, glob) {
     var task = this;
@@ -149,7 +150,7 @@ GCC.prototype = {
   /**
    * Return a list of "externs" to use when type checking.
    * @param {!ProjConfig} pcfg - AQUA project configuration.
-   * @return {Array} externs list.
+   * @return {Array.<string>} externs list.
    */
   getExterns: function(pcfg) {
     var glob = /** @type {Glob} */(require('glob')),
