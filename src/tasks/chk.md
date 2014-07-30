@@ -24,7 +24,7 @@ To use this task you need to include the following required sections in your in 
 
 All code should be annotated with comments to enable both type checking at compile time as well as documentation generation. See [JSDoc Dictionary](http://usejsdoc.org/) and [Closure Compiler Annotation](https://developers.google.com/closure/compiler/docs/js-for-compiler) for more information. Both ([GitHub Flavored Markdown](http://github.github.com/github-flavored-markdown/)) and HTML is supported in the comments, with Markdown preferred as it does not degrade reading the source code as much as HTML.
 
-<pre class="sunlight-highlight-javascript">
+```javascript
 /**
   * An implementation of `_.contains` for cache objects that mimics the return
   * signature of `_.indexOf` by returning `0` if the value is found, else `-1`.
@@ -46,7 +46,61 @@ All code should be annotated with comments to enable both type checking at compi
     }
     return -1;
   }
-</pre>
+```
+
+### Function declarations
+
+```javascript
+/** @type {function():string} */
+function f() {return 'str'}
+```
+
+
+### Variable declarations
+
+```javascript
+/** @type {string} */
+var x = 'fruit';
+```
+
+or
+
+```javascript
+    var /** @type {string} */ x = 'fruit';
+```
+
+### Property declarations
+
+```javascript
+    /** @type {string} */
+    x.prop = 'fruit';
+```
+or
+
+```javascript
+    var x = {
+      /** @type {string} */
+      prop : 'fruit'
+    };
+```
+
+### Catch declarations
+
+```javascript
+try {
+  ...
+} catch (/** @type {string} */ e) {
+  ...
+}
+```
+
+### Type Casts
+
+Type cast precede a parenthesized expression.
+
+```javascript
+    var x = /** @type {string} */ (fruit);
+```
 
 ## Prerequisite
 
