@@ -1,6 +1,6 @@
 {
   "name": "aqua",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "AQUA: Automated QUality Analysis; used to raise the visibility of code quality and increase awareness within teams by getting immediate feedback about code smells before they become technical debt.",
   "author": "Daniel Lamb <dlamb.open.source@gmail.com> (daniellmb.com)",
   "homepage": "http://daniellmb.github.io/AQUA/",
@@ -46,7 +46,7 @@
     "karma-coveralls": "latest",
     "karma-firefox-launcher": "latest",
     "karma-ie-launcher": "latest",
-    "karma-jasmine": "latest",
+    "karma-jasmine": "0.1.5",
     "karma-mocha": "latest",
     "karma-nyan-reporter": "latest",
     "karma-opera-launcher": "latest",
