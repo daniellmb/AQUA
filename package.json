@@ -19,8 +19,9 @@
   "main": "./index.js",
   "dependencies": {
     "colors": "*",
-    "extend": "~2.0.0",
-    "glob": "^4.0.0",
+    "chai": "*",
+    "extend": "*",
+    "glob": "*",
     "gulp": "*",
     "gulp-bump": "*",
     "gulp-clean": "*",
@@ -35,6 +36,7 @@
     "gulp-protractor": "*",
     "gulp-util": "*",
     "istanbul": "*",
+    "jasmine-core": "*",
     "karma": "*",
     "karma-chai": "*",
     "karma-chrome-launcher": "*",
@@ -59,6 +61,8 @@
     "phantomjs": "*",
     "protractor": "*",
     "rewire": "*",
+    "requirejs": "*",
+    "sinon": "*",
     "yargs": "*"
   },
   "peerDependencies": {
