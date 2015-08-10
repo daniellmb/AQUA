@@ -48,8 +48,9 @@ describe('gcc', function() {
 
     // add spies
     spyOn(aqua, 'log');
-    spyOn(aqua, 'error');
     spyOn(aqua, 'warn');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'fail');
   });
 
   it('should exist', function() {
@@ -135,7 +136,8 @@ describe('gcc', function() {
         expect(result).toEqual([
           'foo.bar.js',
           './externs/nodejs/buffer.js',
-          './externs/nodejs/core.js'
+          './externs/nodejs/core.js',
+          './externs/nodejs/process.js'
         ]);
       });
     });
@@ -238,14 +240,14 @@ describe('gcc', function() {
       // mock glob
       glob = mockGlob();
       // add spies
-      spyOn(task, 'findFiles').andCallFake(function(pcfg, pattern) {
+      spyOn(task, 'findFiles').and.callFake(function(pcfg, pattern) {
         return noMatches ? [] : [pattern];
       });
     });
 
     describe('when there are no project types', function() {
       it('should do nothing', function() {
-        // arrange
+        // arrange`
         // act
         var result = task.getProjTypes(pcfg, externs, glob);
         // assert
@@ -302,15 +304,15 @@ describe('gcc', function() {
   describe('getExterns', function() {
     beforeEach(function() {
       // add spies
-      spyOn(task, 'getNodeExterns').andCallFake(function(pcfg, externs) {
+      spyOn(task, 'getNodeExterns').and.callFake(function(pcfg, externs) {
         externs.push('getNodeExterns');
         return externs;
       });
-      spyOn(task, 'getGlobals').andCallFake(function(pcfg, externs) {
+      spyOn(task, 'getGlobals').and.callFake(function(pcfg, externs) {
         externs.push('getGlobals');
         return externs;
       });
-      spyOn(task, 'getProjTypes').andCallFake(function(pcfg, externs) {
+      spyOn(task, 'getProjTypes').and.callFake(function(pcfg, externs) {
         externs.push('getProjTypes');
         return externs;
       });
@@ -345,11 +347,11 @@ describe('gcc', function() {
     beforeEach(function() {
       // mock path module
       path = {
-        join: jasmine.createSpy('join').andReturn('join')
+        join: jasmine.createSpy('join').and.returnValue('join')
       };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return path; });
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function() { return path; });
 
       // use dependency injection to inject mock require
       Task.__set__('require', mockReq);
@@ -357,7 +359,7 @@ describe('gcc', function() {
       // mock flags
       flags = {};
       // add spies
-      spyOn(task, 'getFileName').andReturn('getFileName');
+      spyOn(task, 'getFileName').and.returnValue('getFileName');
     });
 
     describe('when chk task is run', function() {
@@ -409,7 +411,7 @@ describe('gcc', function() {
   describe('getGccFlags', function() {
     beforeEach(function() {
       // add spies
-      spyOn(task, 'getExterns').andReturn('getExterns');
+      spyOn(task, 'getExterns').and.returnValue('getExterns');
       spyOn(task, 'getConditionalFlags');
     });
 
@@ -468,7 +470,7 @@ describe('gcc', function() {
       var result = task.checkPercentTyped(aqua, msg);
       // assert
       expect(aqua.log).toHaveBeenCalled();
-      expect(aqua.error).toHaveBeenCalled();
+      expect(aqua.fail).toHaveBeenCalled();
       expect(result).toBe(false);
     });
 
@@ -483,7 +485,7 @@ describe('gcc', function() {
         message: ''
       };
       // add spies
-      spyOn(task, 'checkPercentTyped').andReturn(false);
+      spyOn(task, 'checkPercentTyped').and.returnValue(false);
     });
 
     describe('and no errors found', function() {
@@ -540,11 +542,11 @@ describe('gcc', function() {
     beforeEach(function() {
       // mock path module
       path = {
-        join: jasmine.createSpy('join').andReturn('join')
+        join: jasmine.createSpy('join').and.returnValue('join')
       };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return path; });
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function() { return path; });
 
       // use dependency injection to inject mock require
       Task.__set__('require', mockReq);
@@ -569,22 +571,22 @@ describe('gcc', function() {
     beforeEach(function() {
       // mock gcc
       gcc = {
-        on: jasmine.createSpy('gcc-on').andReturn('gcc-on')
+        on: jasmine.createSpy('gcc-on').and.returnValue('gcc-on')
       };
-      gccReq = jasmine.createSpy('gccReq').andReturn(gcc);
+      gccReq = jasmine.createSpy('gccReq').and.returnValue(gcc);
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return gccReq; });
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function() { return gccReq; });
 
       // use dependency injection to inject mock require
       Task.__set__('require', mockReq);
 
       // add spies
-      spyOn(task, 'getSource').andReturn('getSource');
-      spyOn(task, 'getGccFlags').andReturn('getGccFlags');
-      spyOn(task, 'getFileName').andReturn('getFileName');
-      spyOn(task, 'getJarPath').andReturn('getJarPath');
-      spyOn(task, 'handelErrors').andReturn('handelErrors');
+      spyOn(task, 'getSource').and.returnValue('getSource');
+      spyOn(task, 'getGccFlags').and.returnValue('getGccFlags');
+      spyOn(task, 'getFileName').and.returnValue('getFileName');
+      spyOn(task, 'getJarPath').and.returnValue('getJarPath');
+      spyOn(task, 'handelErrors').and.returnValue('handelErrors');
     });
 
     it('should load dependencies', function() {
@@ -641,7 +643,7 @@ describe('gcc', function() {
         // arrange
         var e = {};
         task.run(aqua, pcfg, gulp);
-        var onErr = gcc.on.calls[0].args[1];
+        var onErr = gcc.on.calls.argsFor(0)[1];
         // act
         onErr(e);
         // assert

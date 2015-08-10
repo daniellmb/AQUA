@@ -20,3 +20,10 @@ var Istanbul = function() { };
  @param {Object} options - config options
  */
 Istanbul.prototype.writeReports = function(options) {};
+
+
+/**
+ * Overwrite require so it returns the covered files. Always use this option if you're running tests in Node.js
+ * @param {Object=} opt_options - optional settings
+ */
+Istanbul.prototype.hookRequire = function(opt_options) {};

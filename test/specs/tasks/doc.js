@@ -35,8 +35,9 @@ describe('doc', function() {
 
     // add spies
     spyOn(aqua, 'log');
-    spyOn(aqua, 'error');
     spyOn(aqua, 'warn');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'fail');
   });
 
   it('should exist', function() {
@@ -52,7 +53,7 @@ describe('doc', function() {
       pcfg.src = [];
 
       // add spies
-      spyOn(pcfg.src, 'slice').andCallThrough();
+      spyOn(pcfg.src, 'slice').and.callThrough();
     });
 
     it('should copy the source array', function() {
@@ -152,23 +153,23 @@ describe('doc', function() {
       };
 
       // mock doc
-      doc = jasmine.createSpy('doc').andCallFake(function() {
+      doc = jasmine.createSpy('doc').and.callFake(function() {
         return doc;
       });
-      doc.on = jasmine.createSpy('on').andReturn('on');
+      doc.on = jasmine.createSpy('on').and.returnValue('on');
 
       // mock path module
       path = {
-        join: jasmine.createSpy('join').andReturn('join')
+        join: jasmine.createSpy('join').and.returnValue('join')
       };
 
       // mock lodash module
       lodash = {
-        assign: jasmine.createSpy('assign').andReturn('assign')
+        assign: jasmine.createSpy('assign').and.returnValue('assign')
       };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function(name) {
         switch (name) {
           case 'gulp-jsdoc': return doc;
           case 'path': return path;
@@ -180,9 +181,9 @@ describe('doc', function() {
       task.__set__('require', mockReq);
 
       // add spies
-      spyOn(task, 'getSrc').andReturn('getSrc');
-      spyOn(task, 'getExtras').andReturn('getExtras');
-      spyOn(task, 'getTemplate').andReturn('getTemplate');
+      spyOn(task, 'getSrc').and.returnValue('getSrc');
+      spyOn(task, 'getExtras').and.returnValue('getExtras');
+      spyOn(task, 'getTemplate').and.returnValue('getTemplate');
     });
 
     it('should load dependencies', function() {

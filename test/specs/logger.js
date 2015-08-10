@@ -21,14 +21,14 @@ describe('logger', function() {
 
     // mock logger instance
     instance = {
-      setLevel: jasmine.createSpy('setLevel').andReturn('setLevel')
+      setLevel: jasmine.createSpy('setLevel').and.returnValue('setLevel')
     };
 
     // mock dependencies
     log4js = {
-      setGlobalLogLevel: jasmine.createSpy('setGlobalLogLevel').andReturn('setGlobalLogLevel'),
-      configure: jasmine.createSpy('configure').andReturn('configure'),
-      getLogger: jasmine.createSpy('getLogger').andReturn(instance)
+      setGlobalLogLevel: jasmine.createSpy('setGlobalLogLevel').and.returnValue('setGlobalLogLevel'),
+      configure: jasmine.createSpy('configure').and.returnValue('configure'),
+      getLogger: jasmine.createSpy('getLogger').and.returnValue(instance)
     };
 
     constants = {
@@ -44,7 +44,7 @@ describe('logger', function() {
     };
 
     // mock require
-    mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+    mockReq = jasmine.createSpy('mockReq').and.callFake(function(name) {
       switch (name) {
         case 'log4js': return log4js;
         case './util': return mockUtil();

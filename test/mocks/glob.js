@@ -15,6 +15,6 @@
  */
 global.mockGlob = function() {
   return {
-    'sync': jasmine.createSpy('task').andCallFake(function(pattern) { return [pattern]; })
+    'sync': jasmine.createSpy('sync').and.callFake(function(pattern){ return [pattern]; })
   };
 };

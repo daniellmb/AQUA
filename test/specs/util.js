@@ -29,7 +29,7 @@ describe('util', function() {
   describe('isDefined', function() {
     beforeEach(function() {
       // add spies
-      spyOn(_, 'isUndefined').andCallThrough();
+      spyOn(_, 'isUndefined').and.callThrough();
     });
 
     it('should call is isUndefined', function() {

@@ -15,6 +15,7 @@ module.exports = {
   },
   config: require('./src/config'),
   constants: require('./src/constants'),
+  fail: require('./src/fail'),
   init: require('./src/init'),
   logger: require('./src/logger'),
   util: require('./src/util'),

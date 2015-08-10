@@ -46,9 +46,7 @@ E2E.prototype.run = function(aqua, pcfg, gulp) {
       .pipe(protractor({
         configFile: aqua.cfg.testing.e2e
       }))
-      .on('error', function() {
-        aqua.error(arguments);
-      });
+      .on('error', aqua.fail);
 };
 
 

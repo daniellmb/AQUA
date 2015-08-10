@@ -36,8 +36,9 @@ describe('base', function() {
 
     // add spies
     spyOn(aqua, 'log');
-    spyOn(aqua, 'error');
     spyOn(aqua, 'warn');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'fail');
   });
 
   it('should exist', function() {
@@ -115,7 +116,7 @@ describe('base', function() {
         canRun = true;
         // add spies
         done = jasmine.createSpy('done');
-        spyOn(task, 'canRun').andCallFake(function() {
+        spyOn(task, 'canRun').and.callFake(function() {
           return canRun;
         });
         spyOn(task, 'run');
@@ -124,7 +125,7 @@ describe('base', function() {
         // arrange
         canRun = false;
         task.reg(aqua, pcfg, gulp);
-        arg = gulp.task.calls[0].args[2];
+        arg = gulp.task.calls.argsFor(0)[2];
         // act
         arg(done);
         // assert
@@ -133,7 +134,7 @@ describe('base', function() {
       it('should only run if project is configured properly', function() {
         // arrange
         task.reg(aqua, pcfg, gulp);
-        arg = gulp.task.calls[0].args[2];
+        arg = gulp.task.calls.argsFor(0)[2];
         // act
         arg(done);
         // assert
@@ -142,7 +143,7 @@ describe('base', function() {
       it('should run the done callback', function() {
         // arrange
         task.reg(aqua, pcfg, gulp);
-        arg = gulp.task.calls[0].args[2];
+        arg = gulp.task.calls.argsFor(0)[2];
         // act
         arg(done);
         // assert

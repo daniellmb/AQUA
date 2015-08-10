@@ -48,7 +48,7 @@ LintJS.prototype.run = function(aqua, pcfg, gulp) {
         // show on the first error only
         if (no_errors) {
           aqua.log('Lint Check: ' + aqua.colors.yellow('Lint errors found'));
-          aqua.error(arguments);
+          aqua.fail(arguments);
         }
         no_errors = false;
       }).on('end', function() {
@@ -58,7 +58,7 @@ LintJS.prototype.run = function(aqua, pcfg, gulp) {
       }))
       .pipe(jshint.reporter('default'))
       .pipe(jshint.reporter('fail'))
-      .on('error', aqua.error);
+      .on('error', aqua.fail);
 };
 
 

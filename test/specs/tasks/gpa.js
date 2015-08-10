@@ -38,8 +38,9 @@ describe('gpa', function() {
 
     // add spies
     spyOn(aqua, 'log');
-    spyOn(aqua, 'error');
     spyOn(aqua, 'warn');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'fail');
   });
 
   it('should exist', function() {
@@ -59,10 +60,10 @@ describe('gpa', function() {
 
     beforeEach(function() {
       // mock gpa
-      gpa = jasmine.createSpy('gpa').andReturn('bar');
+      gpa = jasmine.createSpy('gpa').and.returnValue('bar');
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return gpa; });
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function() { return gpa; });
 
       // use dependency injection to inject mock require
       task.__set__('require', mockReq);
@@ -140,18 +141,18 @@ describe('gpa', function() {
       it('should log "complexity issues found" to the console', function() {
         // arrange
         task.run(aqua, pcfg, gulp);
-        var onErr = gulp.on.calls[0].args[1];
+        var onErr = gulp.on.calls.argsFor(0)[1];
         // act
         onErr();
         // assert
         expect(aqua.log).toHaveBeenCalledWith(ERR_MSG);
-        expect(aqua.error).toHaveBeenCalled();
+        expect(aqua.fail).toHaveBeenCalled();
       });
       it('should not log "no issues found" to the console', function() {
         // arrange
         task.run(aqua, pcfg, gulp);
-        var onErr = gulp.on.calls[0].args[1],
-            onDone = gulp.on.calls[1].args[1];
+        var onErr = gulp.on.calls.argsFor(0)[1],
+            onDone = gulp.on.calls.argsFor(1)[1];
         // act
         onErr();
         onDone();
@@ -164,7 +165,7 @@ describe('gpa', function() {
       it('should log "no issues found" to the console', function() {
         // arrange
         task.run(aqua, pcfg, gulp);
-        var onDone = gulp.on.calls[1].args[1];
+        var onDone = gulp.on.calls.argsFor(1)[1];
         // act
         onDone();
         // assert

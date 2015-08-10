@@ -44,7 +44,7 @@ describe('log', function() {
     // act
     log('');
     // assert
-    arg = apply.calls[0].args[1].join(' ');
+    arg = apply.calls.argsFor(0)[1].join(' ');
     expect(arg).toContain('[' + colors.cyan('aqua') + '] ');
   });
   it('should log to the console', function() {

@@ -35,8 +35,9 @@ describe('min', function() {
 
     // add spies
     spyOn(aqua, 'log');
-    spyOn(aqua, 'error');
     spyOn(aqua, 'warn');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'fail');
   });
 
   it('should exist', function() {

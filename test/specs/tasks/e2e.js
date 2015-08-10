@@ -35,8 +35,9 @@ describe('e2e', function() {
 
     // add spies
     spyOn(aqua, 'log');
-    spyOn(aqua, 'error');
     spyOn(aqua, 'warn');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'fail');
   });
 
   it('should exist', function() {
@@ -51,8 +52,8 @@ describe('e2e', function() {
 
     beforeEach(function() {
       // mock e2e
-      e2e = jasmine.createSpy('e2e').andReturn('baz');
-      e2e.protractor = jasmine.createSpy('e2e').andReturn('boz');
+      e2e = jasmine.createSpy('e2e').and.returnValue('baz');
+      e2e.protractor = jasmine.createSpy('e2e').and.returnValue('boz');
 
       // extend mock project config
       pcfg.e2e = {
@@ -70,7 +71,7 @@ describe('e2e', function() {
       };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return e2e; });
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function() { return e2e; });
 
       // use dependency injection to inject mock require
       task.__set__('require', mockReq);
@@ -109,14 +110,14 @@ describe('e2e', function() {
     });
 
     describe('when error found', function() {
-      it('should log "complexity issues found" to the console', function() {
+      it('should call AQUA fail', function() {
         // arrange
         task.run(aqua, pcfg, gulp);
-        var onErr = gulp.on.calls[0].args[1];
+        var onErr = gulp.on.calls.argsFor(0)[1];
         // act
         onErr();
         // assert
-        expect(aqua.error).toHaveBeenCalled();
+        expect(aqua.fail).toHaveBeenCalled();
       });
     });
 

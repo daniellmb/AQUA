@@ -38,8 +38,9 @@ describe('lintjs', function() {
 
     // add spies
     spyOn(aqua, 'log');
-    spyOn(aqua, 'error');
     spyOn(aqua, 'warn');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'fail');
   });
 
   it('should exist', function() {
@@ -54,10 +55,10 @@ describe('lintjs', function() {
 
     beforeEach(function() {
       // mock jshint
-      jshint = jasmine.createSpy('jshint').andReturn('jshint');
+      jshint = jasmine.createSpy('jshint').and.returnValue('jshint');
       // mock jshint reporter instance
       reporter = {
-        on: jasmine.createSpy('on').andReturn('on')
+        on: jasmine.createSpy('on').and.returnValue('on')
       };
       // mock jshint reporter
       jshint.reporter = function(rpt) {
@@ -69,10 +70,10 @@ describe('lintjs', function() {
           return reporter;
         }
       };
-      spyOn(jshint, 'reporter').andCallThrough();
+      spyOn(jshint, 'reporter').and.callThrough();
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return jshint; });
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function() { return jshint; });
 
       // use dependency injection to inject mock require
       task = rewire(root + 'src/tasks/lintjs');
@@ -115,7 +116,7 @@ describe('lintjs', function() {
       // act
       task.run(aqua, pcfg, gulp);
       // assert
-      expect(jshint.reporter.callCount).toBeGreaterThan(1);
+      expect(jshint.reporter.calls.count()).toBeGreaterThan(1);
       expect(gulp.pipe).toHaveBeenCalledWith('default');
     });
     it('should use the fail reporter', function() {
@@ -123,7 +124,7 @@ describe('lintjs', function() {
       // act
       task.run(aqua, pcfg, gulp);
       // assert
-      expect(jshint.reporter.callCount).toBeGreaterThan(2);
+      expect(jshint.reporter.calls.count()).toBeGreaterThan(2);
       expect(gulp.pipe).toHaveBeenCalledWith('fail');
     });
     it('should listen for errors', function() {
@@ -131,7 +132,7 @@ describe('lintjs', function() {
       // act
       task.run(aqua, pcfg, gulp);
       // assert
-      expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+      expect(gulp.on).toHaveBeenCalledWith('error', aqua.fail);
     });
     it('should listen for when the task is done', function() {
       // arrange
@@ -145,29 +146,29 @@ describe('lintjs', function() {
       it('should log "lint errors found" to the console', function() {
         // arrange
         task.run(aqua, pcfg, gulp);
-        var onErr = jshint.reporter.calls[0].args[0];
+        var onErr = jshint.reporter.calls.argsFor(0)[0];
         // act
         onErr();
         // assert
         expect(aqua.log).toHaveBeenCalledWith(ERR_MSG);
-        expect(aqua.error).toHaveBeenCalled();
+        expect(aqua.fail).toHaveBeenCalled();
       });
       it('should log "lint errors found" to the console once', function() {
         // arrange
         task.run(aqua, pcfg, gulp);
-        var onErr = jshint.reporter.calls[0].args[0];
+        var onErr = jshint.reporter.calls.argsFor(0)[0];
         // act
         onErr();
         onErr();
         // assert
-        expect(aqua.log.callCount).toBe(1);
-        expect(aqua.error).toHaveBeenCalled();
+        expect(aqua.log.calls.count()).toBe(1);
+        expect(aqua.fail).toHaveBeenCalled();
       });
       it('should not log "no errors found" to the console', function() {
         // arrange
         task.run(aqua, pcfg, gulp);
-        var onErr = jshint.reporter.calls[0].args[0],
-            onDone = reporter.on.calls[0].args[1];
+        var onErr = jshint.reporter.calls.argsFor(0)[0],
+            onDone = reporter.on.calls.argsFor(0)[1];
         // act
         onErr();
         onDone();
@@ -180,7 +181,7 @@ describe('lintjs', function() {
       it('should log "no errors found" to the console', function() {
         // arrange
         task.run(aqua, pcfg, gulp);
-        var onDone = reporter.on.calls[0].args[1];
+        var onDone = reporter.on.calls.argsFor(0)[1];
         // act
         onDone();
         // assert

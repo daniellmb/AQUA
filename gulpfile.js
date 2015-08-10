@@ -6,7 +6,6 @@ module.export = require('./')
   .init([
       // load project config files
       require('./aqua.node.project'),
-      require('./aqua.web.project'),
       require('./demos/angularjs/aqua.project'),
       require('./demos/requirejs/aqua.project'),
       require('./demos/vanillajs/aqua.project')

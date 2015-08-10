@@ -253,6 +253,8 @@ Unit.prototype.testWeb = function(aqua, pcfg, files, gulp) {
     files = [task.PIPE_NOTHING];
   }
 
+  console.log();
+
   // get files needed for testing
   gulp.src(files)
       .pipe(karma(wcfg))
@@ -260,7 +262,7 @@ Unit.prototype.testWeb = function(aqua, pcfg, files, gulp) {
         // enforce thresholds
         task.enforceThresholds(aqua, pcfg.id, gulp);
       })
-      .on('error', aqua.error);
+      .on('error', aqua.fail);
 };
 
 
@@ -274,17 +276,19 @@ Unit.prototype.testWeb = function(aqua, pcfg, files, gulp) {
 Unit.prototype.testNode = function(aqua, pcfg, files, gulp) {
 
   // load dependencies
-  var istanbul = /** @type {Function} */(require('gulp-istanbul')),
+  var instrument = /** @type {Function} */(require('gulp-istanbul')),
+      istanbul = /** @type {Istanbul} */(require('gulp-istanbul')),
       task = this;
 
   // get the files needed for testing
   gulp.src(pcfg.src)
-      .pipe(istanbul(/* instrument source code for coverage */))
+      .pipe(instrument(/* instrument source code for coverage */))
+      .pipe(istanbul.hookRequire()) // force `require` to return covered files
       .on('finish', function() {
         // run unit tests
         task.runNodeTests(aqua, pcfg, files, gulp);
       })
-      .on('error', aqua.error);
+      .on('error', aqua.fail);
 };
 
 
@@ -313,11 +317,11 @@ Unit.prototype.runNodeTests = function(aqua, pcfg, files, gulp) {
   gulp.src(files)
       .pipe(jasmine(ncfg.jasmine))
       .pipe(task.createReports(acfg, ncfg, pcfg.id))
-      .on('end', function() {
+      .on('finish', function() {
         // enforce thresholds
         task.enforceThresholds(aqua, pcfg.id, gulp);
       })
-      .on('error', aqua.error);
+      .on('error', aqua.fail);
 };
 
 
@@ -363,7 +367,7 @@ Unit.prototype.enforceThresholds = function(aqua, id, gulp) {
         noErrors = false;
         task.log.warn('Coverage Below Thresholds:\n' +
             aqua.colors.yellow(e.message.replace(/ERROR: /g, '')));
-        aqua.error(arguments);
+        aqua.fail(arguments);
       })
       .on('end', function() {
         if (noErrors) {
@@ -416,7 +420,7 @@ Unit.prototype.run = function(aqua, pcfg, gulp) {
  */
 Unit.prototype.canRun = function(pcfg, opt_acfg) {
   // need source files unit test config and test config
-  return !!(pcfg.src && pcfg.unit && opt_acfg.testing && opt_acfg.testing.web);
+  return !!(pcfg.src && pcfg.unit && opt_acfg.testing);
 };
 
 

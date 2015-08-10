@@ -29,7 +29,7 @@
     "node": "./configs/node.conf.js"
   },
   "logging": {
-    "level": "INFO",
+    "level": "WARN",
     "colors": true
   }
 }

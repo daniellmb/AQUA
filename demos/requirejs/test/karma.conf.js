@@ -40,7 +40,7 @@ module.exports = {
   // code coverage settings
   coverage: {
     // html, lcovonly, lcov, cobertura, text-summary, text, json, teamcity, clover
-    reporters: ['html', 'text']
+    reporters: ['html', 'text', 'json']
   },
 
   // enable / disable watching file and executing tests whenever any file changes
@@ -50,5 +50,13 @@ module.exports = {
   singleRun: true,
 
   // report slow running tests, time in ms
-  reportSlowerThan: 250
+  reportSlowerThan: 250,
+
+  // optimize the the karma plugins to load
+  plugins: [
+    'karma-jasmine',
+    'karma-coverage',
+    'karma-requirejs',
+    'karma-phantomjs-launcher'
+  ]
 };

@@ -6,12 +6,12 @@ describe('controller', function () {
   var subject, model, view;
 
   var setUpModel = function (todos) {
-    model.read.andCallFake(function (query, callback) {
+    model.read.and.callFake(function (query, callback) {
       callback = callback || query;
       callback(todos);
     });
 
-    model.getCount.andCallFake(function (callback) {
+    model.getCount.and.callFake(function (callback) {
 
       var todoCounts = {
         active: todos.filter(function (todo) {
@@ -26,15 +26,15 @@ describe('controller', function () {
       callback(todoCounts);
     });
 
-    model.remove.andCallFake(function (id, callback) {
+    model.remove.and.callFake(function (id, callback) {
       callback();
     });
 
-    model.create.andCallFake(function (title, callback) {
+    model.create.and.callFake(function (title, callback) {
       callback();
     });
 
-    model.update.andCallFake(function (id, updateData, callback) {
+    model.update.and.callFake(function (id, updateData, callback) {
       callback();
     });
   };
@@ -208,7 +208,7 @@ describe('controller', function () {
 
       view.trigger('newTodo', 'a new todo');
 
-      expect(model.create).toHaveBeenCalledWith('a new todo', jasmine.any(Function));
+      expect(model.create).toHaveBeenCalledWith('a new todo!', jasmine.any(Function));
     });
 
     it('should add a new todo to the view', function () {
@@ -216,9 +216,7 @@ describe('controller', function () {
 
       subject.setView('');
 
-      view.render.reset();
-      model.read.reset();
-      model.read.andCallFake(function (callback) {
+      model.read.and.callFake(function (callback) {
         callback([{
           title: 'a new todo',
           completed: false

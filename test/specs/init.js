@@ -32,13 +32,13 @@ describe('init', function() {
     global.tasks = {
       test: {
         reg: jasmine.createSpy('reg'),
-        about: jasmine.createSpy('about').andReturn('{id}')
+        about: jasmine.createSpy('about').and.returnValue('{id}')
       }
     };
 
     // mock aqua logger
     global.logger = {
-      create: jasmine.createSpy('create').andReturn(mockLogger())
+      create: jasmine.createSpy('create').and.returnValue(mockLogger())
     };
 
     // mock aqua validate
@@ -60,7 +60,7 @@ describe('init', function() {
   });
   it('should loop through the AQUA configuration objects', function() {
     // arrange
-    spyOn(Array.prototype, 'forEach').andCallThrough();
+    spyOn(Array.prototype, 'forEach').and.callThrough();
     // act
     init(pcfgs);
     // assert
@@ -94,7 +94,7 @@ describe('init', function() {
     var cfgTaskLogger, name = 'test', gulp = require('gulp');
     pcfgs.push(pcfg);
     init(pcfgs);
-    cfgTaskLogger = global.util.forOwn.calls[0].args[1];
+    cfgTaskLogger = global.util.forOwn.calls.argsFor(0)[1];
     // act
     cfgTaskLogger(null, name);
     // assert
@@ -105,7 +105,7 @@ describe('init', function() {
     var cfgTaskLogger, name = 'test';
     pcfgs.push(pcfg);
     init(pcfgs);
-    cfgTaskLogger = global.util.forOwn.calls[0].args[1];
+    cfgTaskLogger = global.util.forOwn.calls.argsFor(0)[1];
     // act
     cfgTaskLogger(null, name);
     // assert
@@ -114,7 +114,7 @@ describe('init', function() {
   it('should return the gulp instance', function() {
     // arrange
     var gulp = mockGulp(),
-        mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return gulp; }),
+        mockReq = jasmine.createSpy('mockReq').and.callFake(function() { return gulp; }),
         task = rewire(src + 'init');
     task.__set__('require', mockReq);
     // act

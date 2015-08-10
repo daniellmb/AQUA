@@ -91,7 +91,7 @@ module.exports = {
   /*
    Frameworks to use:
    jasmine, mocha, qunit, requirejs
-  */
+   */
   frameworks: ['jasmine'],
 
   /*
@@ -99,6 +99,7 @@ module.exports = {
    Chrome, ChromeCanary, PhantomJS, Firefox, Opera, IE, Safari, iOS
    */
   browsers: ['PhantomJS'], //Object.keys(customLaunchers),
+  //customLaunchers: customLaunchers,
 
   // sauce labs settings
   sauceLabs: {
@@ -109,7 +110,6 @@ module.exports = {
     startConnect: false,
     recordScreenshots: false
   },
-  customLaunchers: customLaunchers,
 
   // code coverage settings
   coverage: {
@@ -128,5 +128,12 @@ module.exports = {
 
   // If browser does not capture in given timeout [ms], kill it
   // Increase timeout in case connection in CI is slow
-  captureTimeout: 120000
+  captureTimeout: 120000,
+
+  // optimize the the karma plugins to load
+  plugins: [
+    'karma-jasmine',
+    'karma-coverage',
+    'karma-phantomjs-launcher'
+  ]
 };

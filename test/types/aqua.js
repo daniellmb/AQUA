@@ -35,6 +35,11 @@ AQUA.prototype.cfg = null;
  */
 AQUA.prototype.error = function(var_args) { };
 
+/**
+ * Handle failures in a consistent way.
+ * @param {...*} var_args
+ */
+AQUA.prototype.fail = function(var_args) { };
 
 /**
  * Configure AQUA

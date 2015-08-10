@@ -23,6 +23,7 @@ Icon?
 ehthumbs.db
 Thumbs.db
 .idea/
+aqa.js
 
 # Ignore json file with saucelabs credentials
 sauce.json

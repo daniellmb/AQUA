@@ -45,7 +45,7 @@ describe('warn', function() {
     // act
     warn('');
     // assert
-    arg = apply.calls[0].args[1].join(' ');
+    arg = apply.calls.argsFor(0)[1].join(' ');
     expect(arg).toContain('[' + colors.cyan('aqua') + '] \x1B[33mWARNING:');
   });
   it('should put yellow around the warning', function() {
@@ -54,7 +54,7 @@ describe('warn', function() {
     // act
     warn('foo');
     // assert
-    arg = apply.calls[0].args[1].join(' ');
+    arg = apply.calls.argsFor(0)[1].join(' ');
     expect(arg).toContain('\x1B[33mWARNING: foo \x1B[39m');
   });
   it('should log to the console', function() {

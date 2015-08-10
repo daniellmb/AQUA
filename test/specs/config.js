@@ -35,7 +35,7 @@ describe('config', function() {
     // mock aqua logger
     global.logger = {
       setup: jasmine.createSpy('setup'),
-      create: jasmine.createSpy('create').andReturn(mockLogger())
+      create: jasmine.createSpy('create').and.returnValue(mockLogger())
     };
 
     // mock aqua util
@@ -77,7 +77,7 @@ describe('config', function() {
   it('should configure the task loggers', function() {
     // arrange
     config(acfg);
-    var cfgTaskLogger = global.util.forOwn.calls[0].args[1],
+    var cfgTaskLogger = global.util.forOwn.calls.argsFor(0)[1],
         name = 'task-name';
     // act
     cfgTaskLogger(null, name);

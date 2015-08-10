@@ -67,7 +67,7 @@ GCC.prototype = {
     }
 
     // common core node.js externs
-    return externs.concat(['buffer', 'core'].map(function(name) {
+    return externs.concat(['buffer', 'core', 'process'].map(function(name) {
       // build path to node.js externs
       return './externs/nodejs/' + name + '.js';
     }));
@@ -235,7 +235,7 @@ GCC.prototype = {
       // below threshold
       aqua.log(aqua.colors.yellow('Type Check Threshold Not Met:\n') + 'Expected at least ' +
           aqua.cfg.thresholds.percentTyped + '% of source code to be typed, but is currently ' + percent[0] + '%');
-      aqua.error();
+      aqua.fail();
       return false;
     }
     return true;

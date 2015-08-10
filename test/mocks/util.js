@@ -28,7 +28,7 @@ global.mockLodash = function() {
 global.mockUtil = function() {
   var _ = mockLodash();
   return {
-    isDefined: jasmine.createSpy('isDefined').andCallFake(function(value) {
+    isDefined: jasmine.createSpy('isDefined').and.callFake(function(value) {
       return !require('lodash').isUndefined(value);
     }),
     'forOwn': _.forOwn,

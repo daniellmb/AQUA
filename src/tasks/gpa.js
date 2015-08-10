@@ -63,7 +63,7 @@ GPA.prototype.run = function(aqua, pcfg, gulp) {
       .on('error', function() {
         noErrors = false;
         aqua.log('GPA Check: ' + aqua.colors.yellow('Complexity issues found'));
-        aqua.error(arguments);
+        aqua.fail(arguments);
       })
       .on('finish', function() {
         if (noErrors) {

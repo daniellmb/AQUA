@@ -40,8 +40,9 @@ describe('unit', function() {
 
     // add spies
     spyOn(aqua, 'log');
-    spyOn(aqua, 'error');
     spyOn(aqua, 'warn');
+    spyOn(aqua, 'error');
+    spyOn(aqua, 'fail');
   });
 
   it('should exist', function() {
@@ -66,7 +67,7 @@ describe('unit', function() {
       utCfg = {};
       src = [];
       // add spies
-      spyOn(Array.prototype, 'concat').andCallThrough();
+      spyOn(Array.prototype, 'concat').and.callThrough();
     });
     it('should start with "sourceonly.js"', function() {
       // arrange
@@ -149,7 +150,7 @@ describe('unit', function() {
       usingRequire = false;
 
       // add spies
-      spyOn(task, 'usingRequireJS').andCallFake(function(){
+      spyOn(task, 'usingRequireJS').and.callFake(function(){
         return usingRequire;
       });
     });
@@ -220,11 +221,11 @@ describe('unit', function() {
 
       // mock path module
       path = {
-        join: jasmine.createSpy('join').andReturn('join')
+        join: jasmine.createSpy('join').and.returnValue('join')
       };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function(name) {
         switch (name) {
           case 'path': return path;
           default: throw 'Unexpected require ' + name;
@@ -263,7 +264,7 @@ describe('unit', function() {
     it('should set coverage preprocessor for source files', function() {
       // arrange
       task.getCoverageConfig(wcfg, pcfg, aqua);
-      var loop = aqua.util.forEach.calls[0].args[1];
+      var loop = aqua.util.forEach.calls.argsFor(0)[1];
       // act
       loop('file');
       // assert
@@ -293,7 +294,7 @@ describe('unit', function() {
     it('should add coverage reporters', function() {
       // arrange
       task.getCoverageConfig(wcfg, pcfg, aqua);
-      var loop = aqua.util.forEach.calls[1].args[1];
+      var loop = aqua.util.forEach.calls.argsFor(1)[1];
       // act
       loop('reporter');
       // assert
@@ -418,13 +419,13 @@ describe('unit', function() {
 
       // mock path module
       path = {
-        join: jasmine.createSpy('join').andCallFake(function() {
+        join: jasmine.createSpy('join').and.callFake(function() {
           return Array.prototype.slice.call(arguments).join('');
         })
       };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function(name) {
         switch (name) {
           case 'path': return path;
           case '__dirname../../../../foo': return 'file found';
@@ -501,7 +502,7 @@ describe('unit', function() {
       };
 
       // mock karma
-      karma = jasmine.createSpy('karma').andReturn('karma');
+      karma = jasmine.createSpy('karma').and.returnValue('karma');
 
       // mock web test config
       wcfg = {};
@@ -510,7 +511,7 @@ describe('unit', function() {
       usingRequire = false;
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function(name) {
         switch (name) {
           case 'gulp-karma': return karma;
           default: throw 'Unexpected require ' + name;
@@ -521,10 +522,10 @@ describe('unit', function() {
       task.__set__('require', mockReq);
 
       // add spies
-      spyOn(task, 'getTestConfig').andReturn(wcfg);
-      spyOn(aqua.util, 'assign').andReturn(wcfg);
+      spyOn(task, 'getTestConfig').and.returnValue(wcfg);
+      spyOn(aqua.util, 'assign').and.returnValue(wcfg);
       spyOn(task, 'getCoverageConfig');
-      spyOn(task, 'usingRequireJS').andCallFake(function(){
+      spyOn(task, 'usingRequireJS').and.callFake(function(){
         return usingRequire;
       });
       spyOn(task, 'enforceThresholds');
@@ -582,7 +583,7 @@ describe('unit', function() {
     it('should call enforceThresholds when the task is done', function() {
       // arrange
       task.testWeb(aqua, pcfg, files, gulp);
-      var onEnd = gulp.on.calls[0].args[1];
+      var onEnd = gulp.on.calls.argsFor(0)[1];
       // act
       onEnd();
       // assert
@@ -593,7 +594,7 @@ describe('unit', function() {
       // act
       task.testWeb(aqua, pcfg, files, gulp);
       // assert
-      expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+      expect(gulp.on).toHaveBeenCalledWith('error', aqua.fail);
     });
 
     describe('when using require.js', function(){
@@ -619,10 +620,11 @@ describe('unit', function() {
       files = ['bar', 'baz'];
 
       // mock dependencies
-      istanbul = jasmine.createSpy('istanbul').andReturn('istanbul');
+      istanbul = jasmine.createSpy('istanbul').and.returnValue('istanbul');
+      istanbul.hookRequire = jasmine.createSpy('hookRequire').and.returnValue('hookRequire');
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function() { return istanbul; });
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function() { return istanbul; });
 
       // use dependency injection to inject mock require
       task.__set__('require', mockReq);
@@ -652,6 +654,14 @@ describe('unit', function() {
       expect(istanbul).toHaveBeenCalled();
       expect(gulp.pipe).toHaveBeenCalledWith('istanbul');
     });
+    it('should force require to return covered files', function() {
+      // arrange
+      // act
+      task.testNode(aqua, pcfg, files, gulp);
+      // assert
+      expect(istanbul.hookRequire).toHaveBeenCalled();
+      expect(gulp.pipe).toHaveBeenCalledWith('hookRequire');
+    });
     it('should listen for when instrumentation finishes', function() {
       // arrange
       // act
@@ -662,7 +672,7 @@ describe('unit', function() {
     it('should run tests when instrumentation finishes', function() {
       // arrange
       task.testNode(aqua, pcfg, files, gulp);
-      var done = gulp.on.calls[0].args[1];
+      var done = gulp.on.calls.argsFor(0)[1];
       // act
       done();
       // assert
@@ -673,7 +683,7 @@ describe('unit', function() {
       // act
       task.testNode(aqua, pcfg, files, gulp);
       // assert
-      expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+      expect(gulp.on).toHaveBeenCalledWith('error', aqua.fail);
     });
   });
 
@@ -691,13 +701,13 @@ describe('unit', function() {
       };
 
       // mock dependencies
-      gulpJasmine = jasmine.createSpy('jasmine').andReturn('jasmine');
+      gulpJasmine = jasmine.createSpy('jasmine').and.returnValue('jasmine');
       mockNodeCfg = {
         jasmine: {}
       };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function(name) {
         switch (name) {
           case 'gulp-jasmine': return gulpJasmine;
           default: throw 'Unexpected require ' + name;
@@ -708,8 +718,8 @@ describe('unit', function() {
       task.__set__('require', mockReq);
 
       // add spies
-      spyOn(task, 'getTestConfig').andReturn(mockNodeCfg);
-      spyOn(task, 'createReports').andReturn('createReports');
+      spyOn(task, 'getTestConfig').and.returnValue(mockNodeCfg);
+      spyOn(task, 'createReports').and.returnValue('createReports');
       spyOn(task, 'enforceThresholds');
     });
 
@@ -728,7 +738,7 @@ describe('unit', function() {
       // act
       task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
-      var args = gulpJasmine.calls[0].args[0];
+      var args = gulpJasmine.calls.argsFor(0)[0];
       expect(args.showColors).toBe(false);
     });
     it('should look up the files to unit test', function() {
@@ -759,12 +769,12 @@ describe('unit', function() {
       // act
       task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
-      expect(gulp.on).toHaveBeenCalledWith('end', jasmine.any(Function));
+      expect(gulp.on).toHaveBeenCalledWith('finish', jasmine.any(Function));
     });
     it('should run enforce thresholds when reports exist', function() {
       // arrange
       task.runNodeTests(aqua, pcfg, files, gulp);
-      var done = gulp.on.calls[0].args[1];
+      var done = gulp.on.calls.argsFor(0)[1];
       // act
       done();
       // assert
@@ -775,7 +785,7 @@ describe('unit', function() {
       // act
       task.runNodeTests(aqua, pcfg, files, gulp);
       // assert
-      expect(gulp.on).toHaveBeenCalledWith('error', aqua.error);
+      expect(gulp.on).toHaveBeenCalledWith('error', aqua.fail);
     });
   });
 
@@ -796,14 +806,14 @@ describe('unit', function() {
       };
 
       // mock dependencies
-      istanbul = jasmine.createSpy('istanbul').andReturn('istanbul');
-      istanbul.writeReports = jasmine.createSpy('writeReports').andReturn('writeReports');
+      istanbul = jasmine.createSpy('istanbul').and.returnValue('istanbul');
+      istanbul.writeReports = jasmine.createSpy('writeReports').and.returnValue('writeReports');
       path = {
-        join: jasmine.createSpy('join').andReturn('join')
+        join: jasmine.createSpy('join').and.returnValue('join')
       };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function(name) {
         switch (name) {
           case 'gulp-istanbul': return istanbul;
           case 'path': return path;
@@ -863,13 +873,13 @@ describe('unit', function() {
       };
 
       // mock dependencies
-      enforcer = jasmine.createSpy('enforcer').andReturn('enforcer');
+      enforcer = jasmine.createSpy('enforcer').and.returnValue('enforcer');
       path = {
-        join: jasmine.createSpy('join').andReturn('join')
+        join: jasmine.createSpy('join').and.returnValue('join')
       };
 
       // mock require
-      mockReq = jasmine.createSpy('mockReq').andCallFake(function(name) {
+      mockReq = jasmine.createSpy('mockReq').and.callFake(function(name) {
         switch (name) {
           case 'gulp-istanbul-enforcer': return enforcer;
           case 'path': return path;
@@ -933,19 +943,19 @@ describe('unit', function() {
       it('should log errors to the console', function() {
         // arrange
         task.enforceThresholds(aqua, pcfg.id, gulp);
-        var onErr = gulp.on.calls[0].args[1],
+        var onErr = gulp.on.calls.argsFor(0)[1],
             err = {message: ''};
         // act
         onErr(err);
         // assert
         expect(task.log.warn).toHaveBeenCalled();
-        expect(aqua.error).toHaveBeenCalled();
+        expect(aqua.fail).toHaveBeenCalled();
       });
       it('should not log "at minimum thresholds" to the console', function() {
         // arrange
         task.enforceThresholds(aqua, pcfg.id, gulp);
-        var onErr = gulp.on.calls[0].args[1],
-            onDone = gulp.on.calls[1].args[1],
+        var onErr = gulp.on.calls.argsFor(0)[1],
+            onDone = gulp.on.calls.argsFor(1)[1],
             err = {message: ''};
         // act
         onErr(err);
@@ -958,7 +968,7 @@ describe('unit', function() {
       it('should log "at minimum thresholds" to the console', function() {
         // arrange
         task.enforceThresholds(aqua, pcfg.id, gulp);
-        var onDone = gulp.on.calls[1].args[1];
+        var onDone = gulp.on.calls.argsFor(1)[1];
         // act
         onDone();
         // assert
@@ -972,7 +982,7 @@ describe('unit', function() {
     beforeEach(function() {
       files = ['001', '002', '003'];
       // add spies
-      spyOn(task, 'collect').andReturn(files);
+      spyOn(task, 'collect').and.returnValue(files);
       spyOn(task, 'testWeb');
       spyOn(task, 'testNode');
     });
