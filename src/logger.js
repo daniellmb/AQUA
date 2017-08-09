@@ -52,9 +52,9 @@
     });
 
     // pass the values to log4js
-    log4js.setGlobalLogLevel(level);
     log4js.configure({
-      appenders: appenders
+      appenders: { console: { type: 'console' } },
+      categories: { default: { appenders: [ 'console' ], level: level } }
     });
   };
 

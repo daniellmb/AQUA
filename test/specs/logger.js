@@ -26,7 +26,6 @@ describe('logger', function() {
 
     // mock dependencies
     log4js = {
-      setGlobalLogLevel: jasmine.createSpy('setGlobalLogLevel').and.returnValue('setGlobalLogLevel'),
       configure: jasmine.createSpy('configure').and.returnValue('configure'),
       getLogger: jasmine.createSpy('getLogger').and.returnValue(instance)
     };
@@ -99,13 +98,6 @@ describe('logger', function() {
       // act
       logger.setup(undefined, undefined, [constants.CONSOLE_APPENDER]);
       // assert
-    });
-    it('should set the global logging level', function() {
-      // arrange
-      // act
-      logger.setup('level');
-      // assert
-      expect(log4js.setGlobalLogLevel).toHaveBeenCalledWith('level');
     });
     it('should configure appenders', function() {
       // arrange
